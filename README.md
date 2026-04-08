@@ -2,31 +2,38 @@
 
 **中国人口密度时空探索器 (2002-2020)**
 
-An interactive Streamlit web application for exploring China's population density dynamics through the lens of spatial economics, market integration, and regional convergence.
+An interactive Streamlit web application for exploring China's population density dynamics through the lens of **spatial economics, market integration, and regional convergence**.
 
 Built on WorldPop UN-adjusted 1km population density rasters (downsampled to ~5km), covering 19 consecutive years (2002-2020) across 31 mainland provinces.
 
+![Summary Tab](screenshots/summary.png)
+
 ---
 
-## Key Features
+## Highlights
 
-### Spatial Economics Analytics
-- **Spatial Gini Coefficient** — pixel-level population inequality tracking over time
-- **Population Concentration Index** — share of population in top 10% densest pixels
-- **Population Centroid Trajectory** — weighted centroid drift direction and distance
-- **Beta-Convergence Test** — OLS: ln(initial density) vs annual growth rate, with regional coloring (East/Central/West/Northeast)
-- **Sigma-Convergence** — cross-sectional coefficient of variation (CV) time series
+- Pixel-level **Spatial Gini Coefficient** and **Top-10% Concentration Index** reveal agglomeration dynamics over 19 years
+- **Beta-convergence** scatter plot with East/Central/West/Northeast regional coloring tests whether low-density provinces are catching up
+- **Population centroid trajectory** on map shows the macro direction of labor reallocation
+- **Animated spatial reallocation** maps with pre-rendered frames (zero white-flash)
+- Click any pixel on the map to query its full 2002-2020 density timeseries
+- 6 research topic descriptions linking trade, spatial economics, and market integration to the platform's evidence panels
 
-### Interactive Visualization
-- **Folium Maps** with raster overlays and click-to-query pixel timeseries
-- **Animated Spatial Reallocation** — year-by-year cumulative change maps with pre-rendered frames (flicker-free)
-- **Regional Share Analysis** — East/Central/West/Northeast population share evolution
-- **Provincial Deep Dive** — per-province density trends, rankings, and cross-province comparison
+---
 
-### Research Integration
-- 6 research topic descriptions with methodology, data support, and literature references
-- Topics ordered by relevance to trade, spatial economics, and market integration
-- Each topic links to the platform's corresponding evidence panels
+## Screenshots
+
+| Summary: Spatial Economics Narrative | Agglomeration Dynamics |
+|:---:|:---:|
+| ![](screenshots/summary.png) | ![](screenshots/agglomeration.png) |
+
+| Core-Periphery & Centroid Trajectory | Regional Convergence (β-test) |
+|:---:|:---:|
+| ![](screenshots/centroid.png) | ![](screenshots/convergence.png) |
+
+| Spatial Reallocation Map | Research Topics |
+|:---:|:---:|
+| ![](screenshots/spatial.png) | ![](screenshots/research.png) |
 
 ---
 
@@ -74,28 +81,24 @@ National-level JSON stats ──────────────┤
 
 1. **Latitude-corrected pixel area**: `area = (Δ° × 111.32)² × cos(lat)` instead of fixed 25 km², reducing population estimate error from ~39% to ~7%
 2. **Dual-scope architecture**: mainland-only toggle flows through all views via `geometry_mask`
-3. **Raster cube**: stacked (19, 900, 1469) numpy array for O(1) pixel timeseries lookup
+3. **Raster cube**: stacked `(19, 900, 1469)` numpy array for O(1) pixel timeseries lookup
 4. **Pre-rendered animation frames**: PIL-based static frames eliminate Streamlit `st.rerun()` white-flash
 5. **Adaptive colorscale**: P99-based symmetric bounds prevent extreme pixels from compressing the visual range
+6. **Real-time spatial economics indicators**: Gini, β/σ-convergence, centroid computed directly from raster cube with `@st.cache_data`
 
 ---
 
-## Project Structure
+## Spatial Economics Indicators
 
-```
-china-population-density-explorer/
-├── app.py                      # Main Streamlit application (~1600 lines)
-├── preprocess.py               # 1km → 5km downsampling pipeline
-├── preprocess_provinces.py     # Zonal statistics & national summary generation
-├── china_provinces.geojson     # Province boundaries (34 features)
-├── data_5km/                   # Processed data
-│   ├── China_{year}_5km.tif    # 19 downsampled rasters (2002-2020)
-│   ├── province_stats.json     # Per-province statistics (147KB)
-│   └── national_stats.json     # National summary with dual scope (11KB)
-├── requirements.txt
-├── LICENSE
-└── README.md
-```
+| Indicator | Formula / Method | Interpretation |
+|-----------|-----------------|----------------|
+| Spatial Gini | Lorenz curve on pixel-level population (density × area) | Higher = more spatially concentrated |
+| Top-K Concentration | Population share in densest K% of pixels | Rising = agglomeration intensifying |
+| Population Centroid | Σ(pop × coord) / Σ(pop) | Drift direction ≈ labor flow direction |
+| β-Convergence | OLS slope of growth rate on ln(initial density) | Negative = catching-up; Positive = polarization |
+| σ-Convergence | CV of cross-provincial density over time | Declining = provinces converging |
+| Market Potential Proxy | Population-weighted mean density | Rising = expanding local market size |
+| Regional Shares | East/Central/West/NE population proportions | Shift = changing relative market access |
 
 ---
 
@@ -103,8 +106,8 @@ china-population-density-explorer/
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/china-population-density-explorer.git
-cd china-population-density-explorer
+git clone https://github.com/Li-Shen-Clark/CPDE.git
+cd CPDE
 
 # Install dependencies
 pip install -r requirements.txt
@@ -113,13 +116,33 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-The app runs entirely on the included 5km data — no additional downloads needed.
+The app runs entirely on the included 5km data — **no additional downloads needed**.
+
+---
+
+## Project Structure
+
+```
+CPDE/
+├── app.py                      # Main Streamlit application (~1600 lines)
+├── preprocess.py               # 1km → 5km downsampling pipeline
+├── preprocess_provinces.py     # Zonal statistics & national summary generation
+├── china_provinces.geojson     # Province boundaries (34 features)
+├── data_5km/                   # Processed data (included in repo)
+│   ├── China_{year}_5km.tif    # 19 downsampled rasters (2002-2020)
+│   ├── province_stats.json     # Per-province statistics (147KB)
+│   └── national_stats.json     # National summary with dual scope (11KB)
+├── screenshots/                # App screenshots for README
+├── requirements.txt
+├── LICENSE
+└── README.md
+```
 
 ---
 
 ## Reproducing from Raw Data
 
-If you want to rebuild from the original 1km WorldPop rasters:
+To rebuild from the original 1km WorldPop rasters:
 
 1. Download `China_{year}_1km_UNadj.tif` (2002-2020) from [WorldPop](https://hub.worldpop.org/geodata/listing?id=76)
 2. Place them in the project root directory
@@ -133,19 +156,6 @@ streamlit run app.py              # Launch the explorer
 
 ---
 
-## Spatial Economics Indicators
-
-| Indicator | Formula / Method | Interpretation |
-|-----------|-----------------|----------------|
-| Spatial Gini | Lorenz curve on pixel-level population (density × area) | Higher = more spatially concentrated |
-| Top-K Concentration | Pop share in densest K% of pixels | Rising = agglomeration intensifying |
-| Population Centroid | Σ(pop × coord) / Σ(pop) | Drift direction ≈ labor flow direction |
-| β-Convergence | OLS slope of growth rate on ln(initial density) | Negative = catching-up; Positive = polarization |
-| σ-Convergence | CV of cross-provincial density over time | Declining = provinces converging |
-| Market Potential Proxy | Population-weighted mean density | Rising = expanding local market size |
-
----
-
 ## Data Source & Citation
 
 **Data**: WorldPop UN-adjusted Population Density, 1km resolution, 2000-2020
@@ -154,7 +164,6 @@ streamlit run app.py              # Launch the explorer
 - DOI: [10.5258/SOTON/WP00675](https://doi.org/10.5258/SOTON/WP00675)
 - License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
-**Citation**:
 ```
 WorldPop and CIESIN (2018). Global High Resolution Population Denominators Project.
 DOI: 10.5258/SOTON/WP00675
@@ -164,4 +173,4 @@ DOI: 10.5258/SOTON/WP00675
 
 ## License
 
-Code: MIT License. Data: CC BY 4.0 (WorldPop).
+Code: [MIT License](LICENSE). Data: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (WorldPop).
