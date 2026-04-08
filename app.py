@@ -40,6 +40,54 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+st.markdown("""
+<style>
+/* Modern font stack */
+html, body, [class*="css"] {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+/* Reduce default Streamlit padding */
+.block-container {
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    max-width: 1200px;
+}
+/* Tab styling */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+}
+.stTabs [data-baseweb="tab"] {
+    padding: 8px 20px;
+    border-radius: 6px 6px 0 0;
+    font-weight: 500;
+}
+/* KPI metric cards */
+[data-testid="stMetric"] {
+    background: linear-gradient(135deg, #667eea12, #764ba212);
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+}
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: #fafbfc;
+}
+/* Hide Streamlit hamburger and footer */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+/* Expander header */
+.streamlit-expanderHeader {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+/* Captions */
+.stCaption {
+    font-size: 0.82rem;
+    color: #64748b;
+}
+</style>
+""", unsafe_allow_html=True)
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data_5km")
 GEOJSON_PATH = os.path.join(BASE_DIR, "china_provinces.geojson")
@@ -77,7 +125,17 @@ REGION_MAP_EN = {
     "西部": "West",
     "东北": "Northeast",
 }
-REGION_COLORS = {"东部": "#E31A1C", "中部": "#FF7F00", "西部": "#33A02C", "东北": "#1F78B4"}
+REGION_COLORS = {"东部": "#6366f1", "中部": "#f59e0b", "西部": "#14b8a6", "东北": "#ec4899"}
+
+# Modern Plotly layout defaults
+PLOTLY_LAYOUT = dict(
+    font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+    plot_bgcolor="rgba(0,0,0,0)",
+    paper_bgcolor="rgba(0,0,0,0)",
+    margin=dict(t=40, b=20, l=20, r=20),
+    hoverlabel=dict(bgcolor="white", font_size=12),
+    colorway=["#6366f1", "#ec4899", "#14b8a6", "#f59e0b", "#8b5cf6", "#06b6d4", "#f43f5e", "#22c55e"],
+)
 
 
 # ---------------------------------------------------------------------------
@@ -877,10 +935,14 @@ Overlaying population density rasters with other spatial datasets can reveal co-
     "methods_desc_col_en": "Description",
     "methods_citation_zh": "建议引用",
     "methods_citation_en": "Suggested Citation",
+    # Author info
+    "author_info_zh": "**开发者**: Li Shen | Spatial Economics & Data Science",
+    "author_info_en": "**Developer**: Li Shen | Spatial Economics & Data Science",
     # Footer
     "footer_zh": (
         "<small>"
         "🌏 中国人口密度时空探索器 ({scope}) | "
+        "开发者: Li Shen | Spatial Economics &amp; Data Science | "
         "数据: WorldPop UN-adjusted 1km → 5km降采样 | "
         "人口估算: 纬度修正像元面积 | 仅供趋势参考<br>"
         "官方来源: <a href='{col}' target='_blank'>WorldPop Global1 2000-2020</a> | "
@@ -893,6 +955,7 @@ Overlaying population density rasters with other spatial datasets can reveal co-
     "footer_en": (
         "<small>"
         "🌏 China Population Density Spatiotemporal Explorer ({scope}) | "
+        "Developer: Li Shen | Spatial Economics &amp; Data Science | "
         "Data: WorldPop UN-adjusted 1km → 5km downsampled | "
         "Pop. est.: lat-corrected pixel area | For trend reference only<br>"
         "Official source: <a href='{col}' target='_blank'>WorldPop Global1 2000-2020</a> | "
@@ -1016,7 +1079,7 @@ def compute_rank_history(province_stats, exclude_names):
 @st.cache_data
 def raster_to_image(data):
     norm = LogNorm(vmin=VMIN, vmax=VMAX, clip=True)
-    colormap = cm.get_cmap("YlOrRd")
+    colormap = cm.get_cmap("inferno")
     mask = np.isnan(data) | (data <= 0)
     normalized = np.where(mask, 0, norm(data))
     rgba = colormap(normalized)
@@ -1027,8 +1090,8 @@ def raster_to_image(data):
 # [Fix 3] Adaptive diff colorscale using p99
 @st.cache_data
 def diff_to_image_adaptive(diff):
-    """Red-blue diverging colormap with p99-based symmetric bounds."""
-    colormap = cm.get_cmap("RdBu_r")
+    """Coolwarm diverging colormap with p99-based symmetric bounds."""
+    colormap = cm.get_cmap("coolwarm")
     valid = diff[~np.isnan(diff)]
     if len(valid) == 0:
         return np.zeros((*diff.shape, 4), dtype=np.uint8)
@@ -1431,6 +1494,8 @@ drill_province = st.sidebar.selectbox(
 )
 
 st.sidebar.markdown("---")
+st.sidebar.markdown(T("author_info"))
+st.sidebar.markdown("---")
 scope_label_readable = T("scope_mainland") if mainland_only else T("scope_all")
 st.sidebar.markdown(
     T("sidebar_data_info", scope=scope_label_readable),
@@ -1561,7 +1626,8 @@ with tab_summary:
         st.markdown(f"{idx}. {text}")
 
     # --- KPI row ---
-    k1, k2, k3, k4, k5 = st.columns(5)
+    st.divider()
+    k1, k2, k3, k4, k5 = st.columns([1, 1, 1, 1, 1], gap="medium")
     k1.metric(T("kpi_gini"), f"{gini_end:.4f}", delta=f"{gini_end - gini_start:+.4f}")
     k2.metric(T("kpi_conc"), f"{conc_end:.1f}%", delta=f"{conc_end - conc_start:+.1f}%")
     k3.metric(T("kpi_wt_density"), f"{nat_end['加权平均密度']:.1f}",
@@ -1573,24 +1639,31 @@ with tab_summary:
               delta=f"→ {shift_dir}")
 
     # --- Row 2: Gini trend + diff map ---
-    col_trend, col_map = st.columns([3, 2])
+    st.divider()
+    col_trend, col_map = st.columns([5, 3])
     with col_trend:
         fig_summary = make_subplots(specs=[[{"secondary_y": True}]])
         fig_summary.add_trace(go.Scatter(
             x=df_gini["年份"], y=df_gini["空间基尼系数"],
             name=T("gini_series_label"), mode="lines+markers",
-            line=dict(color="#E31A1C", width=2.5),
+            line=dict(color="#6366f1", width=2.5),
         ), secondary_y=False)
         fig_summary.add_trace(go.Scatter(
             x=df_conc10["年份"], y=df_conc10["Top10%人口占比"],
             name=T("conc_series_label"), mode="lines+markers",
-            line=dict(color="#3366CC", width=2.5),
+            line=dict(color="#ec4899", width=2.5),
         ), secondary_y=True)
         fig_summary.update_layout(
             title=T("summary_chart_title"),
-            height=360, margin=dict(t=40, b=20, l=20, r=20),
+            template="plotly_white",
+            height=360,
+            margin=dict(t=40, b=20, l=20, r=20),
             hovermode="x unified",
             legend=dict(orientation="h", y=1.1),
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            hoverlabel=dict(bgcolor="white", font_size=12),
         )
         fig_summary.update_yaxes(title_text=T("gini_yaxis"), secondary_y=False)
         fig_summary.update_yaxes(title_text=T("conc_yaxis"), secondary_y=True)
@@ -1603,7 +1676,8 @@ with tab_summary:
         st.caption(T("diff_map_note", p99=diff_p99, mean=diff_mean))
 
     # --- Row 3: β-convergence scatter + top movers ---
-    col_beta, col_move = st.columns([3, 2])
+    st.divider()
+    col_beta, col_move = st.columns([5, 3])
     with col_beta:
         fig_beta = go.Figure()
         for region in ["东部", "中部", "西部", "东北"]:
@@ -1626,10 +1700,15 @@ with tab_summary:
         ))
         fig_beta.update_layout(
             title=T("beta_chart_title", r2=beta_r2),
+            template="plotly_white",
             height=400, margin=dict(t=45, b=20, l=20, r=20),
             xaxis_title=T("beta_xaxis", y0=YEARS[0]),
             yaxis_title=T("beta_yaxis"),
             legend=dict(orientation="h", y=1.12),
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            hoverlabel=dict(bgcolor="white", font_size=12),
         )
         st.plotly_chart(fig_beta, use_container_width=True)
 
@@ -1642,7 +1721,7 @@ with tab_summary:
                 st.markdown(f"- **{row['省份']}** ({region_tag}) — +{row['绝对增长']:.0f} 人/km²，增长率 {row['增长率%']:+.1f}%")
             else:
                 st.markdown(f"- **{row['省份']}** ({region_tag}) — +{row['绝对增长']:.0f} ppl/km², growth {row['增长率%']:+.1f}%")
-        st.markdown("---")
+        st.divider()
         st.markdown(T("top_losers"))
         losers = df_growth.nsmallest(5, "绝对增长")
         for _, row in losers.iterrows():
@@ -1712,7 +1791,7 @@ with tab_national:
         render_national_frame(manual_year)
 
     # --- Agglomeration indicators panel ---
-    st.markdown("---")
+    st.divider()
     st.subheader(T("agg_indicators"))
 
     col_gini, col_conc = st.columns(2)
@@ -1720,14 +1799,18 @@ with tab_national:
         fig_gini = go.Figure()
         fig_gini.add_trace(go.Scatter(
             x=df_gini["年份"], y=df_gini["空间基尼系数"],
-            mode="lines+markers", line=dict(color="#E31A1C", width=2.5),
-            fill="tozeroy", fillcolor="rgba(227,26,28,0.08)",
+            mode="lines+markers", line=dict(color="#6366f1", width=2.5),
+            fill="tozeroy", fillcolor="rgba(99,102,241,0.08)",
         ))
         fig_gini.update_layout(
             title=T("gini_chart_title"),
+            template="plotly_white",
             height=320, margin=dict(t=40, b=20, l=20, r=20),
             xaxis_title=T("year_label"), yaxis_title=T("gini_yaxis"),
             hovermode="x unified",
+            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            hoverlabel=dict(bgcolor="white", font_size=12),
         )
         st.plotly_chart(fig_gini, use_container_width=True)
         st.caption(T("gini_caption"))
@@ -1736,14 +1819,18 @@ with tab_national:
         fig_conc = go.Figure()
         fig_conc.add_trace(go.Scatter(
             x=df_conc10["年份"], y=df_conc10["Top10%人口占比"],
-            mode="lines+markers", line=dict(color="#3366CC", width=2.5),
-            fill="tozeroy", fillcolor="rgba(51,102,204,0.08)",
+            mode="lines+markers", line=dict(color="#ec4899", width=2.5),
+            fill="tozeroy", fillcolor="rgba(236,72,153,0.08)",
         ))
         fig_conc.update_layout(
             title=T("conc_chart_title"),
+            template="plotly_white",
             height=320, margin=dict(t=40, b=20, l=20, r=20),
             xaxis_title=T("year_label"), yaxis_title=T("conc_yaxis2"),
             hovermode="x unified",
+            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            hoverlabel=dict(bgcolor="white", font_size=12),
         )
         st.plotly_chart(fig_conc, use_container_width=True)
         st.caption(T("conc_caption"))
@@ -1754,17 +1841,21 @@ with tab_national:
         fig_mp.add_trace(go.Scatter(
             x=df_national["年份"], y=df_national["加权平均密度"],
             name=T("mp_trace1"), mode="lines+markers",
-            line=dict(color="#E31A1C", width=2.5),
+            line=dict(color="#6366f1", width=2.5),
         ), secondary_y=False)
         fig_mp.add_trace(go.Scatter(
             x=df_national["年份"], y=df_national["高密度像素数"],
             name=T("mp_trace2"), mode="lines+markers",
-            line=dict(color="#FF7F00", width=2),
+            line=dict(color="#f59e0b", width=2),
         ), secondary_y=True)
         fig_mp.update_layout(
             title=T("mp_chart_title"),
+            template="plotly_white",
             height=320, margin=dict(t=40, b=20, l=20, r=20),
             hovermode="x unified", legend=dict(orientation="h", y=1.12),
+            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            hoverlabel=dict(bgcolor="white", font_size=12),
         )
         fig_mp.update_yaxes(title_text=T("mp_yaxis1"), secondary_y=False)
         fig_mp.update_yaxes(title_text=T("mp_yaxis2"), secondary_y=True)
@@ -1775,14 +1866,18 @@ with tab_national:
         fig_sigma = go.Figure()
         fig_sigma.add_trace(go.Scatter(
             x=df_sigma["年份"], y=df_sigma["变异系数CV"],
-            mode="lines+markers", line=dict(color="#33A02C", width=2.5),
-            fill="tozeroy", fillcolor="rgba(51,160,44,0.08)",
+            mode="lines+markers", line=dict(color="#14b8a6", width=2.5),
+            fill="tozeroy", fillcolor="rgba(20,184,166,0.08)",
         ))
         fig_sigma.update_layout(
             title=T("sigma_chart_title"),
+            template="plotly_white",
             height=320, margin=dict(t=40, b=20, l=20, r=20),
             xaxis_title=T("year_label"), yaxis_title=T("sigma_yaxis"),
             hovermode="x unified",
+            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            hoverlabel=dict(bgcolor="white", font_size=12),
         )
         st.plotly_chart(fig_sigma, use_container_width=True)
         st.caption(T("sigma_caption"))
@@ -1801,7 +1896,7 @@ with tab_spatial:
 
     with spatial_single:
         year_sp = st.slider(T("year_slider2"), YEARS[0], YEARS[-1], 2010, 1, key="spatial_single_year")
-        col_map, col_side = st.columns([5, 3])
+        col_map, col_side = st.columns([2, 1])
 
         with col_map:
             data_sp, bounds_sp, _, _, _ = load_year(year_sp)
@@ -1822,13 +1917,17 @@ with tab_spatial:
                 ts = get_pixel_timeseries(raster_cube, cube_transform, cube_h, cube_w, lat_c, lng_c)
                 fig_click = go.Figure(go.Scatter(
                     x=[t["年份"] for t in ts], y=[t["密度"] for t in ts],
-                    mode="lines+markers", line=dict(color="#E31A1C", width=2),
-                    fill="tozeroy", fillcolor="rgba(227,26,28,0.1)",
+                    mode="lines+markers", line=dict(color="#6366f1", width=2),
+                    fill="tozeroy", fillcolor="rgba(99,102,241,0.1)",
                 ))
                 fig_click.update_layout(
                     title=T("click_chart_title", lat=lat_c, lng=lng_c),
+                    template="plotly_white",
                     height=220, margin=dict(t=40, b=20, l=20, r=20),
                     xaxis_title=T("click_xaxis"), yaxis_title=T("density_unit"),
+                    plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+                    font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+                    hoverlabel=dict(bgcolor="white", font_size=12),
                 )
                 st.plotly_chart(fig_click, use_container_width=True)
 
@@ -1839,23 +1938,33 @@ with tab_spatial:
                 y=[p["name"] for p in year_provs[:15]][::-1],
                 x=[p["mean"] for p in year_provs[:15]][::-1],
                 orientation="h",
-                marker=dict(color=[p["mean"] for p in year_provs[:15]][::-1], colorscale="YlOrRd"),
+                marker=dict(color=[p["mean"] for p in year_provs[:15]][::-1], colorscale="Purples"),
                 text=[f"{p['mean']:.0f}" for p in year_provs[:15]][::-1],
                 textposition="outside",
             ))
-            fig_rank.update_layout(height=320, margin=dict(t=20, b=10, l=10, r=50),
-                                   title=T("top15_title"), xaxis_title=T("density_unit"))
+            fig_rank.update_layout(
+                height=320, margin=dict(t=20, b=10, l=10, r=50),
+                title=T("top15_title"), xaxis_title=T("density_unit"),
+                template="plotly_white",
+                plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+                font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            )
             st.plotly_chart(fig_rank, use_container_width=True)
 
             valid_sp = data_sp[~np.isnan(data_sp) & (data_sp > 0)]
             fig_hist = px.histogram(
                 x=valid_sp[valid_sp <= np.percentile(valid_sp, 99.5)],
                 nbins=60,
-                color_discrete_sequence=["#4E79A7"],
+                color_discrete_sequence=["#6366f1"],
                 title=T("pixel_hist_title"),
             )
-            fig_hist.update_layout(height=220, margin=dict(t=35, b=20, l=20, r=20),
-                                   xaxis_title=T("density_unit"), yaxis_title=T("pixel_count"))
+            fig_hist.update_layout(
+                height=220, margin=dict(t=35, b=20, l=20, r=20),
+                xaxis_title=T("density_unit"), yaxis_title=T("pixel_count"),
+                template="plotly_white",
+                plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+                font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            )
             st.plotly_chart(fig_hist, use_container_width=True)
 
     with spatial_compare:
@@ -1909,16 +2018,19 @@ with tab_spatial:
                     y=[p["省份"] for p in prov_diff_list],
                     x=[p["密度变化"] for p in prov_diff_list],
                     orientation="h",
-                    marker_color=["#B2182B" if p["密度变化"] > 0 else "#2166AC" for p in prov_diff_list],
+                    marker_color=["#6366f1" if p["密度变化"] > 0 else "#ec4899" for p in prov_diff_list],
                     text=[f"{p['密度变化']:+.0f}" for p in prov_diff_list],
                     textposition="outside",
                 ))
                 fig_prov_diff.add_vline(x=0, line_color="grey")
                 fig_prov_diff.update_layout(
                     title=T("prov_diff_title"),
+                    template="plotly_white",
                     height=max(400, len(prov_diff_list) * 22),
                     margin=dict(t=40, b=10, l=10, r=50),
                     xaxis_title=T("density_unit"),
+                    plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+                    font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
                 )
                 st.plotly_chart(fig_prov_diff, use_container_width=True)
 
@@ -1926,10 +2038,15 @@ with tab_spatial:
                 clipped_hist = valid_diff[(valid_diff > -p99_val * 1.5) & (valid_diff < p99_val * 1.5)]
                 fig_hist = px.histogram(x=clipped_hist, nbins=100,
                                         title=T("pixel_change_hist"),
-                                        color_discrete_sequence=["#3366CC"])
-                fig_hist.add_vline(x=0, line_dash="dash", line_color="red")
-                fig_hist.update_layout(height=300, margin=dict(t=35, b=20, l=20, r=20),
-                                       xaxis_title=T("density_unit"), yaxis_title=T("pixel_count"))
+                                        color_discrete_sequence=["#8b5cf6"])
+                fig_hist.add_vline(x=0, line_dash="dash", line_color="#ec4899")
+                fig_hist.update_layout(
+                    height=300, margin=dict(t=35, b=20, l=20, r=20),
+                    xaxis_title=T("density_unit"), yaxis_title=T("pixel_count"),
+                    template="plotly_white",
+                    plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+                    font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+                )
                 st.plotly_chart(fig_hist, use_container_width=True)
                 st.dataframe(pd.DataFrame(prov_diff_list).head(8), use_container_width=True, hide_index=True)
         else:
@@ -1964,8 +2081,12 @@ with tab_spatial:
             )
             fig_centroid.update_layout(
                 title=T("centroid_chart_title", y0=YEARS[0], y1=YEARS[-1]),
+                template="plotly_white",
                 height=450, margin=dict(t=40, b=10, l=10, r=10),
                 geo=dict(bgcolor="rgba(0,0,0,0)"),
+                paper_bgcolor="rgba(0,0,0,0)",
+                font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+                hoverlabel=dict(bgcolor="white", font_size=12),
             )
             st.plotly_chart(fig_centroid, use_container_width=True)
 
@@ -1986,7 +2107,7 @@ with tab_spatial:
             st.markdown(T("centroid_lat_dir", km=abs(dlat_km), dir=north_dir))
             st.markdown(T("centroid_lon_dir", km=abs(dlon_km), dir=east_dir))
 
-            st.markdown("---")
+            st.divider()
             st.markdown(T("centroid_meaning"))
             st.markdown(T("centroid_meaning_text"))
 
@@ -1994,22 +2115,26 @@ with tab_spatial:
             fig_latlon = make_subplots(specs=[[{"secondary_y": True}]])
             fig_latlon.add_trace(go.Scatter(
                 x=df_centroid["年份"], y=df_centroid["重心纬度"],
-                name=T("lat_label"), mode="lines+markers", line=dict(color="#E31A1C", width=2),
+                name=T("lat_label"), mode="lines+markers", line=dict(color="#6366f1", width=2),
             ), secondary_y=False)
             fig_latlon.add_trace(go.Scatter(
                 x=df_centroid["年份"], y=df_centroid["重心经度"],
-                name=T("lon_label"), mode="lines+markers", line=dict(color="#3366CC", width=2),
+                name=T("lon_label"), mode="lines+markers", line=dict(color="#ec4899", width=2),
             ), secondary_y=True)
             fig_latlon.update_layout(
                 title=T("latlon_chart_title"), height=250,
+                template="plotly_white",
                 margin=dict(t=35, b=20, l=20, r=20),
                 hovermode="x unified", legend=dict(orientation="h", y=1.15),
+                plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+                font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+                hoverlabel=dict(bgcolor="white", font_size=12),
             )
             fig_latlon.update_yaxes(title_text=T("deg_n"), secondary_y=False)
             fig_latlon.update_yaxes(title_text=T("deg_e"), secondary_y=True)
             st.plotly_chart(fig_latlon, use_container_width=True)
 
-        st.markdown("---")
+        st.divider()
         st.subheader(T("region_shares_header"))
         st.caption(T("region_shares_caption"))
 
@@ -2026,10 +2151,14 @@ with tab_spatial:
                 ))
             fig_region.update_layout(
                 title=T("region_shares_chart_title"),
+                template="plotly_white",
                 height=380, margin=dict(t=40, b=20, l=20, r=20),
                 xaxis_title=T("year_label"), yaxis_title=T("region_shares_yaxis"),
                 hovermode="x unified",
                 legend=dict(orientation="h", y=1.1),
+                plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+                font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+                hoverlabel=dict(bgcolor="white", font_size=12),
             )
             st.plotly_chart(fig_region, use_container_width=True)
 
@@ -2049,7 +2178,7 @@ with tab_spatial:
                 })
             st.dataframe(pd.DataFrame(summary_rows), use_container_width=True, hide_index=True)
 
-            st.markdown("---")
+            st.divider()
             st.markdown(T("region_interp"))
             east_change = float(pivot.loc[YEARS[-1], "东部"]) - float(pivot.loc[YEARS[0], "东部"])
             if east_change > 0:
@@ -2251,26 +2380,30 @@ with tab_hetero:
     st.plotly_chart(fig_hm, use_container_width=True)
 
     # --- σ-convergence detail ---
-    st.markdown("---")
+    st.divider()
     st.subheader(T("sigma_detail_header"))
-    col_sigma_detail, col_sigma_text = st.columns([3, 2])
+    col_sigma_detail, col_sigma_text = st.columns([5, 3])
     with col_sigma_detail:
         df_sigma_h = compute_sigma_convergence(province_stats, frozenset(exclude_for_rank))
         fig_sigma_h = make_subplots(specs=[[{"secondary_y": True}]])
         fig_sigma_h.add_trace(go.Scatter(
             x=df_sigma_h["年份"], y=df_sigma_h["省际标准差"],
             name=T("sigma_detail_trace1"), mode="lines+markers",
-            line=dict(color="#E31A1C", width=2.5),
+            line=dict(color="#6366f1", width=2.5),
         ), secondary_y=False)
         fig_sigma_h.add_trace(go.Scatter(
             x=df_sigma_h["年份"], y=df_sigma_h["变异系数CV"],
             name=T("sigma_detail_trace2"), mode="lines+markers",
-            line=dict(color="#3366CC", width=2.5),
+            line=dict(color="#ec4899", width=2.5),
         ), secondary_y=True)
         fig_sigma_h.update_layout(
             title=T("sigma_detail_title"),
+            template="plotly_white",
             height=320, margin=dict(t=40, b=20, l=20, r=20),
             hovermode="x unified", legend=dict(orientation="h", y=1.12),
+            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            hoverlabel=dict(bgcolor="white", font_size=12),
         )
         fig_sigma_h.update_yaxes(title_text=T("sigma_yaxis1"), secondary_y=False)
         fig_sigma_h.update_yaxes(title_text=T("cv_yaxis"), secondary_y=True)
@@ -2285,14 +2418,14 @@ with tab_hetero:
         std_dir = T("std_shrink") if std_end < std_start else T("std_expand")
         st.markdown(f"- {'变异系数 CV' if lang == 'zh' else 'Coeff. of Variation CV'}: {cv_start:.4f} → {cv_end:.4f} ({cv_dir})")
         st.markdown(f"- {'标准差' if lang == 'zh' else 'Std. Dev.'}: {std_start:.2f} → {std_end:.2f} ({std_dir})")
-        st.markdown("---")
+        st.divider()
         st.markdown(T("sigma_meaning"))
         if cv_end < cv_start:
             st.markdown(T("sigma_conv_text"))
         else:
             st.markdown(T("sigma_div_text"))
 
-    st.markdown("---")
+    st.divider()
     st.subheader(T("focus_profile", prov=focus_province))
 
     prov_series = df_prov[df_prov["name"] == focus_province].sort_values("年份")
@@ -2320,19 +2453,23 @@ with tab_hetero:
         fig_detail.add_trace(go.Scatter(
             x=prov_series["年份"], y=prov_series["mean"],
             name=T("avg_density_trace"), mode="lines+markers",
-            line=dict(color="#E31A1C", width=2.5),
-            fill="tozeroy", fillcolor="rgba(227,26,28,0.1)",
+            line=dict(color="#6366f1", width=2.5),
+            fill="tozeroy", fillcolor="rgba(99,102,241,0.1)",
         ), secondary_y=False)
         fig_detail.add_trace(go.Scatter(
             x=prov_series["年份"], y=prov_series["est_pop_wan"] / 10000,
             name=T("pop_est_trace"), mode="lines+markers",
-            line=dict(color="#3366CC", width=2),
+            line=dict(color="#ec4899", width=2),
         ), secondary_y=True)
         fig_detail.add_vline(x=year_dr, line_dash="dash", line_color="grey")
         fig_detail.update_layout(
             title=T("province_trend_title", prov=focus_province),
+            template="plotly_white",
             height=320, margin=dict(t=40, b=20, l=20, r=20),
             hovermode="x unified", legend=dict(orientation="h", y=1.1),
+            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            hoverlabel=dict(bgcolor="white", font_size=12),
         )
         fig_detail.update_yaxes(title_text=T("density_unit"), secondary_y=False)
         fig_detail.update_yaxes(title_text=T("hundred_million"), secondary_y=True)
@@ -2345,12 +2482,16 @@ with tab_hetero:
             mode="lines+markers+text",
             text=[f"#{r}" for r in prov_rank_data["排名"]],
             textposition="top center",
-            line=dict(color="#E31A1C", width=3), marker=dict(size=8),
+            line=dict(color="#6366f1", width=3), marker=dict(size=8),
         ))
         fig_bump.update_layout(
             title=T("rank_chart_title", prov=focus_province),
+            template="plotly_white",
             height=320, margin=dict(t=40, b=20, l=20, r=20),
             yaxis=dict(autorange="reversed", dtick=1, title=T("rank_yaxis")),
+            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            hoverlabel=dict(bgcolor="white", font_size=12),
         )
         st.plotly_chart(fig_bump, use_container_width=True)
 
@@ -2392,15 +2533,19 @@ with tab_hetero:
         fig_cross = make_subplots(rows=1, cols=3, subplot_titles=subplot_titles)
         for idx, metric in enumerate(["mean", "est_pop_wan", "max"], 1):
             fig_cross.add_trace(go.Scatter(x=s1["年份"], y=s1[metric], name=focus_province,
-                                           mode="lines+markers", line=dict(color="#E31A1C", width=2),
+                                           mode="lines+markers", line=dict(color="#6366f1", width=2),
                                            showlegend=(idx == 1)), row=1, col=idx)
             fig_cross.add_trace(go.Scatter(x=s2["年份"], y=s2[metric], name=compare_province,
-                                           mode="lines+markers", line=dict(color="#3366CC", width=2),
+                                           mode="lines+markers", line=dict(color="#ec4899", width=2),
                                            showlegend=(idx == 1)), row=1, col=idx)
         fig_cross.update_layout(
             height=330, margin=dict(t=40, b=20, l=20, r=20),
+            template="plotly_white",
             hovermode="x unified", legend=dict(orientation="h", y=1.1),
             title=f"{focus_province} vs {compare_province}",
+            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
+            hoverlabel=dict(bgcolor="white", font_size=12),
         )
         st.plotly_chart(fig_cross, use_container_width=True)
 
@@ -2430,7 +2575,7 @@ with tab_research:
     with st.expander(T("topic6_title")):
         st.markdown(T("topic6_body"))
 
-    st.markdown("---")
+    st.divider()
     st.info(T("research_footer") % WORLDPOP_COLLECTION_URL)
 
 
@@ -2484,7 +2629,7 @@ with tab_methods:
 # ---------------------------------------------------------------------------
 # Footer
 # ---------------------------------------------------------------------------
-st.markdown("---")
+st.divider()
 scope_label = T("scope_short_mainland") if mainland_only else T("scope_short_all")
 st.markdown(
     T("footer",
