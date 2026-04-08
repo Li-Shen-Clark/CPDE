@@ -1,0 +1,420 @@
+{
+  "2002": {
+    "all": {
+      "est_pop_wan": 136615.82,
+      "mean_density": 136.82,
+      "median_density": 6.7,
+      "max_density": 64489.4,
+      "weighted_mean_density": 143.57,
+      "high_density_pixels_1000": 10881,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 131657.7,
+      "mean_density": 133.7,
+      "median_density": 6.58,
+      "max_density": 64489.4,
+      "weighted_mean_density": 140.1,
+      "high_density_pixels_1000": 10391,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2003": {
+    "all": {
+      "est_pop_wan": 137435.13,
+      "mean_density": 137.62,
+      "median_density": 6.58,
+      "max_density": 63667.68,
+      "weighted_mean_density": 144.44,
+      "high_density_pixels_1000": 11222,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 132486.71,
+      "mean_density": 134.53,
+      "median_density": 6.45,
+      "max_density": 63667.68,
+      "weighted_mean_density": 140.98,
+      "high_density_pixels_1000": 10725,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2004": {
+    "all": {
+      "est_pop_wan": 138340.46,
+      "mean_density": 138.53,
+      "median_density": 6.58,
+      "max_density": 65066.7,
+      "weighted_mean_density": 145.39,
+      "high_density_pixels_1000": 11222,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 133297.09,
+      "mean_density": 135.35,
+      "median_density": 6.45,
+      "max_density": 65066.7,
+      "weighted_mean_density": 141.84,
+      "high_density_pixels_1000": 10721,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2005": {
+    "all": {
+      "est_pop_wan": 139174.34,
+      "mean_density": 139.35,
+      "median_density": 6.67,
+      "max_density": 67720.8,
+      "weighted_mean_density": 146.26,
+      "high_density_pixels_1000": 11339,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 134031.08,
+      "mean_density": 136.09,
+      "median_density": 6.55,
+      "max_density": 67720.8,
+      "weighted_mean_density": 142.62,
+      "high_density_pixels_1000": 10831,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2006": {
+    "all": {
+      "est_pop_wan": 139988.11,
+      "mean_density": 140.16,
+      "median_density": 6.72,
+      "max_density": 65636.97,
+      "weighted_mean_density": 147.12,
+      "high_density_pixels_1000": 11461,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 134854.56,
+      "mean_density": 136.92,
+      "median_density": 6.6,
+      "max_density": 65636.97,
+      "weighted_mean_density": 143.5,
+      "high_density_pixels_1000": 10942,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2007": {
+    "all": {
+      "est_pop_wan": 140742.96,
+      "mean_density": 140.91,
+      "median_density": 6.67,
+      "max_density": 66479.31,
+      "weighted_mean_density": 147.91,
+      "high_density_pixels_1000": 11687,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 135543.26,
+      "mean_density": 137.61,
+      "median_density": 6.56,
+      "max_density": 66479.31,
+      "weighted_mean_density": 144.23,
+      "high_density_pixels_1000": 11151,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2008": {
+    "all": {
+      "est_pop_wan": 141537.09,
+      "mean_density": 141.7,
+      "median_density": 6.72,
+      "max_density": 65830.4,
+      "weighted_mean_density": 148.75,
+      "high_density_pixels_1000": 11687,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 136300.02,
+      "mean_density": 138.38,
+      "median_density": 6.61,
+      "max_density": 65830.4,
+      "weighted_mean_density": 145.04,
+      "high_density_pixels_1000": 11155,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2009": {
+    "all": {
+      "est_pop_wan": 142469.86,
+      "mean_density": 142.63,
+      "median_density": 6.61,
+      "max_density": 66342.05,
+      "weighted_mean_density": 149.73,
+      "high_density_pixels_1000": 12141,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 137180.86,
+      "mean_density": 139.26,
+      "median_density": 6.5,
+      "max_density": 66342.05,
+      "weighted_mean_density": 145.97,
+      "high_density_pixels_1000": 11586,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2010": {
+    "all": {
+      "est_pop_wan": 143447.24,
+      "mean_density": 143.59,
+      "median_density": 5.72,
+      "max_density": 66507.3,
+      "weighted_mean_density": 150.75,
+      "high_density_pixels_1000": 12410,
+      "total_valid_pixels": 554404,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 138027.39,
+      "mean_density": 140.11,
+      "median_density": 5.61,
+      "max_density": 66507.3,
+      "weighted_mean_density": 146.87,
+      "high_density_pixels_1000": 11852,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2011": {
+    "all": {
+      "est_pop_wan": 144154.66,
+      "mean_density": 144.31,
+      "median_density": 6.07,
+      "max_density": 67996.49,
+      "weighted_mean_density": 151.5,
+      "high_density_pixels_1000": 12416,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 138777.37,
+      "mean_density": 140.87,
+      "median_density": 5.97,
+      "max_density": 67996.49,
+      "weighted_mean_density": 147.67,
+      "high_density_pixels_1000": 11865,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2012": {
+    "all": {
+      "est_pop_wan": 145010.25,
+      "mean_density": 145.15,
+      "median_density": 6.05,
+      "max_density": 72244.12,
+      "weighted_mean_density": 152.4,
+      "high_density_pixels_1000": 12664,
+      "total_valid_pixels": 554404,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 139546.01,
+      "mean_density": 141.64,
+      "median_density": 5.95,
+      "max_density": 72244.12,
+      "weighted_mean_density": 148.49,
+      "high_density_pixels_1000": 12129,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2013": {
+    "all": {
+      "est_pop_wan": 145888.35,
+      "mean_density": 146.03,
+      "median_density": 6.03,
+      "max_density": 77084.91,
+      "weighted_mean_density": 153.32,
+      "high_density_pixels_1000": 12792,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 140381.99,
+      "mean_density": 142.48,
+      "median_density": 5.94,
+      "max_density": 77084.91,
+      "weighted_mean_density": 149.38,
+      "high_density_pixels_1000": 12249,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2014": {
+    "all": {
+      "est_pop_wan": 146695.69,
+      "mean_density": 146.83,
+      "median_density": 6.45,
+      "max_density": 80562.58,
+      "weighted_mean_density": 154.17,
+      "high_density_pixels_1000": 12670,
+      "total_valid_pixels": 554404,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 141139.74,
+      "mean_density": 143.25,
+      "median_density": 6.35,
+      "max_density": 80562.58,
+      "weighted_mean_density": 150.19,
+      "high_density_pixels_1000": 12120,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2015": {
+    "all": {
+      "est_pop_wan": 147541.79,
+      "mean_density": 147.67,
+      "median_density": 6.69,
+      "max_density": 88711.33,
+      "weighted_mean_density": 155.06,
+      "high_density_pixels_1000": 13018,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 141939.96,
+      "mean_density": 144.05,
+      "median_density": 6.6,
+      "max_density": 88711.33,
+      "weighted_mean_density": 151.04,
+      "high_density_pixels_1000": 12448,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2016": {
+    "all": {
+      "est_pop_wan": 148312.68,
+      "mean_density": 148.44,
+      "median_density": 6.75,
+      "max_density": 92107.15,
+      "weighted_mean_density": 155.87,
+      "high_density_pixels_1000": 13236,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 142697.16,
+      "mean_density": 144.81,
+      "median_density": 6.67,
+      "max_density": 92107.15,
+      "weighted_mean_density": 151.84,
+      "high_density_pixels_1000": 12664,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2017": {
+    "all": {
+      "est_pop_wan": 149056.69,
+      "mean_density": 149.17,
+      "median_density": 6.82,
+      "max_density": 97021.01,
+      "weighted_mean_density": 156.65,
+      "high_density_pixels_1000": 13318,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 143400.41,
+      "mean_density": 145.52,
+      "median_density": 6.73,
+      "max_density": 97021.01,
+      "weighted_mean_density": 152.59,
+      "high_density_pixels_1000": 12745,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2018": {
+    "all": {
+      "est_pop_wan": 149814.16,
+      "mean_density": 149.92,
+      "median_density": 7.03,
+      "max_density": 100120.56,
+      "weighted_mean_density": 157.45,
+      "high_density_pixels_1000": 13429,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 144094.33,
+      "mean_density": 146.22,
+      "median_density": 6.94,
+      "max_density": 100120.56,
+      "weighted_mean_density": 153.33,
+      "high_density_pixels_1000": 12857,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2019": {
+    "all": {
+      "est_pop_wan": 150492.78,
+      "mean_density": 150.59,
+      "median_density": 7.03,
+      "max_density": 110620.62,
+      "weighted_mean_density": 158.16,
+      "high_density_pixels_1000": 13453,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 144733.49,
+      "mean_density": 146.86,
+      "median_density": 6.94,
+      "max_density": 110620.62,
+      "weighted_mean_density": 154.01,
+      "high_density_pixels_1000": 12875,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  },
+  "2020": {
+    "all": {
+      "est_pop_wan": 151097.92,
+      "mean_density": 151.19,
+      "median_density": 7.11,
+      "max_density": 115782.07,
+      "weighted_mean_density": 158.79,
+      "high_density_pixels_1000": 13473,
+      "total_valid_pixels": 554403,
+      "inhabited_pixels": 454779
+    },
+    "mainland": {
+      "est_pop_wan": 145306.17,
+      "mean_density": 147.43,
+      "median_density": 7.03,
+      "max_density": 115782.07,
+      "weighted_mean_density": 154.62,
+      "high_density_pixels_1000": 12894,
+      "total_valid_pixels": 547888,
+      "inhabited_pixels": 448615
+    }
+  }
+}
