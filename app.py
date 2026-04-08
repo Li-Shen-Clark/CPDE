@@ -54,12 +54,17 @@ html, body, [class*="css"] {
 }
 /* Tab styling */
 .stTabs [data-baseweb="tab-list"] {
-    gap: 4px;
+    gap: 2px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
 }
 .stTabs [data-baseweb="tab"] {
-    padding: 8px 20px;
-    border-radius: 8px 8px 0 0;
+    padding: 6px 10px;
+    border-radius: 6px 6px 0 0;
     font-weight: 500;
+    font-size: 0.88rem;
+    white-space: nowrap;
+    flex-shrink: 0;
     transition: all 0.2s ease;
 }
 .stTabs [data-baseweb="tab"][aria-selected="true"] {
