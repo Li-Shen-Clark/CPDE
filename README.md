@@ -43,7 +43,7 @@ Built on WorldPop UN-adjusted 1km population density rasters (downsampled to ~5k
 |-----------|-----------|
 | Web Framework | Streamlit |
 | Raster Processing | rasterio, numpy |
-| Spatial Statistics | rasterstats, geopandas, scipy |
+| Spatial Statistics | scipy (runtime), rasterstats/geopandas (preprocessing only) |
 | Interactive Maps | Folium + streamlit-folium |
 | Charts | Plotly (scatter, heatmap, line, bar) |
 | Animation | PIL pre-rendered frames + Python loop |
@@ -109,7 +109,7 @@ National-level JSON stats ──────────────┤
 git clone https://github.com/Li-Shen-Clark/CPDE.git
 cd CPDE
 
-# Install dependencies
+# Install runtime dependencies
 pip install -r requirements.txt
 
 # Launch the app
@@ -133,7 +133,8 @@ CPDE/
 │   ├── province_stats.json     # Per-province statistics (147KB)
 │   └── national_stats.json     # National summary with dual scope (11KB)
 ├── screenshots/                # App screenshots for README
-├── requirements.txt
+├── requirements.txt            # Runtime dependencies for Streamlit deployment
+├── requirements-preprocess.txt # Extra local dependencies for rebuilding stats
 ├── LICENSE
 └── README.md
 ```
@@ -149,6 +150,7 @@ To rebuild from the original 1km WorldPop rasters:
 3. Run the preprocessing pipeline:
 
 ```bash
+pip install -r requirements-preprocess.txt
 python preprocess.py              # Downsample 1km → 5km
 python preprocess_provinces.py    # Generate province & national stats
 streamlit run app.py              # Launch the explorer
