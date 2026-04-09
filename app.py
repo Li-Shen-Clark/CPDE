@@ -52,52 +52,24 @@ html, body, [class*="css"] {
     padding-bottom: 1rem;
     max-width: 1200px;
 }
-/* Sidebar card-style navigation */
-section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > label {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #94a3b8;
-    font-weight: 600;
-    margin-bottom: 4px;
+/* Sidebar card-style navigation buttons */
+section[data-testid="stSidebar"] button[kind="secondary"] {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    padding: 10px 14px !important;
+    font-weight: 500 !important;
+    font-size: 0.92rem !important;
+    color: #334155 !important;
+    transition: all 0.18s ease !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
+    margin-bottom: 2px !important;
 }
-section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] {
-    gap: 6px;
-    display: flex;
-    flex-direction: column;
-}
-section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label {
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 10px 14px;
-    margin: 0;
-    cursor: pointer;
-    transition: all 0.18s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    font-weight: 500;
-    font-size: 0.92rem;
-}
-section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label:hover {
-    background: #eef2ff;
-    border-color: #a5b4fc;
-    box-shadow: 0 2px 6px rgba(99,102,241,0.1);
-}
-section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label[data-checked="true"] {
-    background: linear-gradient(135deg, #6366f1, #7c3aed);
-    color: white !important;
-    border-color: transparent;
-    box-shadow: 0 3px 10px rgba(99,102,241,0.25);
-    font-weight: 600;
-}
-section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label[data-checked="true"] p,
-section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label[data-checked="true"] span,
-section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label[data-checked="true"] div {
-    color: white !important;
-}
-/* Hide radio circle */
-section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label > div:first-child {
-    display: none;
+section[data-testid="stSidebar"] button[kind="secondary"]:hover {
+    background: #eef2ff !important;
+    border-color: #a5b4fc !important;
+    box-shadow: 0 2px 6px rgba(99,102,241,0.12) !important;
+    color: #4f46e5 !important;
 }
 /* KPI metric cards */
 [data-testid="stMetric"] {
@@ -1004,13 +976,13 @@ Overlaying population density rasters with other spatial datasets can reveal co-
     "methods_citation_zh": "建议引用",
     "methods_citation_en": "Suggested Citation",
     # Author info
-    "author_info_zh": "**开发者**: Li Shen | Spatial Economics & Data Science",
-    "author_info_en": "**Developer**: Li Shen | Spatial Economics & Data Science",
+    "author_info_zh": "**Li Shen** · Spatial Economics & Data Science",
+    "author_info_en": "**Li Shen** · Spatial Economics & Data Science",
     # Footer
     "footer_zh": (
         "<small>"
         "🌏 中国人口密度时空探索器 ({scope}) | "
-        "开发者: Li Shen | Spatial Economics &amp; Data Science | "
+        "Li Shen | Spatial Economics &amp; Data Science | "
         "数据: WorldPop UN-adjusted 1km → 5km降采样 | "
         "人口估算: 纬度修正像元面积 | 仅供趋势参考<br>"
         "官方来源: <a href='{col}' target='_blank'>WorldPop Global1 2000-2020</a> | "
@@ -1023,7 +995,7 @@ Overlaying population density rasters with other spatial datasets can reveal co-
     "footer_en": (
         "<small>"
         "🌏 China Population Density Spatiotemporal Explorer ({scope}) | "
-        "Developer: Li Shen | Spatial Economics &amp; Data Science | "
+        "Li Shen | Spatial Economics &amp; Data Science | "
         "Data: WorldPop UN-adjusted 1km → 5km downsampled | "
         "Pop. est.: lat-corrected pixel area | For trend reference only<br>"
         "Official source: <a href='{col}' target='_blank'>WorldPop Global1 2000-2020</a> | "
@@ -1562,7 +1534,7 @@ drill_province = st.sidebar.selectbox(
 
 st.sidebar.divider()
 
-# Page navigation in sidebar
+# Page navigation in sidebar — card-style buttons
 _nav_labels = [
     T("tab_summary"),
     T("tab_national"),
@@ -1571,12 +1543,32 @@ _nav_labels = [
     T("tab_research"),
     T("tab_methods"),
 ]
-_page = st.sidebar.radio(
-    "📂 " + ("导航" if lang == "zh" else "Navigation"),
-    _nav_labels,
-    index=0,
-    key="nav_page",
+if "nav_page" not in st.session_state:
+    st.session_state["nav_page"] = _nav_labels[0]
+# Re-sync if language changed and stored label no longer matches
+if st.session_state["nav_page"] not in _nav_labels:
+    st.session_state["nav_page"] = _nav_labels[0]
+
+st.sidebar.markdown(
+    f"<p style='font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;"
+    f"color:#94a3b8;font-weight:600;margin:0 0 6px 0;'>"
+    f"{'导航' if lang == 'zh' else 'NAVIGATION'}</p>",
+    unsafe_allow_html=True,
 )
+for _nl in _nav_labels:
+    _is_active = (st.session_state["nav_page"] == _nl)
+    if _is_active:
+        st.sidebar.markdown(
+            f"<div style='background:linear-gradient(135deg,#6366f1,#7c3aed);color:white;"
+            f"padding:10px 14px;border-radius:10px;font-weight:600;font-size:0.92rem;"
+            f"margin-bottom:6px;box-shadow:0 3px 10px rgba(99,102,241,0.25);'>{_nl}</div>",
+            unsafe_allow_html=True,
+        )
+    else:
+        if st.sidebar.button(_nl, key=f"nav_{_nl}", use_container_width=True):
+            st.session_state["nav_page"] = _nl
+            st.rerun()
+_page = st.session_state["nav_page"]
 
 st.sidebar.divider()
 st.sidebar.markdown(T("author_info"))
@@ -2666,9 +2658,9 @@ scope_label = T("scope_short_mainland") if mainland_only else T("scope_short_all
 _fc1, _fc2 = st.columns([1, 1])
 with _fc1:
     if lang == "zh":
-        st.markdown(f"<span style='font-size:0.85rem;color:#64748b;'>🌏 中国人口密度时空探索器 ({scope_label}) &nbsp;|&nbsp; 开发者: Li Shen</span>", unsafe_allow_html=True)
+        st.markdown(f"<span style='font-size:0.85rem;color:#64748b;'>🌏 中国人口密度时空探索器 ({scope_label}) &nbsp;|&nbsp; Li Shen</span>", unsafe_allow_html=True)
     else:
-        st.markdown(f"<span style='font-size:0.85rem;color:#64748b;'>🌏 China Population Density Explorer ({scope_label}) &nbsp;|&nbsp; Developer: Li Shen</span>", unsafe_allow_html=True)
+        st.markdown(f"<span style='font-size:0.85rem;color:#64748b;'>🌏 China Population Density Explorer ({scope_label}) &nbsp;|&nbsp; Li Shen</span>", unsafe_allow_html=True)
 with _fc2:
     st.markdown(
         f"<span style='font-size:0.85rem;color:#64748b;'>"
