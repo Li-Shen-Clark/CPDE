@@ -2435,7 +2435,7 @@ if _page == _nav_labels[3]:
                       + ("值" if lang == "zh" else "Value")
                       + ": %{z}<extra></extra>",
     ))
-    fig_hm.update_layout(**PLOTLY_LAYOUT,
+    fig_hm.update_layout(**{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
                          height=max(480, len(prov_names_ordered) * 20),
                          margin=dict(t=20, b=20, l=10, r=10),
                          xaxis=dict(dtick=1), yaxis=dict(autorange="reversed"))
