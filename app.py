@@ -52,14 +52,52 @@ html, body, [class*="css"] {
     padding-bottom: 1rem;
     max-width: 1200px;
 }
-/* Sidebar nav radio styling */
-section[data-testid="stSidebar"] [data-testid="stRadio"] > div[role="radiogroup"] > label {
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: background 0.15s ease;
+/* Sidebar card-style navigation */
+section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
-section[data-testid="stSidebar"] [data-testid="stRadio"] > div[role="radiogroup"] > label:hover {
-    background: #e2e8f0;
+section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] {
+    gap: 6px;
+    display: flex;
+    flex-direction: column;
+}
+section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    font-weight: 500;
+    font-size: 0.92rem;
+}
+section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label:hover {
+    background: #eef2ff;
+    border-color: #a5b4fc;
+    box-shadow: 0 2px 6px rgba(99,102,241,0.1);
+}
+section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label[data-checked="true"] {
+    background: linear-gradient(135deg, #6366f1, #7c3aed);
+    color: white !important;
+    border-color: transparent;
+    box-shadow: 0 3px 10px rgba(99,102,241,0.25);
+    font-weight: 600;
+}
+section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label[data-checked="true"] p,
+section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label[data-checked="true"] span,
+section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label[data-checked="true"] div {
+    color: white !important;
+}
+/* Hide radio circle */
+section[data-testid="stSidebar"] [data-testid="stRadio"][data-st-key="nav_page"] > div[role="radiogroup"] > label > div:first-child {
+    display: none;
 }
 /* KPI metric cards */
 [data-testid="stMetric"] {
