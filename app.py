@@ -52,24 +52,14 @@ html, body, [class*="css"] {
     padding-bottom: 1rem;
     max-width: 1200px;
 }
-/* Tab styling */
-.stTabs [data-baseweb="tab-list"] {
-    gap: 2px;
-    overflow-x: auto;
-    flex-wrap: nowrap;
+/* Sidebar nav radio styling */
+section[data-testid="stSidebar"] [data-testid="stRadio"] > div[role="radiogroup"] > label {
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.15s ease;
 }
-.stTabs [data-baseweb="tab"] {
-    padding: 6px 10px;
-    border-radius: 6px 6px 0 0;
-    font-weight: 500;
-    font-size: 0.88rem;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: all 0.2s ease;
-}
-.stTabs [data-baseweb="tab"][aria-selected="true"] {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: white !important;
+section[data-testid="stSidebar"] [data-testid="stRadio"] > div[role="radiogroup"] > label:hover {
+    background: #e2e8f0;
 }
 /* KPI metric cards */
 [data-testid="stMetric"] {
@@ -1533,6 +1523,24 @@ drill_province = st.sidebar.selectbox(
 )
 
 st.sidebar.divider()
+
+# Page navigation in sidebar
+_nav_labels = [
+    T("tab_summary"),
+    T("tab_national"),
+    T("tab_spatial"),
+    T("tab_hetero"),
+    T("tab_research"),
+    T("tab_methods"),
+]
+_page = st.sidebar.radio(
+    "📂 " + ("导航" if lang == "zh" else "Navigation"),
+    _nav_labels,
+    index=0,
+    key="nav_page",
+)
+
+st.sidebar.divider()
 st.sidebar.markdown(T("author_info"))
 st.sidebar.markdown("[GitHub](https://github.com/Li-Shen-Clark/CPDE) · Spatial Economics & Data Science")
 scope_label_readable = T("scope_mainland") if mainland_only else T("scope_all")
@@ -1563,20 +1571,13 @@ rank_df = compute_rank_history(province_stats, exclude_names=frozenset(exclude_f
 df_growth = build_growth_df(frozenset(exclude_for_rank))
 focus_default_idx = available_names.index(drill_province) if drill_province in available_names else 0
 
-tab_summary, tab_national, tab_spatial, tab_hetero, tab_research, tab_methods = st.tabs([
-    T("tab_summary"),
-    T("tab_national"),
-    T("tab_spatial"),
-    T("tab_hetero"),
-    T("tab_research"),
-    T("tab_methods"),
-])
+# Navigation is now handled by sidebar radio (_page)
 
 
 # ===================================================================
 # TAB 1: Summary — Spatial Economics Narrative
 # ===================================================================
-with tab_summary:
+if _page == _nav_labels[0]:
     st.header(T("summary_header"))
     st.caption(T("summary_caption", y0=YEARS[0], y1=YEARS[-1], scope=scope_label_readable))
 
@@ -1766,7 +1767,7 @@ with tab_summary:
 # ===================================================================
 # TAB 2: National evolution — Agglomeration Dynamics
 # ===================================================================
-with tab_national:
+if _page == _nav_labels[1]:
     st.header(T("national_header"))
     st.caption(T("national_caption", y0=YEARS[0], y1=YEARS[-1]))
 
@@ -1905,7 +1906,7 @@ with tab_national:
 # ===================================================================
 # TAB 3: Spatial patterns — Core-Periphery & Spatial Reallocation
 # ===================================================================
-with tab_spatial:
+if _page == _nav_labels[2]:
     st.header(T("spatial_header"))
     spatial_single, spatial_compare, spatial_centroid = st.tabs([
         T("spatial_sub_single"),
@@ -2190,7 +2191,7 @@ with tab_spatial:
 # ===================================================================
 # TAB 4: Provincial heterogeneity — Regional Convergence
 # ===================================================================
-with tab_hetero:
+if _page == _nav_labels[3]:
     st.header(T("hetero_header"))
     st.caption(T("hetero_caption"))
 
@@ -2544,7 +2545,7 @@ with tab_hetero:
 # ===================================================================
 # TAB 5: Research topics — Trade, Spatial, Market Integration focus
 # ===================================================================
-with tab_research:
+if _page == _nav_labels[4]:
     st.header(T("research_header"))
     st.caption(T("research_caption"))
 
@@ -2575,7 +2576,7 @@ with tab_research:
 # ===================================================================
 # TAB 6: Data and methods
 # ===================================================================
-with tab_methods:
+if _page == _nav_labels[5]:
     st.header(T("methods_header"))
     st.caption(T("methods_caption"))
 
