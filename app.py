@@ -2096,7 +2096,7 @@ if _page == _nav_labels[2]:
                 ))
                 fig_prov_diff.add_vline(x=0, line_color="grey")
                 fig_prov_diff.update_layout(
-                    **PLOTLY_LAYOUT,
+                    **{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
                     title=T("prov_diff_title"),
                     height=max(480, len(prov_diff_list) * 22),
                     margin=dict(t=40, b=10, l=10, r=50),
