@@ -170,6 +170,18 @@ REGION_MAP_EN = {
     "西部": "West",
     "东北": "Northeast",
 }
+PROVINCE_NAME_EN = {
+    "北京市": "Beijing", "天津市": "Tianjin", "河北省": "Hebei", "山西省": "Shanxi",
+    "内蒙古自治区": "Inner Mongolia", "辽宁省": "Liaoning", "吉林省": "Jilin",
+    "黑龙江省": "Heilongjiang", "上海市": "Shanghai", "江苏省": "Jiangsu",
+    "浙江省": "Zhejiang", "安徽省": "Anhui", "福建省": "Fujian", "江西省": "Jiangxi",
+    "山东省": "Shandong", "河南省": "Henan", "湖北省": "Hubei", "湖南省": "Hunan",
+    "广东省": "Guangdong", "广西壮族自治区": "Guangxi", "海南省": "Hainan",
+    "重庆市": "Chongqing", "四川省": "Sichuan", "贵州省": "Guizhou", "云南省": "Yunnan",
+    "西藏自治区": "Tibet", "陕西省": "Shaanxi", "甘肃省": "Gansu", "青海省": "Qinghai",
+    "宁夏回族自治区": "Ningxia", "新疆维吾尔自治区": "Xinjiang",
+    "香港特别行政区": "Hong Kong", "澳门特别行政区": "Macao", "台湾省": "Taiwan",
+}
 REGION_COLORS = {"东部": "#1e3a5f", "中部": "#c0392b", "西部": "#2d6a4f", "东北": "#64748b"}
 
 # Modern Plotly layout defaults
@@ -1043,6 +1055,13 @@ def region_name(zh_name):
     return zh_name
 
 
+def prov_name(zh_name):
+    """Return province name in current language."""
+    if lang == "en":
+        return PROVINCE_NAME_EN.get(zh_name, zh_name)
+    return zh_name
+
+
 # ---------------------------------------------------------------------------
 # Cached data loaders
 # ---------------------------------------------------------------------------
@@ -1578,11 +1597,15 @@ else:
 available_names = filter_names(ALL_PROVINCE_NAMES, mainland_only)
 if _page == _page_with_drilldown:
     st.sidebar.markdown(T("province_drilldown"))
-    drill_province = st.sidebar.selectbox(
+    _display_names = [prov_name(n) for n in available_names]
+    _drill_options = [T("all_national")] + _display_names
+    _drill_idx = st.sidebar.selectbox(
         T("select_province"),
-        [T("all_national")] + available_names,
+        range(len(_drill_options)),
+        format_func=lambda i: _drill_options[i],
         index=0,
     )
+    drill_province = T("all_national") if _drill_idx == 0 else available_names[_drill_idx - 1]
 else:
     drill_province = T("all_national")
 
@@ -1780,7 +1803,7 @@ if _page == _nav_labels[0]:
                 x=sub["ln初始密度"], y=sub["年均增长率%"],
                 mode="markers+text", name=region_name(region),
                 marker=dict(size=10, color=REGION_COLORS.get(region, "#999")),
-                text=sub["省份"].str.replace("省|市|自治区|壮族|维吾尔|回族", "", regex=True),
+                text=sub["省份"].apply(lambda x: PROVINCE_NAME_EN.get(x, x) if lang == "en" else x.replace("省","").replace("市","").replace("自治区","").replace("壮族","").replace("维吾尔","").replace("回族","")),
                 textposition="top center", textfont_size=8,
             ))
         # OLS line
@@ -1808,18 +1831,18 @@ if _page == _nav_labels[0]:
         for _, row in movers.iterrows():
             region_tag = region_name(REGION_MAP.get(row["省份"], ""))
             if lang == "zh":
-                st.markdown(f"- **{row['省份']}** ({region_tag}) — +{row['绝对增长']:.0f} 人/km²，增长率 {row['增长率%']:+.1f}%")
+                st.markdown(f"- **{prov_name(row['省份'])}** ({region_tag}) — +{row['绝对增长']:.0f} 人/km²，增长率 {row['增长率%']:+.1f}%")
             else:
-                st.markdown(f"- **{row['省份']}** ({region_tag}) — +{row['绝对增长']:.0f} ppl/km², growth {row['增长率%']:+.1f}%")
+                st.markdown(f"- **{prov_name(row['省份'])}** ({region_tag}) — +{row['绝对增长']:.0f} ppl/km², growth {row['增长率%']:+.1f}%")
         st.divider()
         st.markdown(T("top_losers"))
         losers = df_growth.nsmallest(5, "绝对增长")
         for _, row in losers.iterrows():
             region_tag = region_name(REGION_MAP.get(row["省份"], ""))
             if lang == "zh":
-                st.markdown(f"- **{row['省份']}** ({region_tag}) — {row['绝对增长']:+.0f} 人/km²，增长率 {row['增长率%']:+.1f}%")
+                st.markdown(f"- **{prov_name(row['省份'])}** ({region_tag}) — {row['绝对增长']:+.0f} 人/km²，增长率 {row['增长率%']:+.1f}%")
             else:
-                st.markdown(f"- **{row['省份']}** ({region_tag}) — {row['绝对增长']:+.0f} ppl/km², growth {row['增长率%']:+.1f}%")
+                st.markdown(f"- **{prov_name(row['省份'])}** ({region_tag}) — {row['绝对增长']:+.0f} ppl/km², growth {row['增长率%']:+.1f}%")
 
 
 # ===================================================================
@@ -1871,7 +1894,7 @@ if _page == _nav_labels[1]:
                               key=lambda x: x["mean"], reverse=True)
             st.markdown(T("anim_top5", yr=yr))
             for i, p in enumerate(yr_provs[:5], 1):
-                st.markdown(f"{i}. **{p['name']}** — {p['mean']:.0f} {'人/km²' if lang == 'zh' else 'ppl/km²'}")
+                st.markdown(f"{i}. **{prov_name(p['name'])}** — {p['mean']:.0f} {'人/km²' if lang == 'zh' else 'ppl/km²'}")
 
     if play_btn:
         for yr in YEARS:
@@ -2010,7 +2033,7 @@ if _page == _nav_labels[2]:
             year_provs = sorted(filter_provs(province_stats[str(year_sp)], mainland_only),
                                 key=lambda x: x["mean"], reverse=True)
             fig_rank = go.Figure(go.Bar(
-                y=[p["name"] for p in year_provs[:15]][::-1],
+                y=[prov_name(p["name"]) for p in year_provs[:15]][::-1],
                 x=[p["mean"] for p in year_provs[:15]][::-1],
                 orientation="h",
                 marker=dict(color=[p["mean"] for p in year_provs[:15]][::-1], colorscale="YlOrBr"),
@@ -2087,7 +2110,7 @@ if _page == _nav_labels[2]:
 
             with col_bar:
                 fig_prov_diff = go.Figure(go.Bar(
-                    y=[p["省份"] for p in prov_diff_list],
+                    y=[prov_name(p["省份"]) for p in prov_diff_list],
                     x=[p["密度变化"] for p in prov_diff_list],
                     orientation="h",
                     marker_color=["#c0392b" if p["密度变化"] > 0 else "#1e3a5f" for p in prov_diff_list],
@@ -2256,12 +2279,14 @@ if _page == _nav_labels[3]:
     col_focus, col_peer, col_year = st.columns([2, 2, 1.3])
     with col_focus:
         focus_province = st.selectbox(T("focus_province"), available_names,
-                                      index=focus_default_idx, key="hetero_focus")
+                                      index=focus_default_idx, key="hetero_focus",
+                                      format_func=prov_name)
     with col_peer:
         peer_candidates = [n for n in available_names if n != focus_province]
         peer_default = peer_candidates.index("江苏省") if "江苏省" in peer_candidates else 0
         compare_province = st.selectbox(T("compare_province"), peer_candidates,
-                                        index=peer_default, key="hetero_peer")
+                                        index=peer_default, key="hetero_peer",
+                                        format_func=prov_name)
     with col_year:
         year_dr = st.slider(T("focus_year"), YEARS[0], YEARS[-1], 2010, 1, key="hetero_year")
 
@@ -2279,7 +2304,7 @@ if _page == _nav_labels[3]:
         label_set.update(scatter_df.nlargest(3, "增长率%")["省份"])
         label_set.update(scatter_df.nsmallest(3, "增长率%")["省份"])
         label_set.add(focus_province)
-        scatter_df["标签"] = scatter_df["省份"].str.replace("省|市|自治区|壮族|维吾尔|回族", "", regex=True).where(scatter_df["省份"].isin(label_set), "")
+        scatter_df["标签"] = scatter_df["省份"].apply(lambda x: PROVINCE_NAME_EN.get(x, x) if lang == "en" else x.replace("省","").replace("市","").replace("自治区","").replace("壮族","").replace("维吾尔","").replace("回族","")).where(scatter_df["省份"].isin(label_set), "")
 
         fig_traj = go.Figure()
         for region in ["东部", "中部", "西部", "东北"]:
@@ -2399,6 +2424,7 @@ if _page == _nav_labels[3]:
     provs_2020 = sorted(filter_provs(province_stats["2020"], mainland_only),
                         key=lambda x: x["mean"], reverse=True)
     prov_names_ordered = [p["name"] for p in provs_2020]
+    prov_names_display = [prov_name(n) for n in prov_names_ordered]
     z_matrix = []
     for pname in prov_names_ordered:
         row = []
@@ -2426,7 +2452,7 @@ if _page == _nav_labels[3]:
         colorscale, zmin, zmax, bar_title = "RdBu_r", -zmax, zmax, T("heatmap_bar_density")
 
     fig_hm = go.Figure(go.Heatmap(
-        z=z_matrix, x=YEARS, y=prov_names_ordered, colorscale=colorscale, zmin=zmin, zmax=zmax,
+        z=z_matrix, x=YEARS, y=prov_names_display, colorscale=colorscale, zmin=zmin, zmax=zmax,
         colorbar_title=bar_title,
         hovertemplate=("省份" if lang == "zh" else "Province")
                       + ": %{y}<br>"
@@ -2485,7 +2511,7 @@ if _page == _nav_labels[3]:
             st.markdown(T("sigma_div_text"))
 
     st.divider()
-    st.subheader(T("focus_profile", prov=focus_province))
+    st.subheader(T("focus_profile", prov=prov_name(focus_province)))
 
     prov_series = df_prov[df_prov["name"] == focus_province].sort_values("年份")
     prov_current = prov_series[prov_series["年份"] == year_dr].iloc[0]
@@ -2523,7 +2549,7 @@ if _page == _nav_labels[3]:
         fig_detail.add_vline(x=year_dr, line_dash="dash", line_color="grey")
         fig_detail.update_layout(
             **PLOTLY_LAYOUT,
-            title=T("province_trend_title", prov=focus_province),
+            title=T("province_trend_title", prov=prov_name(focus_province)),
             height=380,
             hovermode="x unified", legend=dict(orientation="h", y=1.1),
         )
@@ -2542,7 +2568,7 @@ if _page == _nav_labels[3]:
         ))
         fig_bump.update_layout(
             **PLOTLY_LAYOUT,
-            title=T("rank_chart_title", prov=focus_province),
+            title=T("rank_chart_title", prov=prov_name(focus_province)),
             height=380,
             yaxis=dict(autorange="reversed", dtick=1, title=T("rank_yaxis")),
         )
@@ -2585,17 +2611,17 @@ if _page == _nav_labels[3]:
         subplot_titles = T("compare_subplots")
         fig_cross = make_subplots(rows=1, cols=3, subplot_titles=subplot_titles)
         for idx, metric in enumerate(["mean", "est_pop_wan", "max"], 1):
-            fig_cross.add_trace(go.Scatter(x=s1["年份"], y=s1[metric], name=focus_province,
+            fig_cross.add_trace(go.Scatter(x=s1["年份"], y=s1[metric], name=prov_name(focus_province),
                                            mode="lines+markers", line=dict(color="#1e3a5f", width=2),
                                            showlegend=(idx == 1)), row=1, col=idx)
-            fig_cross.add_trace(go.Scatter(x=s2["年份"], y=s2[metric], name=compare_province,
+            fig_cross.add_trace(go.Scatter(x=s2["年份"], y=s2[metric], name=prov_name(compare_province),
                                            mode="lines+markers", line=dict(color="#c0392b", width=2),
                                            showlegend=(idx == 1)), row=1, col=idx)
         fig_cross.update_layout(
             **PLOTLY_LAYOUT,
             height=380,
             hovermode="x unified", legend=dict(orientation="h", y=1.1),
-            title=f"{focus_province} vs {compare_province}",
+            title=f"{prov_name(focus_province)} vs {prov_name(compare_province)}",
         )
         st.plotly_chart(fig_cross, use_container_width=True)
 
