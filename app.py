@@ -1613,6 +1613,47 @@ rank_df = compute_rank_history(province_stats, exclude_names=frozenset(exclude_f
 df_growth = build_growth_df(frozenset(exclude_for_rank))
 focus_default_idx = available_names.index(drill_province) if drill_province in available_names else 0
 
+# Pre-compute economics indicators used across multiple pages
+nat_start = df_national[df_national["年份"] == YEARS[0]].iloc[0]
+nat_end = df_national[df_national["年份"] == YEARS[-1]].iloc[0]
+df_gini = compute_spatial_gini_series(raster_cube, area_grid)
+df_conc10 = compute_concentration_series(raster_cube, area_grid, top_pct=10)
+df_centroid = compute_population_centroid(raster_cube, area_grid, cube_transform)
+beta_df, beta_slope, beta_r2, beta_p = compute_beta_convergence(province_stats, frozenset(exclude_for_rank))
+
+
+# ===================================================================
+# TAB 1: Summary — Spatial Economics Narrative
+# ===================================================================
+# Derived indicators used across Summary + Spatial/Centroid pages
+gini_start = df_gini[df_gini["年份"] == YEARS[0]]["空间基尼系数"].values[0]
+gini_end = df_gini[df_gini["年份"] == YEARS[-1]]["空间基尼系数"].values[0]
+conc_start = df_conc10[df_conc10["年份"] == YEARS[0]][f"Top10%人口占比"].values[0]
+conc_end = df_conc10[df_conc10["年份"] == YEARS[-1]][f"Top10%人口占比"].values[0]
+centroid_start = df_centroid[df_centroid["年份"] == YEARS[0]].iloc[0]
+centroid_end = df_centroid[df_centroid["年份"] == YEARS[-1]].iloc[0]
+
+dlat_km = (centroid_end["重心纬度"] - centroid_start["重心纬度"]) * 111.32
+dlon_km = (centroid_end["重心经度"] - centroid_start["重心经度"]) * 111.32 * np.cos(np.radians(centroid_end["重心纬度"]))
+shift_km = np.sqrt(dlat_km ** 2 + dlon_km ** 2)
+
+if dlat_km > 0 and dlon_km > 0:
+    shift_dir_zh = "东北"
+    shift_dir_en = "Northeast"
+elif dlat_km > 0 and dlon_km <= 0:
+    shift_dir_zh = "西北"
+    shift_dir_en = "Northwest"
+elif dlat_km <= 0 and dlon_km > 0:
+    shift_dir_zh = "东南"
+    shift_dir_en = "Southeast"
+else:
+    shift_dir_zh = "西南"
+    shift_dir_en = "Southwest"
+shift_dir = shift_dir_zh if lang == "zh" else shift_dir_en
+
+convergence_word = T("convergence") if beta_slope < 0 else T("divergence")
+convergence_sig = T("sig") if beta_p < 0.05 else T("insig")
+
 
 # ===================================================================
 # TAB 1: Summary — Spatial Economics Narrative
@@ -1620,43 +1661,6 @@ focus_default_idx = available_names.index(drill_province) if drill_province in a
 if _page == _nav_labels[0]:
     st.header(T("summary_header"))
     st.caption(T("summary_caption", y0=YEARS[0], y1=YEARS[-1], scope=scope_label_readable))
-
-    # --- Compute economics indicators ---
-    nat_start = df_national[df_national["年份"] == YEARS[0]].iloc[0]
-    nat_end = df_national[df_national["年份"] == YEARS[-1]].iloc[0]
-    df_gini = compute_spatial_gini_series(raster_cube, area_grid)
-    df_conc10 = compute_concentration_series(raster_cube, area_grid, top_pct=10)
-    df_centroid = compute_population_centroid(raster_cube, area_grid, cube_transform)
-    beta_df, beta_slope, beta_r2, beta_p = compute_beta_convergence(province_stats, frozenset(exclude_for_rank))
-
-    gini_start = df_gini[df_gini["年份"] == YEARS[0]]["空间基尼系数"].values[0]
-    gini_end = df_gini[df_gini["年份"] == YEARS[-1]]["空间基尼系数"].values[0]
-    conc_start = df_conc10[df_conc10["年份"] == YEARS[0]][f"Top10%人口占比"].values[0]
-    conc_end = df_conc10[df_conc10["年份"] == YEARS[-1]][f"Top10%人口占比"].values[0]
-    centroid_start = df_centroid[df_centroid["年份"] == YEARS[0]].iloc[0]
-    centroid_end = df_centroid[df_centroid["年份"] == YEARS[-1]].iloc[0]
-
-    # approx distance shift in km
-    dlat_km = (centroid_end["重心纬度"] - centroid_start["重心纬度"]) * 111.32
-    dlon_km = (centroid_end["重心经度"] - centroid_start["重心经度"]) * 111.32 * np.cos(np.radians(centroid_end["重心纬度"]))
-    shift_km = np.sqrt(dlat_km ** 2 + dlon_km ** 2)
-
-    if dlat_km > 0 and dlon_km > 0:
-        shift_dir_zh = "东北"
-        shift_dir_en = "Northeast"
-    elif dlat_km > 0 and dlon_km <= 0:
-        shift_dir_zh = "西北"
-        shift_dir_en = "Northwest"
-    elif dlat_km <= 0 and dlon_km > 0:
-        shift_dir_zh = "东南"
-        shift_dir_en = "Southeast"
-    else:
-        shift_dir_zh = "西南"
-        shift_dir_en = "Southwest"
-    shift_dir = shift_dir_zh if lang == "zh" else shift_dir_en
-
-    convergence_word = T("convergence") if beta_slope < 0 else T("divergence")
-    convergence_sig = T("sig") if beta_p < 0.05 else T("insig")
 
     # --- Key findings: spatial economics framing ---
     rise_fall_gini = T("finding1_rise") if gini_end > gini_start else T("finding1_fall")
