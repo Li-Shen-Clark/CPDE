@@ -269,11 +269,11 @@ _LANG_STRINGS = {
     "tab_methods_zh": "数据与方法",
     "tab_methods_en": "Data & Methods",
     # Page title
-    "page_title_zh": "中国人口密度时空探索器",
-    "page_title_en": "China Population Density Explorer",
+    "page_title_zh": "人口集聚与空间再配置：中国 2002-2020",
+    "page_title_en": "Population Agglomeration and Spatial Reallocation in China",
     # ---- Tab 1: Summary ----
-    "summary_header_zh": "研究摘要：空间集聚、市场潜力与区域收敛",
-    "summary_header_en": "Summary: Spatial Agglomeration, Market Potential & Regional Convergence",
+    "summary_header_zh": "研究摘要：人口集聚与空间再配置",
+    "summary_header_en": "Summary: Population Agglomeration and Spatial Reallocation",
     "summary_caption_zh": "从空间经济学视角解读 {y0}-{y1} 年人口密度栅格数据。当前范围：{scope}。",
     "summary_caption_en": "Interpreting population density raster data {y0}-{y1} from a spatial economics perspective. Current scope: {scope}.",
     # shift directions
@@ -295,8 +295,8 @@ _LANG_STRINGS = {
     # findings
     "finding1_rise_zh": "升至", "finding1_rise_en": "rose to",
     "finding1_fall_zh": "降至", "finding1_fall_en": "fell to",
-    "finding1_agg_zh": "表明集聚力（agglomeration forces）在研究期内持续主导",
-    "finding1_agg_en": "indicating agglomeration forces dominated throughout the study period",
+    "finding1_agg_zh": "表明空间集聚在研究期内持续增强",
+    "finding1_agg_en": "suggesting increased spatial agglomeration over the study period",
     "finding1_disp_zh": "表明分散力有所增强",
     "finding1_disp_en": "indicating dispersion forces have strengthened",
     # KPI labels
@@ -315,8 +315,8 @@ _LANG_STRINGS = {
     "divergence_label_zh": "发散",
     "divergence_label_en": "Diverging",
     # Summary charts
-    "summary_chart_title_zh": "集聚力在 19 年间持续主导空间格局",
-    "summary_chart_title_en": "Agglomeration Forces Dominated Spatial Patterns Over 19 Years",
+    "summary_chart_title_zh": "空间集聚指标在 19 年间持续上升",
+    "summary_chart_title_en": "Spatial Concentration Indicators Trended Upward Over 19 Years",
     "gini_series_label_zh": "空间基尼系数",
     "gini_series_label_en": "Spatial Gini Coeff.",
     "conc_series_label_zh": "Top10%人口占比(%)",
@@ -994,13 +994,13 @@ Overlaying population density rasters with other spatial datasets can reveal co-
     "methods_citation_zh": "建议引用",
     "methods_citation_en": "Suggested Citation",
     # Author info
-    "author_info_zh": "**Li Shen** · Spatial Economics & Data Science",
-    "author_info_en": "**Li Shen** · Spatial Economics & Data Science",
+    "author_info_zh": "**Li Shen** · Department of Economics, Clark University",
+    "author_info_en": "**Li Shen** · Department of Economics, Clark University",
     # Footer
     "footer_zh": (
         "<small>"
         "中国人口密度时空探索器 ({scope}) | "
-        "Li Shen | Spatial Economics &amp; Data Science | "
+        "Li Shen | Dept. of Economics, Clark University |"
         "数据: WorldPop UN-adjusted 1km → 5km降采样 | "
         "人口估算: 纬度修正像元面积 | 仅供趋势参考<br>"
         "官方来源: <a href='{col}' target='_blank'>WorldPop Global1 2000-2020</a> | "
@@ -1013,7 +1013,7 @@ Overlaying population density rasters with other spatial datasets can reveal co-
     "footer_en": (
         "<small>"
         "China Population Density Spatiotemporal Explorer ({scope}) | "
-        "Li Shen | Spatial Economics &amp; Data Science | "
+        "Li Shen | Dept. of Economics, Clark University |"
         "Data: WorldPop UN-adjusted 1km → 5km downsampled | "
         "Pop. est.: lat-corrected pixel area | For trend reference only<br>"
         "Official source: <a href='{col}' target='_blank'>WorldPop Global1 2000-2020</a> | "
@@ -1699,48 +1699,46 @@ if _page == _nav_labels[0]:
     # Thesis statement
     if lang == "zh":
         st.markdown(
-            f"> **核心发现**：{YEARS[0]}-{YEARS[-1]} 年间，中国人口在空间上持续向少数高密度区域集聚，"
+            f"> **核心发现**：{YEARS[0]}-{YEARS[-1]} 年间，多项指标显示中国人口的空间集聚程度持续上升，"
             f"加权平均密度上升 {(nat_end['加权平均密度'] - nat_start['加权平均密度'])/nat_start['加权平均密度']*100:.0f}%，"
             f"人口重心向{shift_dir}偏移 {shift_km:.0f} km。"
         )
     else:
         st.markdown(
-            f"> **Key finding**: From {YEARS[0]} to {YEARS[-1]}, China's population continued concentrating in a few high-density areas. "
+            f"> **Key finding**: Between {YEARS[0]} and {YEARS[-1]}, several indicators point to increased spatial concentration of China's population. "
             f"Weighted average density rose {(nat_end['加权平均密度'] - nat_start['加权平均密度'])/nat_start['加权平均密度']*100:.0f}%, "
             f"and the population centroid shifted {shift_km:.0f} km toward the {shift_dir}."
         )
 
     if lang == "zh":
         findings = [
-            f"**发生了什么** — 空间基尼系数由 {gini_start:.4f} {rise_fall_gini} {gini_end:.4f}，"
+            f"**空间集聚** — 空间基尼系数由 {gini_start:.4f} {rise_fall_gini} {gini_end:.4f}，"
             f"Top 10% 最密像元的人口份额由 {conc_start:.1f}% {rise_fall_conc} {conc_end:.1f}%，"
             f"{agg_text}。",
 
-            f"**规模效应** — 加权平均密度由 {nat_start['加权平均密度']:.1f} 增至 "
-            f"{nat_end['加权平均密度']:.1f} 人/km²，高密度像元由 {int(nat_start['高密度像素数']):,} 增至 {int(nat_end['高密度像素数']):,}，"
-            f"核心区在持续扩张。",
+            f"**核心扩展** — 加权平均密度由 {nat_start['加权平均密度']:.1f} 增至 "
+            f"{nat_end['加权平均密度']:.1f} 人/km²，高密度像元由 {int(nat_start['高密度像素数']):,} 增至 {int(nat_end['高密度像素数']):,}。",
 
-            f"**区域分化** — β-收敛斜率 = {beta_slope:.4f}（R² = {beta_r2:.3f}，p = {beta_p:.3f}），"
-            f"{'初始密度低的省份增速更快，呈追赶态势' if beta_slope < 0 else '初始密度高的省份增速更快，空间极化在加剧'}。",
+            f"**省际收敛** — β-收敛斜率 = {beta_slope:.4f}（R² = {beta_r2:.3f}，p = {beta_p:.3f}），"
+            f"{'初始密度低的省份增速更快，呈追赶态势' if beta_slope < 0 else '未发现系统性的省际追赶效应'}。",
 
-            f"**劳动力流向** — 人口重心向{shift_dir}偏移 {shift_km:.1f} km，"
-            f"反映 market integration 的宏观方向。",
+            f"**重心轨迹** — 人口重心向{shift_dir}偏移 {shift_km:.1f} km，"
+            f"与沿海及中南部省份的相对人口增长一致。",
         ]
     else:
         findings = [
-            f"**What happened** — Spatial Gini rose from {gini_start:.4f} to {gini_end:.4f}; "
+            f"**Spatial concentration** — Spatial Gini rose from {gini_start:.4f} to {gini_end:.4f}; "
             f"Top 10% pixel population share moved from {conc_start:.1f}% to {conc_end:.1f}%, "
             f"{agg_text}.",
 
-            f"**Scale effects** — Weighted avg. density increased from {nat_start['加权平均密度']:.1f} to "
-            f"{nat_end['加权平均密度']:.1f} ppl/km²; high-density pixels grew from {int(nat_start['高密度像素数']):,} to {int(nat_end['高密度像素数']):,}, "
-            f"the core kept expanding.",
+            f"**Core expansion** — Weighted avg. density increased from {nat_start['加权平均密度']:.1f} to "
+            f"{nat_end['加权平均密度']:.1f} ppl/km²; high-density pixels grew from {int(nat_start['高密度像素数']):,} to {int(nat_end['高密度像素数']):,}.",
 
-            f"**Regional divergence** — β-convergence slope = {beta_slope:.4f} (R² = {beta_r2:.3f}, p = {beta_p:.3f}); "
-            f"{'lower-density provinces grew faster, showing catch-up' if beta_slope < 0 else 'higher-density provinces grew faster, intensifying polarization'}.",
+            f"**Provincial convergence** — β-convergence slope = {beta_slope:.4f} (R² = {beta_r2:.3f}, p = {beta_p:.3f}); "
+            f"{'lower-density provinces grew faster, suggesting catch-up' if beta_slope < 0 else 'no evidence of systematic provincial catch-up'}.",
 
-            f"**Labor flow** — Population centroid shifted {shift_km:.1f} km toward the {shift_dir}, "
-            f"reflecting the macro direction of market integration.",
+            f"**Centroid trajectory** — Population centroid shifted {shift_km:.1f} km toward the {shift_dir}, "
+            f"consistent with relative population gains in coastal and south-central provinces.",
         ]
 
     for idx, text in enumerate(findings, 1):
@@ -2697,6 +2695,13 @@ if _page == _nav_labels[5]:
     )
 
     st.subheader(T("methods_citation"))
+    st.markdown("**Paper:**")
+    st.code(
+        "Shen, Li (2025). \"Population Agglomeration and Spatial Reallocation in China.\" "
+        "Working Paper, Clark University.",
+        language="text",
+    )
+    st.markdown("**Data:**")
     st.code(
         "WorldPop and CIESIN (2018). Global High Resolution Population Denominators Project. "
         "DOI: 10.5258/SOTON/WP00675",
