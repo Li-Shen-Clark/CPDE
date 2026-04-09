@@ -2148,7 +2148,7 @@ if _page == _nav_labels[2]:
                 projection_type="mercator",
             )
             fig_centroid.update_layout(
-                **PLOTLY_LAYOUT,
+                **{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
                 title=T("centroid_chart_title", y0=YEARS[0], y1=YEARS[-1]),
                 height=480,
                 margin=dict(t=40, b=10, l=10, r=10),
