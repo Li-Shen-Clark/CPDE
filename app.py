@@ -42,86 +42,92 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-/* Modern font stack */
+/* Academic warm-tone base */
 html, body, [class*="css"] {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Crimson Pro', 'Georgia', 'Noto Serif SC', serif;
 }
-/* Reduce default Streamlit padding */
 .block-container {
     padding-top: 1.5rem;
     padding-bottom: 1rem;
     max-width: 1200px;
-}
-/* Sidebar card-style navigation buttons */
-section[data-testid="stSidebar"] button[kind="secondary"] {
-    background: white !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 10px !important;
-    padding: 10px 14px !important;
-    font-weight: 500 !important;
-    font-size: 0.92rem !important;
-    color: #334155 !important;
-    transition: all 0.18s ease !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
-    margin-bottom: 2px !important;
-}
-section[data-testid="stSidebar"] button[kind="secondary"]:hover {
-    background: #eef2ff !important;
-    border-color: #a5b4fc !important;
-    box-shadow: 0 2px 6px rgba(99,102,241,0.12) !important;
-    color: #4f46e5 !important;
-}
-/* KPI metric cards */
-[data-testid="stMetric"] {
-    background: linear-gradient(135deg, #667eea18, #764ba218);
-    padding: 14px 18px;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 4px rgba(99,102,241,0.06);
-}
-[data-testid="stMetric"] label {
-    font-size: 0.82rem;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-}
-/* Headers */
-h1 {
-    border-bottom: 3px solid #6366f1;
-    padding-bottom: 8px;
-}
-h2 {
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 6px;
+    background-color: #faf9f6;
 }
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background: #f1f5f9;
-    border-right: 1px solid #e2e8f0;
+    background: #f0efe9;
+    border-right: 1px solid #ddd8d0;
 }
-section[data-testid="stSidebar"] .block-container {
-    padding-top: 1rem;
+/* Nav buttons in sidebar */
+section[data-testid="stSidebar"] button[kind="secondary"] {
+    background: #faf9f6 !important;
+    border: 1px solid #d5d0c8 !important;
+    border-radius: 6px !important;
+    padding: 9px 14px !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+    color: #3d3d3d !important;
+    transition: background 0.15s ease !important;
+    box-shadow: none !important;
+    margin-bottom: 2px !important;
 }
-/* Hide Streamlit hamburger and footer */
+section[data-testid="stSidebar"] button[kind="secondary"]:hover {
+    background: #eae8e1 !important;
+    border-color: #b8b2a6 !important;
+    box-shadow: none !important;
+    color: #1e3a5f !important;
+}
+/* KPI metric cards — quiet, academic */
+[data-testid="stMetric"] {
+    background: #f5f4f0;
+    padding: 12px 16px;
+    border-radius: 6px;
+    border: 1px solid #ddd8d0;
+}
+[data-testid="stMetric"] label {
+    font-size: 0.78rem;
+    color: #6b6560;
+    letter-spacing: 0.02em;
+}
+/* Headers — weight + spacing, no underline */
+h1 {
+    font-weight: 700;
+    color: #1e3a5f;
+    border: none !important;
+    padding-bottom: 0;
+    margin-bottom: 0.3rem;
+}
+h2 {
+    font-weight: 600;
+    color: #2d3748;
+    border: none !important;
+    padding-bottom: 0;
+    margin-bottom: 0.2rem;
+}
+h3 {
+    font-weight: 600;
+    color: #3d3d3d;
+}
+/* Hide Streamlit chrome */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
-/* Expander header */
+/* Expander */
 .streamlit-expanderHeader {
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: 1rem;
+    color: #2d3748;
 }
 /* Captions */
 .stCaption {
     font-size: 0.82rem;
-    color: #64748b;
+    color: #8a8480;
 }
 /* Divider */
 hr {
-    border-color: #e2e8f0;
+    border-color: #ddd8d0;
 }
 /* Data tables */
 [data-testid="stDataFrame"] {
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
 }
 </style>
@@ -164,17 +170,17 @@ REGION_MAP_EN = {
     "西部": "West",
     "东北": "Northeast",
 }
-REGION_COLORS = {"东部": "#6366f1", "中部": "#f59e0b", "西部": "#14b8a6", "东北": "#ec4899"}
+REGION_COLORS = {"东部": "#1e3a5f", "中部": "#c0392b", "西部": "#2d6a4f", "东北": "#64748b"}
 
 # Modern Plotly layout defaults
 PLOTLY_LAYOUT = dict(
     template="plotly_white",
-    font=dict(family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", size=12),
-    plot_bgcolor="rgba(0,0,0,0)",
-    paper_bgcolor="rgba(0,0,0,0)",
+    font=dict(family="Georgia, 'Noto Serif SC', serif", size=12, color="#3d3d3d"),
+    plot_bgcolor="#faf9f6",
+    paper_bgcolor="#faf9f6",
     margin=dict(t=40, b=20, l=20, r=20),
-    hoverlabel=dict(bgcolor="white", font_size=12),
-    colorway=["#6366f1", "#ec4899", "#14b8a6", "#f59e0b", "#8b5cf6", "#06b6d4", "#f43f5e", "#22c55e"],
+    hoverlabel=dict(bgcolor="#faf9f6", font_size=12, bordercolor="#ddd8d0"),
+    colorway=["#1e3a5f", "#c0392b", "#2d6a4f", "#b8860b", "#64748b", "#8b5e3c", "#5b7065", "#a0522d"],
 )
 
 
@@ -297,8 +303,8 @@ _LANG_STRINGS = {
     "divergence_label_zh": "发散",
     "divergence_label_en": "Diverging",
     # Summary charts
-    "summary_chart_title_zh": "空间集聚动态：基尼系数与人口集中度",
-    "summary_chart_title_en": "Spatial Agglomeration Dynamics: Gini & Concentration",
+    "summary_chart_title_zh": "集聚力在 19 年间持续主导空间格局",
+    "summary_chart_title_en": "Agglomeration Forces Dominated Spatial Patterns Over 19 Years",
     "gini_series_label_zh": "空间基尼系数",
     "gini_series_label_en": "Spatial Gini Coeff.",
     "conc_series_label_zh": "Top10%人口占比(%)",
@@ -355,22 +361,22 @@ _LANG_STRINGS = {
     "agg_indicators_zh": "集聚指标时间序列",
     "agg_indicators_en": "Agglomeration Indicator Time Series",
     # Gini chart
-    "gini_chart_title_zh": "空间基尼系数（人口分布不平等度）",
-    "gini_chart_title_en": "Spatial Gini Coefficient (Population Distribution Inequality)",
+    "gini_chart_title_zh": "人口持续向少数区域集中",
+    "gini_chart_title_en": "Population Continues Concentrating in Fewer Areas",
     "year_label_zh": "年份",
     "year_label_en": "Year",
     "gini_caption_zh": "基尼系数越高，人口在空间上越集中。趋势上升 = 集聚力主导。",
     "gini_caption_en": "Higher Gini = more spatially concentrated population. Rising trend = agglomeration dominates.",
     # Concentration chart
-    "conc_chart_title_zh": "Top 10% 最密像元的人口集中度",
-    "conc_chart_title_en": "Top 10% Densest Pixels: Population Concentration",
+    "conc_chart_title_zh": "核心区吸纳了越来越多的人口",
+    "conc_chart_title_en": "Core Areas Absorb an Increasing Share of Population",
     "conc_yaxis2_zh": "占总人口比例 (%)",
     "conc_yaxis2_en": "Share of Total Population (%)",
     "conc_caption_zh": "该比例上升意味着更多人口进入少数高密度区域——市场规模效应的直接体现。",
     "conc_caption_en": "Rising share means more population entering high-density areas — direct evidence of market size effects.",
     # Market potential chart
-    "mp_chart_title_zh": "市场潜力代理指标与核心区规模",
-    "mp_chart_title_en": "Market Potential Proxy & Core Area Scale",
+    "mp_chart_title_zh": "本地市场规模在持续扩大",
+    "mp_chart_title_en": "Local Market Scale Continues to Expand",
     "mp_trace1_zh": "加权平均密度 (Market Potential 代理)",
     "mp_trace1_en": "Weighted Avg. Density (Market Potential Proxy)",
     "mp_trace2_zh": "高密度像元数 (核心区规模)",
@@ -380,8 +386,8 @@ _LANG_STRINGS = {
     "mp_yaxis2_zh": "像元数",
     "mp_yaxis2_en": "Pixel Count",
     # Sigma convergence chart
-    "sigma_chart_title_zh": "σ-收敛：省际密度变异系数 (CV)",
-    "sigma_chart_title_en": "σ-Convergence: Interprovincial Density CV",
+    "sigma_chart_title_zh": "省际差异是在缩小还是扩大？",
+    "sigma_chart_title_en": "Are Interprovincial Gaps Narrowing or Widening?",
     "sigma_yaxis_zh": "变异系数",
     "sigma_yaxis_en": "Coeff. of Variation",
     "sigma_caption_zh": "CV 下降 = σ-收敛（省际差异缩小）；CV 上升 = σ-发散（差异扩大）。",
@@ -1176,7 +1182,7 @@ def render_animation_frame_image(year, opacity):
     min_lat, min_lon = bounds[0]
     max_lat, max_lon = bounds[1]
 
-    background = np.full((h, w, 3), 255, dtype=np.float32)
+    background = np.full((h, w, 3), 250, dtype=np.float32)
     alpha = (rgba[..., 3:4].astype(np.float32) / 255.0) * float(opacity)
     rgb = rgba[..., :3].astype(np.float32)
     blended = (background * (1.0 - alpha) + rgb * alpha).astype(np.uint8)
@@ -1207,7 +1213,7 @@ def render_diff_frame_image(year_a, year_b, opacity):
     rgba, p99, clipped_n, total_n = diff_to_image_adaptive(diff)
 
     h, w = rgba.shape[:2]
-    background = np.full((h, w, 3), 255, dtype=np.float32)
+    background = np.full((h, w, 3), 250, dtype=np.float32)
     alpha = (rgba[..., 3:4].astype(np.float32) / 255.0) * float(opacity)
     rgb = rgba[..., :3].astype(np.float32)
     blended = (background * (1.0 - alpha) + rgb * alpha).astype(np.uint8)
@@ -1536,7 +1542,7 @@ if st.session_state["nav_page"] not in _nav_labels:
 
 st.sidebar.markdown(
     f"<p style='font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;"
-    f"color:#94a3b8;font-weight:600;margin:0 0 6px 0;'>"
+    f"color:#8a8480;font-weight:600;margin:0 0 6px 0;'>"
     f"{'导航' if lang == 'zh' else 'NAVIGATION'}</p>",
     unsafe_allow_html=True,
 )
@@ -1544,9 +1550,9 @@ for _nl in _nav_labels:
     _is_active = (st.session_state["nav_page"] == _nl)
     if _is_active:
         st.sidebar.markdown(
-            f"<div style='background:linear-gradient(135deg,#6366f1,#7c3aed);color:white;"
-            f"padding:10px 14px;border-radius:10px;font-weight:600;font-size:0.92rem;"
-            f"margin-bottom:6px;box-shadow:0 3px 10px rgba(99,102,241,0.25);'>{_nl}</div>",
+            f"<div style='background:#1e3a5f;color:#faf9f6;"
+            f"padding:10px 14px;border-radius:6px;font-weight:600;font-size:0.9rem;"
+            f"margin-bottom:6px;'>{_nl}</div>",
             unsafe_allow_html=True,
         )
     else:
@@ -1662,48 +1668,56 @@ if _page == _nav_labels[0]:
     st.header(T("summary_header"))
     st.caption(T("summary_caption", y0=YEARS[0], y1=YEARS[-1], scope=scope_label_readable))
 
-    # --- Key findings: spatial economics framing ---
+    # --- Thesis + Key findings ---
     rise_fall_gini = T("finding1_rise") if gini_end > gini_start else T("finding1_fall")
     rise_fall_conc = T("finding1_rise") if conc_end > conc_start else T("finding1_fall")
     agg_text = T("finding1_agg") if gini_end > gini_start else T("finding1_disp")
 
+    # Thesis statement
+    if lang == "zh":
+        st.markdown(
+            f"> **核心发现**：{YEARS[0]}-{YEARS[-1]} 年间，中国人口在空间上持续向少数高密度区域集聚，"
+            f"加权平均密度上升 {(nat_end['加权平均密度'] - nat_start['加权平均密度'])/nat_start['加权平均密度']*100:.0f}%，"
+            f"人口重心向{shift_dir}偏移 {shift_km:.0f} km。"
+        )
+    else:
+        st.markdown(
+            f"> **Key finding**: From {YEARS[0]} to {YEARS[-1]}, China's population continued concentrating in a few high-density areas. "
+            f"Weighted average density rose {(nat_end['加权平均密度'] - nat_start['加权平均密度'])/nat_start['加权平均密度']*100:.0f}%, "
+            f"and the population centroid shifted {shift_km:.0f} km toward the {shift_dir}."
+        )
+
     if lang == "zh":
         findings = [
-            f"**集聚加速**：空间基尼系数由 {gini_start:.4f} {rise_fall_gini} {gini_end:.4f}，"
+            f"**发生了什么** — 空间基尼系数由 {gini_start:.4f} {rise_fall_gini} {gini_end:.4f}，"
             f"Top 10% 最密像元的人口份额由 {conc_start:.1f}% {rise_fall_conc} {conc_end:.1f}%，"
             f"{agg_text}。",
 
-            f"**市场潜力上升**：加权平均密度（market potential 代理指标）由 {nat_start['加权平均密度']:.1f} 增至 "
-            f"{nat_end['加权平均密度']:.1f} 人/km²（+{(nat_end['加权平均密度'] - nat_start['加权平均密度'])/nat_start['加权平均密度']*100:.1f}%），"
-            f"意味着「平均居民」周围的本地市场规模在扩大。",
+            f"**规模效应** — 加权平均密度由 {nat_start['加权平均密度']:.1f} 增至 "
+            f"{nat_end['加权平均密度']:.1f} 人/km²，高密度像元由 {int(nat_start['高密度像素数']):,} 增至 {int(nat_end['高密度像素数']):,}，"
+            f"核心区在持续扩张。",
 
-            f"**核心区扩展**：高密度像元（>1000 人/km²）由 {int(nat_start['高密度像素数']):,} 增至 {int(nat_end['高密度像素数']):,}，"
-            f"核心区在空间上持续扩张，对应 NEG 框架中核心-外围格局的演化。",
-
-            f"**区域{convergence_word}**：β-收敛检验斜率 = {beta_slope:.4f}（R² = {beta_r2:.3f}，{convergence_sig}，p = {beta_p:.3f}），"
+            f"**区域分化** — β-收敛斜率 = {beta_slope:.4f}（R² = {beta_r2:.3f}，p = {beta_p:.3f}），"
             f"{'初始密度低的省份增速更快，呈追赶态势' if beta_slope < 0 else '初始密度高的省份增速更快，空间极化在加剧'}。",
 
-            f"**人口重心漂移**：{YEARS[0]}-{YEARS[-1]} 年重心向{shift_dir}方向移动约 {shift_km:.1f} km，"
-            f"反映劳动力流动和 market integration 的宏观方向。",
+            f"**劳动力流向** — 人口重心向{shift_dir}偏移 {shift_km:.1f} km，"
+            f"反映 market integration 的宏观方向。",
         ]
     else:
         findings = [
-            f"**Accelerating Agglomeration**: Spatial Gini rose from {gini_start:.4f} {rise_fall_gini} {gini_end:.4f}; "
-            f"Top 10% densest pixel population share {rise_fall_conc} from {conc_start:.1f}% to {conc_end:.1f}%, "
+            f"**What happened** — Spatial Gini rose from {gini_start:.4f} to {gini_end:.4f}; "
+            f"Top 10% pixel population share moved from {conc_start:.1f}% to {conc_end:.1f}%, "
             f"{agg_text}.",
 
-            f"**Rising Market Potential**: Weighted average density (market potential proxy) increased from {nat_start['加权平均密度']:.1f} to "
-            f"{nat_end['加权平均密度']:.1f} ppl/km² (+{(nat_end['加权平均密度'] - nat_start['加权平均密度'])/nat_start['加权平均密度']*100:.1f}%), "
-            f"indicating expanding local market scale around the average resident.",
+            f"**Scale effects** — Weighted avg. density increased from {nat_start['加权平均密度']:.1f} to "
+            f"{nat_end['加权平均密度']:.1f} ppl/km²; high-density pixels grew from {int(nat_start['高密度像素数']):,} to {int(nat_end['高密度像素数']):,}, "
+            f"the core kept expanding.",
 
-            f"**Core Area Expansion**: High-density pixels (>1000 ppl/km²) grew from {int(nat_start['高密度像素数']):,} to {int(nat_end['高密度像素数']):,}, "
-            f"reflecting continuous spatial expansion of the core, consistent with core-periphery evolution in the NEG framework.",
+            f"**Regional divergence** — β-convergence slope = {beta_slope:.4f} (R² = {beta_r2:.3f}, p = {beta_p:.3f}); "
+            f"{'lower-density provinces grew faster, showing catch-up' if beta_slope < 0 else 'higher-density provinces grew faster, intensifying polarization'}.",
 
-            f"**Regional {convergence_word}**: β-convergence slope = {beta_slope:.4f} (R² = {beta_r2:.3f}, {convergence_sig}, p = {beta_p:.3f}); "
-            f"{'provinces with lower initial density grew faster, showing catch-up dynamics' if beta_slope < 0 else 'provinces with higher initial density grew faster, intensifying spatial polarization'}.",
-
-            f"**Centroid Drift**: Population centroid shifted {shift_km:.1f} km toward the {shift_dir} from {YEARS[0]} to {YEARS[-1]}, "
-            f"reflecting the macro direction of labor mobility and market integration.",
+            f"**Labor flow** — Population centroid shifted {shift_km:.1f} km toward the {shift_dir}, "
+            f"reflecting the macro direction of market integration.",
         ]
 
     for idx, text in enumerate(findings, 1):
@@ -1731,12 +1745,12 @@ if _page == _nav_labels[0]:
         fig_summary.add_trace(go.Scatter(
             x=df_gini["年份"], y=df_gini["空间基尼系数"],
             name=T("gini_series_label"), mode="lines+markers",
-            line=dict(color="#6366f1", width=2.5),
+            line=dict(color="#1e3a5f", width=2.5),
         ), secondary_y=False)
         fig_summary.add_trace(go.Scatter(
             x=df_conc10["年份"], y=df_conc10["Top10%人口占比"],
             name=T("conc_series_label"), mode="lines+markers",
-            line=dict(color="#ec4899", width=2.5),
+            line=dict(color="#c0392b", width=2.5),
         ), secondary_y=True)
         fig_summary.update_layout(
             **PLOTLY_LAYOUT,
@@ -1875,8 +1889,8 @@ if _page == _nav_labels[1]:
         fig_gini = go.Figure()
         fig_gini.add_trace(go.Scatter(
             x=df_gini["年份"], y=df_gini["空间基尼系数"],
-            mode="lines+markers", line=dict(color="#6366f1", width=2.5),
-            fill="tozeroy", fillcolor="rgba(99,102,241,0.08)",
+            mode="lines+markers", line=dict(color="#1e3a5f", width=2.5),
+            fill="tozeroy", fillcolor="rgba(30,58,95,0.08)",
         ))
         fig_gini.update_layout(
             **PLOTLY_LAYOUT,
@@ -1892,8 +1906,8 @@ if _page == _nav_labels[1]:
         fig_conc = go.Figure()
         fig_conc.add_trace(go.Scatter(
             x=df_conc10["年份"], y=df_conc10["Top10%人口占比"],
-            mode="lines+markers", line=dict(color="#ec4899", width=2.5),
-            fill="tozeroy", fillcolor="rgba(236,72,153,0.08)",
+            mode="lines+markers", line=dict(color="#c0392b", width=2.5),
+            fill="tozeroy", fillcolor="rgba(192,57,43,0.08)",
         ))
         fig_conc.update_layout(
             **PLOTLY_LAYOUT,
@@ -1911,12 +1925,12 @@ if _page == _nav_labels[1]:
         fig_mp.add_trace(go.Scatter(
             x=df_national["年份"], y=df_national["加权平均密度"],
             name=T("mp_trace1"), mode="lines+markers",
-            line=dict(color="#6366f1", width=2.5),
+            line=dict(color="#1e3a5f", width=2.5),
         ), secondary_y=False)
         fig_mp.add_trace(go.Scatter(
             x=df_national["年份"], y=df_national["高密度像素数"],
             name=T("mp_trace2"), mode="lines+markers",
-            line=dict(color="#f59e0b", width=2),
+            line=dict(color="#b8860b", width=2),
         ), secondary_y=True)
         fig_mp.update_layout(
             **PLOTLY_LAYOUT,
@@ -1933,8 +1947,8 @@ if _page == _nav_labels[1]:
         fig_sigma = go.Figure()
         fig_sigma.add_trace(go.Scatter(
             x=df_sigma["年份"], y=df_sigma["变异系数CV"],
-            mode="lines+markers", line=dict(color="#14b8a6", width=2.5),
-            fill="tozeroy", fillcolor="rgba(20,184,166,0.08)",
+            mode="lines+markers", line=dict(color="#2d6a4f", width=2.5),
+            fill="tozeroy", fillcolor="rgba(45,106,79,0.08)",
         ))
         fig_sigma.update_layout(
             **PLOTLY_LAYOUT,
@@ -1981,8 +1995,8 @@ if _page == _nav_labels[2]:
                 ts = get_pixel_timeseries(raster_cube, cube_transform, cube_h, cube_w, lat_c, lng_c)
                 fig_click = go.Figure(go.Scatter(
                     x=[t["年份"] for t in ts], y=[t["密度"] for t in ts],
-                    mode="lines+markers", line=dict(color="#6366f1", width=2),
-                    fill="tozeroy", fillcolor="rgba(99,102,241,0.1)",
+                    mode="lines+markers", line=dict(color="#1e3a5f", width=2),
+                    fill="tozeroy", fillcolor="rgba(30,58,95,0.1)",
                 ))
                 fig_click.update_layout(
                     **PLOTLY_LAYOUT,
@@ -1999,7 +2013,7 @@ if _page == _nav_labels[2]:
                 y=[p["name"] for p in year_provs[:15]][::-1],
                 x=[p["mean"] for p in year_provs[:15]][::-1],
                 orientation="h",
-                marker=dict(color=[p["mean"] for p in year_provs[:15]][::-1], colorscale="Purples"),
+                marker=dict(color=[p["mean"] for p in year_provs[:15]][::-1], colorscale="YlOrBr"),
                 text=[f"{p['mean']:.0f}" for p in year_provs[:15]][::-1],
                 textposition="outside",
             ))
@@ -2015,7 +2029,7 @@ if _page == _nav_labels[2]:
             fig_hist = px.histogram(
                 x=valid_sp[valid_sp <= np.percentile(valid_sp, 99.5)],
                 nbins=60,
-                color_discrete_sequence=["#6366f1"],
+                color_discrete_sequence=["#1e3a5f"],
                 title=T("pixel_hist_title"),
             )
             fig_hist.update_layout(
@@ -2076,7 +2090,7 @@ if _page == _nav_labels[2]:
                     y=[p["省份"] for p in prov_diff_list],
                     x=[p["密度变化"] for p in prov_diff_list],
                     orientation="h",
-                    marker_color=["#6366f1" if p["密度变化"] > 0 else "#ec4899" for p in prov_diff_list],
+                    marker_color=["#c0392b" if p["密度变化"] > 0 else "#1e3a5f" for p in prov_diff_list],
                     text=[f"{p['密度变化']:+.0f}" for p in prov_diff_list],
                     textposition="outside",
                 ))
@@ -2094,8 +2108,8 @@ if _page == _nav_labels[2]:
                 clipped_hist = valid_diff[(valid_diff > -p99_val * 1.5) & (valid_diff < p99_val * 1.5)]
                 fig_hist = px.histogram(x=clipped_hist, nbins=100,
                                         title=T("pixel_change_hist"),
-                                        color_discrete_sequence=["#8b5cf6"])
-                fig_hist.add_vline(x=0, line_dash="dash", line_color="#ec4899")
+                                        color_discrete_sequence=["#64748b"])
+                fig_hist.add_vline(x=0, line_dash="dash", line_color="#c0392b")
                 fig_hist.update_layout(
                     **PLOTLY_LAYOUT,
                     height=280,
@@ -2118,7 +2132,7 @@ if _page == _nav_labels[2]:
                 mode="lines+markers+text",
                 marker=dict(
                     size=df_centroid["年份"].apply(lambda y: 6 + (y - YEARS[0]) * 0.8),
-                    color=df_centroid["年份"], colorscale=[[0, "#c7d2fe"], [0.5, "#818cf8"], [1, "#4f46e5"]],
+                    color=df_centroid["年份"], colorscale=[[0, "#c8d6e5"], [0.5, "#5b7fa5"], [1, "#1e3a5f"]],
                     colorbar=dict(title=T("year_label")),
                 ),
                 text=df_centroid["年份"].astype(str),
@@ -2167,11 +2181,11 @@ if _page == _nav_labels[2]:
             fig_latlon = make_subplots(specs=[[{"secondary_y": True}]])
             fig_latlon.add_trace(go.Scatter(
                 x=df_centroid["年份"], y=df_centroid["重心纬度"],
-                name=T("lat_label"), mode="lines+markers", line=dict(color="#6366f1", width=2),
+                name=T("lat_label"), mode="lines+markers", line=dict(color="#1e3a5f", width=2),
             ), secondary_y=False)
             fig_latlon.add_trace(go.Scatter(
                 x=df_centroid["年份"], y=df_centroid["重心经度"],
-                name=T("lon_label"), mode="lines+markers", line=dict(color="#ec4899", width=2),
+                name=T("lon_label"), mode="lines+markers", line=dict(color="#c0392b", width=2),
             ), secondary_y=True)
             fig_latlon.update_layout(
                 **PLOTLY_LAYOUT,
@@ -2403,13 +2417,13 @@ if _page == _nav_labels[3]:
         z_matrix.append(row)
 
     if matrix_metric == "平均密度":
-        colorscale, zmin, zmax, bar_title = "Purples", 0, 1200, T("heatmap_bar_density")
+        colorscale, zmin, zmax, bar_title = "OrRd", 0, 1200, T("heatmap_bar_density")
     elif matrix_metric == "相对2002年增长率%":
         zmax = max(abs(v) for row in z_matrix for v in row)
         colorscale, zmin, zmax, bar_title = "RdYlBu_r", -zmax * 0.3, zmax, T("heatmap_bar_pct")
     else:
         zmax = max(abs(v) for row in z_matrix for v in row if abs(v) < 500)
-        colorscale, zmin, zmax, bar_title = "Picnic", -zmax, zmax, T("heatmap_bar_density")
+        colorscale, zmin, zmax, bar_title = "RdBu_r", -zmax, zmax, T("heatmap_bar_density")
 
     fig_hm = go.Figure(go.Heatmap(
         z=z_matrix, x=YEARS, y=prov_names_ordered, colorscale=colorscale, zmin=zmin, zmax=zmax,
@@ -2437,12 +2451,12 @@ if _page == _nav_labels[3]:
         fig_sigma_h.add_trace(go.Scatter(
             x=df_sigma_h["年份"], y=df_sigma_h["省际标准差"],
             name=T("sigma_detail_trace1"), mode="lines+markers",
-            line=dict(color="#6366f1", width=2.5),
+            line=dict(color="#1e3a5f", width=2.5),
         ), secondary_y=False)
         fig_sigma_h.add_trace(go.Scatter(
             x=df_sigma_h["年份"], y=df_sigma_h["变异系数CV"],
             name=T("sigma_detail_trace2"), mode="lines+markers",
-            line=dict(color="#ec4899", width=2.5),
+            line=dict(color="#c0392b", width=2.5),
         ), secondary_y=True)
         fig_sigma_h.update_layout(
             **PLOTLY_LAYOUT,
@@ -2498,13 +2512,13 @@ if _page == _nav_labels[3]:
         fig_detail.add_trace(go.Scatter(
             x=prov_series["年份"], y=prov_series["mean"],
             name=T("avg_density_trace"), mode="lines+markers",
-            line=dict(color="#6366f1", width=2.5),
-            fill="tozeroy", fillcolor="rgba(99,102,241,0.1)",
+            line=dict(color="#1e3a5f", width=2.5),
+            fill="tozeroy", fillcolor="rgba(30,58,95,0.1)",
         ), secondary_y=False)
         fig_detail.add_trace(go.Scatter(
             x=prov_series["年份"], y=prov_series["est_pop_wan"] / 10000,
             name=T("pop_est_trace"), mode="lines+markers",
-            line=dict(color="#ec4899", width=2),
+            line=dict(color="#c0392b", width=2),
         ), secondary_y=True)
         fig_detail.add_vline(x=year_dr, line_dash="dash", line_color="grey")
         fig_detail.update_layout(
@@ -2524,7 +2538,7 @@ if _page == _nav_labels[3]:
             mode="lines+markers+text",
             text=[f"#{r}" for r in prov_rank_data["排名"]],
             textposition="top center",
-            line=dict(color="#6366f1", width=3), marker=dict(size=8),
+            line=dict(color="#1e3a5f", width=3), marker=dict(size=8),
         ))
         fig_bump.update_layout(
             **PLOTLY_LAYOUT,
@@ -2572,10 +2586,10 @@ if _page == _nav_labels[3]:
         fig_cross = make_subplots(rows=1, cols=3, subplot_titles=subplot_titles)
         for idx, metric in enumerate(["mean", "est_pop_wan", "max"], 1):
             fig_cross.add_trace(go.Scatter(x=s1["年份"], y=s1[metric], name=focus_province,
-                                           mode="lines+markers", line=dict(color="#6366f1", width=2),
+                                           mode="lines+markers", line=dict(color="#1e3a5f", width=2),
                                            showlegend=(idx == 1)), row=1, col=idx)
             fig_cross.add_trace(go.Scatter(x=s2["年份"], y=s2[metric], name=compare_province,
-                                           mode="lines+markers", line=dict(color="#ec4899", width=2),
+                                           mode="lines+markers", line=dict(color="#c0392b", width=2),
                                            showlegend=(idx == 1)), row=1, col=idx)
         fig_cross.update_layout(
             **PLOTLY_LAYOUT,
@@ -2672,15 +2686,15 @@ scope_label = T("scope_short_mainland") if mainland_only else T("scope_short_all
 _fc1, _fc2 = st.columns([1, 1])
 with _fc1:
     if lang == "zh":
-        st.markdown(f"<span style='font-size:0.85rem;color:#64748b;'>中国人口密度时空探索器 ({scope_label}) &nbsp;|&nbsp; Li Shen</span>", unsafe_allow_html=True)
+        st.markdown(f"<span style='font-size:0.85rem;color:#6b6560;'>中国人口密度时空探索器 ({scope_label}) &nbsp;|&nbsp; Li Shen</span>", unsafe_allow_html=True)
     else:
-        st.markdown(f"<span style='font-size:0.85rem;color:#64748b;'>China Population Density Explorer ({scope_label}) &nbsp;|&nbsp; Li Shen</span>", unsafe_allow_html=True)
+        st.markdown(f"<span style='font-size:0.85rem;color:#6b6560;'>China Population Density Explorer ({scope_label}) &nbsp;|&nbsp; Li Shen</span>", unsafe_allow_html=True)
 with _fc2:
     st.markdown(
-        f"<span style='font-size:0.85rem;color:#64748b;'>"
-        f"Data: <a href='{WORLDPOP_COLLECTION_URL}' target='_blank' style='color:#6366f1;'>WorldPop</a> &nbsp;|&nbsp; "
-        f"DOI: <a href='{WORLDPOP_DOI_URL}' target='_blank' style='color:#6366f1;'>10.5258/SOTON/WP00675</a> &nbsp;|&nbsp; "
-        f"<a href='{CC_BY_4_URL}' target='_blank' style='color:#6366f1;'>CC BY 4.0</a>"
+        f"<span style='font-size:0.85rem;color:#6b6560;'>"
+        f"Data: <a href='{WORLDPOP_COLLECTION_URL}' target='_blank' style='color:#1e3a5f;'>WorldPop</a> &nbsp;|&nbsp; "
+        f"DOI: <a href='{WORLDPOP_DOI_URL}' target='_blank' style='color:#1e3a5f;'>10.5258/SOTON/WP00675</a> &nbsp;|&nbsp; "
+        f"<a href='{CC_BY_4_URL}' target='_blank' style='color:#1e3a5f;'>CC BY 4.0</a>"
         f"</span>",
         unsafe_allow_html=True,
     )
