@@ -34,7 +34,7 @@ from streamlit_folium import st_folium
 # Page config
 # ---------------------------------------------------------------------------
 st.set_page_config(
-    page_title="中国人口密度时空探索器",
+    page_title="Population Agglomeration & Spatial Reallocation in China",
     page_icon="",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -204,10 +204,10 @@ PLOTLY_LAYOUT = dict(
 
 _LANG_STRINGS = {
     # Sidebar
-    "sidebar_title_zh": "时空探索器",
-    "sidebar_title_en": "Spatiotemporal Explorer",
-    "sidebar_subtitle_zh": "中国人口密度 2002-2020",
-    "sidebar_subtitle_en": "China Population Density 2002-2020",
+    "sidebar_title_zh": "论文数据伴侣",
+    "sidebar_title_en": "Working Paper Companion",
+    "sidebar_subtitle_zh": "中国人口密度 2002–2020",
+    "sidebar_subtitle_en": "China Population Density 2002–2020",
     "mainland_toggle_zh": "仅中国大陆 (不含港澳台)",
     "mainland_toggle_en": "Mainland China only (excl. HK/MO/TW)",
     "opacity_slider_zh": "图层透明度",
@@ -256,14 +256,14 @@ _LANG_STRINGS = {
     "scope_short_all_zh": "含港澳台",
     "scope_short_all_en": "Incl. HK/MO/TW",
     # Tab names
-    "tab_summary_zh": "摘要",
-    "tab_summary_en": "Summary",
-    "tab_national_zh": "全国演变",
-    "tab_national_en": "National Dynamics",
+    "tab_summary_zh": "概览",
+    "tab_summary_en": "Overview",
+    "tab_national_zh": "主要发现",
+    "tab_national_en": "Main Findings",
     "tab_spatial_zh": "空间格局",
-    "tab_spatial_en": "Spatial Patterns",
-    "tab_hetero_zh": "省际异质性",
-    "tab_hetero_en": "Provincial Heterogeneity",
+    "tab_spatial_en": "Maps",
+    "tab_hetero_zh": "省际证据",
+    "tab_hetero_en": "Provincial Evidence",
     "tab_research_zh": "研究课题",
     "tab_research_en": "Research Topics",
     "tab_methods_zh": "数据与方法",
@@ -271,11 +271,28 @@ _LANG_STRINGS = {
     # Page title
     "page_title_zh": "人口集聚与空间再配置：中国 2002-2020",
     "page_title_en": "Population Agglomeration and Spatial Reallocation in China",
-    # ---- Tab 1: Summary ----
-    "summary_header_zh": "研究摘要：人口集聚与空间再配置",
-    "summary_header_en": "Summary: Population Agglomeration and Spatial Reallocation",
-    "summary_caption_zh": "从空间经济学视角解读 {y0}-{y1} 年人口密度栅格数据。当前范围：{scope}。",
-    "summary_caption_en": "Interpreting population density raster data {y0}-{y1} from a spatial economics perspective. Current scope: {scope}.",
+    # ---- Tab 1: Summary (paper landing page) ----
+    "summary_header_zh": "人口集聚与空间再配置：中国",
+    "summary_header_en": "Population Agglomeration and Spatial Reallocation in China",
+    "summary_author_zh": "沈力 · 克拉克大学经济学系",
+    "summary_author_en": "Li Shen · Department of Economics, Clark University",
+    "summary_abstract_zh": (
+        "本研究利用 WorldPop 联合国校正 1 km 人口密度栅格数据（降采样至 ~5 km），"
+        "对 {y0}–{y1} 年间中国大陆人口的空间分布演变进行描述性分析。"
+        "我们从四个维度刻画空间格局：空间集聚指标（基尼系数与 Top-10% 集中度）、"
+        "像元层面的累积变化、人口重心轨迹以及省际 β/σ 收敛检验。"
+        "结果显示空间集聚在研究期内持续增强，但省际密度并未出现系统性收敛。"
+    ),
+    "summary_abstract_en": (
+        "Using WorldPop UN-adjusted 1 km population density rasters (downsampled to ~5 km), "
+        "this paper provides a descriptive account of how the spatial distribution of China's population "
+        "evolved between {y0} and {y1}. We document four dimensions: spatial concentration (Gini and "
+        "top-decile share), pixel-level cumulative change, population centroid trajectory, and provincial "
+        "β/σ convergence. The results show that spatial concentration increased over the study period, "
+        "while interprovincial density exhibited no systematic convergence."
+    ),
+    "summary_caption_zh": "Working Paper · 当前范围：{scope}",
+    "summary_caption_en": "Working Paper · Current scope: {scope}",
     # shift directions
     "shift_ne_zh": "东北", "shift_ne_en": "Northeast",
     "shift_nw_zh": "西北", "shift_nw_en": "Northwest",
@@ -288,8 +305,8 @@ _LANG_STRINGS = {
     # convergence words
     "convergence_zh": "收敛（追赶效应）",
     "convergence_en": "Convergence (catch-up effect)",
-    "divergence_zh": "发散（强者恒强）",
-    "divergence_en": "Divergence (winner-takes-all)",
+    "divergence_zh": "发散",
+    "divergence_en": "Divergence",
     "sig_zh": "显著", "sig_en": "significant",
     "insig_zh": "不显著", "insig_en": "not significant",
     # findings
@@ -315,8 +332,8 @@ _LANG_STRINGS = {
     "divergence_label_zh": "发散",
     "divergence_label_en": "Diverging",
     # Summary charts
-    "summary_chart_title_zh": "空间集聚指标在 19 年间持续上升",
-    "summary_chart_title_en": "Spatial Concentration Indicators Trended Upward Over 19 Years",
+    "summary_chart_title_zh": "空间集聚指标（{y0}–{y1}）",
+    "summary_chart_title_en": "Spatial Concentration Indicators ({y0}–{y1})",
     "gini_series_label_zh": "空间基尼系数",
     "gini_series_label_en": "Spatial Gini Coeff.",
     "conc_series_label_zh": "Top10%人口占比(%)",
@@ -344,10 +361,10 @@ _LANG_STRINGS = {
     "top_losers_zh": "**人口流失最快的省份**",
     "top_losers_en": "**Fastest Population Losing Provinces**",
     # ---- Tab 2: National ----
-    "national_header_zh": "集聚动态与市场规模演化",
-    "national_header_en": "Agglomeration Dynamics & Market Scale Evolution",
-    "national_caption_zh": "追踪 {y0}-{y1} 年集聚力的时间演变。上半部分为空间再配置动画，下半部分为集聚指标时间序列。",
-    "national_caption_en": "Tracking the temporal evolution of agglomeration forces {y0}-{y1}. Top: spatial reallocation animation. Bottom: agglomeration indicator time series.",
+    "national_header_zh": "主要发现",
+    "national_header_en": "Main Findings",
+    "national_caption_zh": "展示 {y0}–{y1} 年人口密度的时间演变。上半部分为空间再配置动画，下半部分为集聚指标时间序列。",
+    "national_caption_en": "Displaying temporal evolution of population density {y0}–{y1}. Top: spatial reallocation animation. Bottom: concentration indicator time series.",
     "play_btn_zh": "播放累计变化",
     "play_btn_en": "Play Cumulative Change",
     "speed_label_zh": "速度",
@@ -371,42 +388,42 @@ _LANG_STRINGS = {
     "anim_top5_zh": "**{yr} 年高密度 Top 5 省份**",
     "anim_top5_en": "**{yr} Top 5 High-Density Provinces**",
     "agg_indicators_zh": "集聚指标时间序列",
-    "agg_indicators_en": "Agglomeration Indicator Time Series",
+    "agg_indicators_en": "Concentration Indicator Time Series",
     # Gini chart
-    "gini_chart_title_zh": "人口持续向少数区域集中",
-    "gini_chart_title_en": "Population Continues Concentrating in Fewer Areas",
+    "gini_chart_title_zh": "空间基尼系数",
+    "gini_chart_title_en": "Spatial Gini Coefficient",
     "year_label_zh": "年份",
     "year_label_en": "Year",
-    "gini_caption_zh": "基尼系数越高，人口在空间上越集中。趋势上升 = 集聚力主导。",
-    "gini_caption_en": "Higher Gini = more spatially concentrated population. Rising trend = agglomeration dominates.",
+    "gini_caption_zh": "基尼系数越高，人口在空间上越集中。",
+    "gini_caption_en": "Higher Gini = more spatially concentrated population.",
     # Concentration chart
-    "conc_chart_title_zh": "核心区吸纳了越来越多的人口",
-    "conc_chart_title_en": "Core Areas Absorb an Increasing Share of Population",
+    "conc_chart_title_zh": "Top 10% 人口集中度",
+    "conc_chart_title_en": "Top-10% Population Concentration",
     "conc_yaxis2_zh": "占总人口比例 (%)",
     "conc_yaxis2_en": "Share of Total Population (%)",
-    "conc_caption_zh": "该比例上升意味着更多人口进入少数高密度区域——市场规模效应的直接体现。",
-    "conc_caption_en": "Rising share means more population entering high-density areas — direct evidence of market size effects.",
+    "conc_caption_zh": "该比例上升意味着更多人口集中在少数高密度区域。",
+    "conc_caption_en": "Rising share means more population is concentrated in a few high-density areas.",
     # Market potential chart
-    "mp_chart_title_zh": "本地市场规模在持续扩大",
-    "mp_chart_title_en": "Local Market Scale Continues to Expand",
-    "mp_trace1_zh": "加权平均密度 (Market Potential 代理)",
-    "mp_trace1_en": "Weighted Avg. Density (Market Potential Proxy)",
-    "mp_trace2_zh": "高密度像元数 (核心区规模)",
-    "mp_trace2_en": "High-Density Pixels (Core Area Scale)",
+    "mp_chart_title_zh": "加权平均密度与高密度像元数",
+    "mp_chart_title_en": "Weighted Mean Density and High-Density Pixel Count",
+    "mp_trace1_zh": "加权平均密度",
+    "mp_trace1_en": "Weighted Avg. Density",
+    "mp_trace2_zh": "高密度像元数",
+    "mp_trace2_en": "High-Density Pixel Count",
     "mp_yaxis1_zh": "人/km²",
     "mp_yaxis1_en": "ppl/km²",
     "mp_yaxis2_zh": "像元数",
     "mp_yaxis2_en": "Pixel Count",
     # Sigma convergence chart
-    "sigma_chart_title_zh": "省际差异是在缩小还是扩大？",
-    "sigma_chart_title_en": "Are Interprovincial Gaps Narrowing or Widening?",
+    "sigma_chart_title_zh": "σ-收敛：省际密度变异系数",
+    "sigma_chart_title_en": "σ-Convergence: Interprovincial Density CV",
     "sigma_yaxis_zh": "变异系数",
     "sigma_yaxis_en": "Coeff. of Variation",
     "sigma_caption_zh": "CV 下降 = σ-收敛（省际差异缩小）；CV 上升 = σ-发散（差异扩大）。",
     "sigma_caption_en": "CV declining = σ-convergence (narrowing interprovincial gap); CV rising = σ-divergence (widening gap).",
     # ---- Tab 3: Spatial ----
-    "spatial_header_zh": "核心-外围格局与空间再配置",
-    "spatial_header_en": "Core-Periphery Pattern & Spatial Reallocation",
+    "spatial_header_zh": "空间格局与累积变化",
+    "spatial_header_en": "Spatial Patterns & Cumulative Change",
     "spatial_sub_single_zh": "单年格局",
     "spatial_sub_single_en": "Single Year",
     "spatial_sub_compare_zh": "两期对比",
@@ -452,8 +469,8 @@ _LANG_STRINGS = {
     # Centroid subtab
     "centroid_header_zh": "人口重心轨迹",
     "centroid_header_en": "Population Centroid Trajectory",
-    "centroid_caption_zh": "人口重心 = Σ(人口×坐标) / Σ人口。重心漂移方向反映劳动力流动和 market integration 的宏观趋势。",
-    "centroid_caption_en": "Population centroid = Σ(pop×coord)/Σpop. Drift direction reflects macro trends in labor mobility and market integration.",
+    "centroid_caption_zh": "人口重心 = Σ(人口×坐标) / Σ人口。重心漂移方向与区域间相对人口增长的宏观格局一致。",
+    "centroid_caption_en": "Population centroid = Σ(pop×coord)/Σpop. Drift direction is consistent with macro patterns of relative population growth across regions.",
     "centroid_hover_zh": "年份: %{text}<br>经度: %{lon:.4f}<br>纬度: %{lat:.4f}<extra></extra>",
     "centroid_hover_en": "Year: %{text}<br>Lon: %{lon:.4f}<br>Lat: %{lat:.4f}<extra></extra>",
     "centroid_chart_title_zh": "人口重心轨迹 ({y0}-{y1})",
@@ -470,15 +487,15 @@ _LANG_STRINGS = {
     "centroid_lat_dir_en": "- Latitudinal: {km:.1f} km ({dir})",
     "centroid_lon_dir_zh": "- 经度方向: {km:.1f} km ({dir})",
     "centroid_lon_dir_en": "- Longitudinal: {km:.1f} km ({dir})",
-    "centroid_meaning_zh": "**经济含义**",
-    "centroid_meaning_en": "**Economic Interpretation**",
+    "centroid_meaning_zh": "**说明**",
+    "centroid_meaning_en": "**Note**",
     "centroid_meaning_text_zh": (
-        "人口重心向某方向漂移，表明该方向的劳动力吸引力（就业机会、公共服务、市场规模）更强。"
-        "在 market integration 框架下，重心漂移方向与贸易成本下降最快的方向一致。"
+        "人口重心的持续漂移与沿海和中南部省份的相对人口增长一致。"
+        "方向性的一致提示这不太可能仅由短期随机波动所驱动。"
     ),
     "centroid_meaning_text_en": (
-        "Centroid drift toward a direction indicates stronger labor attraction (employment, public services, market size) in that direction. "
-        "Under a market integration framework, drift direction aligns with where trade costs fell fastest."
+        "The persistent centroid drift is consistent with relative population gains in coastal and south-central provinces. "
+        "The directional consistency suggests this is unlikely to be driven solely by idiosyncratic local shocks."
     ),
     "latlon_chart_title_zh": "重心坐标时间序列",
     "latlon_chart_title_en": "Centroid Coordinate Time Series",
@@ -490,8 +507,8 @@ _LANG_STRINGS = {
     "deg_e_zh": "°E", "deg_e_en": "°E",
     "region_shares_header_zh": "四大区域人口份额演变",
     "region_shares_header_en": "Four-Region Population Share Trends",
-    "region_shares_caption_zh": "东部/中部/西部/东北的人口份额变化，反映区域间 market access 的相对变化。",
-    "region_shares_caption_en": "Population share changes across East/Central/West/Northeast, reflecting shifts in relative regional market access.",
+    "region_shares_caption_zh": "东部/中部/西部/东北的人口份额变化。",
+    "region_shares_caption_en": "Population share changes across East/Central/West/Northeast.",
     "region_shares_chart_title_zh": "四大区域人口份额",
     "region_shares_chart_title_en": "Four-Region Population Shares",
     "region_shares_yaxis_zh": "占总人口比例 (%)",
@@ -502,17 +519,17 @@ _LANG_STRINGS = {
     "region_col_en": "Region",
     "change_col_zh": "变化",
     "change_col_en": "Change",
-    "region_interp_zh": "**解读**",
-    "region_interp_en": "**Interpretation**",
-    "east_rise_zh": "东部份额上升 {d:+.2f} 个百分点，核心区对劳动力的吸引持续增强，与 NEG 预测的核心-外围集聚一致。",
-    "east_rise_en": "East's share rose {d:+.2f} pp, indicating continued labor attraction to the core, consistent with NEG core-periphery predictions.",
+    "region_interp_zh": "**说明**",
+    "region_interp_en": "**Note**",
+    "east_rise_zh": "东部份额上升 {d:+.2f} 个百分点，与人口持续向沿海高密度区域集中的趋势一致。",
+    "east_rise_en": "East's share rose {d:+.2f} pp, consistent with continued population concentration in coastal high-density areas.",
     "east_fall_zh": "东部份额下降 {d:+.2f} 个百分点，中西部人口回流或就地城镇化趋势增强。",
     "east_fall_en": "East's share fell {d:+.2f} pp, suggesting population return migration to inland regions or in-situ urbanization.",
     # ---- Tab 4: Heterogeneity ----
-    "hetero_header_zh": "区域收敛与增长分异",
-    "hetero_header_en": "Regional Convergence & Growth Divergence",
-    "hetero_caption_zh": "核心问题：初始密度低的省份是否增长更快（收敛）？空间经济格局在趋同还是极化？",
-    "hetero_caption_en": "Key question: Do provinces with lower initial density grow faster (convergence)? Is the spatial economic pattern converging or polarizing?",
+    "hetero_header_zh": "省际证据",
+    "hetero_header_en": "Provincial Evidence",
+    "hetero_caption_zh": "初始密度低的省份是否增长更快？省际密度差异在缩小还是扩大？",
+    "hetero_caption_en": "Do provinces with lower initial density grow faster? Is cross-provincial dispersion narrowing or widening?",
     "focus_province_zh": "焦点省份",
     "focus_province_en": "Focus Province",
     "compare_province_zh": "对照省份",
@@ -585,12 +602,12 @@ _LANG_STRINGS = {
     "std_shrink_en": "↓ Shrinking",
     "std_expand_zh": "↑ 扩大",
     "std_expand_en": "↑ Expanding",
-    "sigma_meaning_zh": "**经济含义**",
-    "sigma_meaning_en": "**Economic Interpretation**",
-    "sigma_conv_text_zh": "CV 下降表明省际人口密度差异在缩小（σ-收敛），可能反映劳动力流动降低了区域间的密度差距，与 market integration 促进要素趋同一致。",
-    "sigma_conv_text_en": "Declining CV indicates narrowing interprovincial density differences (σ-convergence), likely reflecting labor mobility reducing regional density gaps, consistent with market integration promoting factor equalization.",
-    "sigma_div_text_zh": "CV 上升表明省际人口密度差异在扩大（σ-发散），集聚力持续将人口从低密度省份吸引至高密度省份，空间极化在加剧。",
-    "sigma_div_text_en": "Rising CV indicates widening interprovincial density differences (σ-divergence), with agglomeration forces continuously drawing population from low- to high-density provinces, intensifying spatial polarization.",
+    "sigma_meaning_zh": "**说明**",
+    "sigma_meaning_en": "**Note**",
+    "sigma_conv_text_zh": "CV 下降表明省际人口密度差异在缩小（σ-收敛），与劳动力流动降低区域间密度差距的假设一致。",
+    "sigma_conv_text_en": "Declining CV indicates narrowing interprovincial density differences (σ-convergence), consistent with labor mobility reducing regional density gaps.",
+    "sigma_div_text_zh": "CV 上升表明省际人口密度差异在扩大（σ-发散），高密度省份的人口份额持续上升。",
+    "sigma_div_text_en": "Rising CV indicates widening interprovincial density differences (σ-divergence), with high-density provinces continuing to gain population share.",
     "focus_profile_zh": "{prov} · 深度剖面",
     "focus_profile_en": "{prov} · In-Depth Profile",
     "kpi_yr_density_zh": "{yr}年平均密度",
@@ -967,7 +984,7 @@ Overlaying population density rasters with other spatial datasets can reveal co-
         "人口密度 > 1000 人/km² 的像元数量，代表核心区规模",
         "基于像元人口（密度×面积）的洛伦兹曲线计算，衡量人口空间分布不平等度",
         "最密 10% 像元的人口占总人口比例，衡量集聚程度",
-        "Σ(人口×坐标) / Σ人口，漂移方向反映 market integration 趋势",
+        "Σ(人口×坐标) / Σ人口，漂移方向反映区域间相对人口增长格局",
         "ln(初始密度) vs 年均增长率的 OLS 斜率；负值 = 收敛（追赶），正值 = 发散",
         "省际密度变异系数（标准差/均值）；下降 = 省际差异缩小",
         "东/中/西/东北四大区域的人口占比，基于省级估算人口汇总",
@@ -980,7 +997,7 @@ Overlaying population density rasters with other spatial datasets can reveal co-
         "Number of pixels with population density > 1000 ppl/km², representing core area scale",
         "Computed from Lorenz curve of pixel-level population (density×area), measuring spatial inequality of population distribution",
         "Share of total population living in the densest 10% of pixels, measuring agglomeration degree",
-        "Σ(pop×coord)/Σpop; drift direction reflects market integration trends",
+        "Σ(pop×coord)/Σpop; drift direction reflects relative population growth across regions",
         "OLS slope of ln(initial density) vs annual growth rate; negative = convergence (catch-up), positive = divergence",
         "Interprovincial density coefficient of variation (std/mean); declining = narrowing interprovincial gap",
         "Population shares of the four major regions (East/Central/West/Northeast), aggregated from provincial estimates",
@@ -1551,7 +1568,6 @@ _nav_labels = [
     T("tab_national"),
     T("tab_spatial"),
     T("tab_hetero"),
-    T("tab_research"),
     T("tab_methods"),
 ]
 if "nav_page" not in st.session_state:
@@ -1611,24 +1627,11 @@ else:
 
 st.sidebar.divider()
 
-# --- Meta info ---
-st.sidebar.markdown(T("author_info"))
-st.sidebar.markdown("[GitHub](https://github.com/Li-Shen-Clark/CPDE)")
+# --- Minimal meta info ---
 scope_label_readable = T("scope_mainland") if mainland_only else T("scope_all")
-st.sidebar.markdown(
-    T("sidebar_data_info", scope=scope_label_readable),
-    unsafe_allow_html=True,
+st.sidebar.caption(
+    f"Li Shen · Clark University · [GitHub](https://github.com/Li-Shen-Clark/CPDE)"
 )
-with st.sidebar.expander(T("data_source_expander")):
-    st.markdown(
-        T("data_source_md",
-          col=WORLDPOP_COLLECTION_URL,
-          proj=WORLDPOP_PROJECT_URL,
-          c2002=WORLDPOP_CHINA_2002_URL,
-          c2020=WORLDPOP_CHINA_2020_URL,
-          doi=WORLDPOP_DOI_URL,
-          cc=CC_BY_4_URL)
-    )
 
 # Compute rank once based on scope
 exclude_for_rank = EXCLUDE_HMT if mainland_only else set()
@@ -1688,27 +1691,39 @@ convergence_sig = T("sig") if beta_p < 0.05 else T("insig")
 # TAB 1: Summary — Spatial Economics Narrative
 # ===================================================================
 if _page == _nav_labels[0]:
-    st.header(T("summary_header"))
-    st.caption(T("summary_caption", y0=YEARS[0], y1=YEARS[-1], scope=scope_label_readable))
+    # --- Paper landing page ---
+    st.markdown(
+        f"<h1 style='font-size:1.8rem;margin-bottom:0.1rem;'>{T('summary_header')}</h1>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f"<p style='font-size:1.0rem;color:#6b6560;margin-top:0;'>{T('summary_author')}</p>",
+        unsafe_allow_html=True,
+    )
+    st.caption(T("summary_caption", scope=scope_label_readable))
 
-    # --- Thesis + Key findings ---
+    # Abstract
+    st.markdown(
+        f"<div style='background:#f5f4f0;border-left:3px solid #1e3a5f;padding:12px 16px;"
+        f"margin:0.5rem 0 1rem 0;font-size:0.92rem;line-height:1.55;color:#3d3d3d;'>"
+        f"{T('summary_abstract', y0=YEARS[0], y1=YEARS[-1])}</div>",
+        unsafe_allow_html=True,
+    )
+
+    # Read the paper button
+    _btn_col, _ = st.columns([1, 3])
+    with _btn_col:
+        if lang == "zh":
+            st.link_button("📄 阅读论文 (PDF)", "https://github.com/Li-Shen-Clark/CPDE/blob/main/main.pdf", use_container_width=True)
+        else:
+            st.link_button("📄 Read the Paper (PDF)", "https://github.com/Li-Shen-Clark/CPDE/blob/main/main.pdf", use_container_width=True)
+
+    st.divider()
+
+    # --- 4 Key findings as hero content ---
     rise_fall_gini = T("finding1_rise") if gini_end > gini_start else T("finding1_fall")
     rise_fall_conc = T("finding1_rise") if conc_end > conc_start else T("finding1_fall")
     agg_text = T("finding1_agg") if gini_end > gini_start else T("finding1_disp")
-
-    # Thesis statement
-    if lang == "zh":
-        st.markdown(
-            f"> **核心发现**：{YEARS[0]}-{YEARS[-1]} 年间，多项指标显示中国人口的空间集聚程度持续上升，"
-            f"加权平均密度上升 {(nat_end['加权平均密度'] - nat_start['加权平均密度'])/nat_start['加权平均密度']*100:.0f}%，"
-            f"人口重心向{shift_dir}偏移 {shift_km:.0f} km。"
-        )
-    else:
-        st.markdown(
-            f"> **Key finding**: Between {YEARS[0]} and {YEARS[-1]}, several indicators point to increased spatial concentration of China's population. "
-            f"Weighted average density rose {(nat_end['加权平均密度'] - nat_start['加权平均密度'])/nat_start['加权平均密度']*100:.0f}%, "
-            f"and the population centroid shifted {shift_km:.0f} km toward the {shift_dir}."
-        )
 
     if lang == "zh":
         findings = [
@@ -1775,7 +1790,7 @@ if _page == _nav_labels[0]:
         ), secondary_y=True)
         fig_summary.update_layout(
             **PLOTLY_LAYOUT,
-            title=T("summary_chart_title"),
+            title=T("summary_chart_title", y0=YEARS[0], y1=YEARS[-1]),
             height=380,
             hovermode="x unified",
             legend=dict(orientation="h", y=1.1),
@@ -1983,7 +1998,7 @@ if _page == _nav_labels[1]:
 
 
 # ===================================================================
-# TAB 3: Spatial patterns — Core-Periphery & Spatial Reallocation
+# TAB 3: Spatial patterns — Maps & Cumulative Change
 # ===================================================================
 if _page == _nav_labels[2]:
     st.header(T("spatial_header"))
@@ -2625,9 +2640,9 @@ if _page == _nav_labels[3]:
 
 
 # ===================================================================
-# TAB 5: Research topics — Trade, Spatial, Market Integration focus
+# TAB 5: Research topics — hidden from main nav, kept for future use
 # ===================================================================
-if _page == _nav_labels[4]:
+if False:  # removed from main navigation
     st.header(T("research_header"))
     st.caption(T("research_caption"))
 
@@ -2658,7 +2673,7 @@ if _page == _nav_labels[4]:
 # ===================================================================
 # TAB 6: Data and methods
 # ===================================================================
-if _page == _nav_labels[5]:
+if _page == _nav_labels[4]:
     st.header(T("methods_header"))
     st.caption(T("methods_caption"))
 
@@ -2717,9 +2732,9 @@ scope_label = T("scope_short_mainland") if mainland_only else T("scope_short_all
 _fc1, _fc2 = st.columns([1, 1])
 with _fc1:
     if lang == "zh":
-        st.markdown(f"<span style='font-size:0.85rem;color:#6b6560;'>中国人口密度时空探索器 ({scope_label}) &nbsp;|&nbsp; Li Shen</span>", unsafe_allow_html=True)
+        st.markdown(f"<span style='font-size:0.85rem;color:#6b6560;'>人口集聚与空间再配置：中国 ({scope_label}) &nbsp;|&nbsp; Li Shen</span>", unsafe_allow_html=True)
     else:
-        st.markdown(f"<span style='font-size:0.85rem;color:#6b6560;'>China Population Density Explorer ({scope_label}) &nbsp;|&nbsp; Li Shen</span>", unsafe_allow_html=True)
+        st.markdown(f"<span style='font-size:0.85rem;color:#6b6560;'>Population Agglomeration & Spatial Reallocation in China ({scope_label}) &nbsp;|&nbsp; Li Shen</span>", unsafe_allow_html=True)
 with _fc2:
     st.markdown(
         f"<span style='font-size:0.85rem;color:#6b6560;'>"
