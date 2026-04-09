@@ -190,7 +190,7 @@ PLOTLY_LAYOUT = dict(
     font=dict(family="Georgia, 'Noto Serif SC', serif", size=12, color="#3d3d3d"),
     plot_bgcolor="#faf9f6",
     paper_bgcolor="#faf9f6",
-    margin=dict(t=40, b=20, l=20, r=20),
+    margin=dict(t=70, b=20, l=20, r=20),
     hoverlabel=dict(bgcolor="#faf9f6", font_size=12, bordercolor="#ddd8d0"),
     colorway=["#1e3a5f", "#c0392b", "#2d6a4f", "#b8860b", "#64748b", "#8b5e3c", "#5b7065", "#a0522d"],
 )
@@ -1793,7 +1793,7 @@ if _page == _nav_labels[0]:
             title=T("summary_chart_title", y0=YEARS[0], y1=YEARS[-1]),
             height=380,
             hovermode="x unified",
-            legend=dict(orientation="h", y=1.1),
+            legend=dict(orientation="h", y=1.02, yanchor="bottom"),
         )
         fig_summary.update_yaxes(title_text=T("gini_yaxis"), secondary_y=False)
         fig_summary.update_yaxes(title_text=T("conc_yaxis"), secondary_y=True)
@@ -1834,7 +1834,7 @@ if _page == _nav_labels[0]:
             height=380,
             xaxis_title=T("beta_xaxis", y0=YEARS[0]),
             yaxis_title=T("beta_yaxis"),
-            legend=dict(orientation="h", y=1.12),
+            legend=dict(orientation="h", y=1.02, yanchor="bottom"),
         )
         st.plotly_chart(fig_beta, use_container_width=True)
 
@@ -1972,7 +1972,7 @@ if _page == _nav_labels[1]:
             **PLOTLY_LAYOUT,
             title=T("mp_chart_title"),
             height=380,
-            hovermode="x unified", legend=dict(orientation="h", y=1.12),
+            hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
         )
         fig_mp.update_yaxes(title_text=T("mp_yaxis1"), secondary_y=False)
         fig_mp.update_yaxes(title_text=T("mp_yaxis2"), secondary_y=True)
@@ -2226,7 +2226,7 @@ if _page == _nav_labels[2]:
             fig_latlon.update_layout(
                 **PLOTLY_LAYOUT,
                 title=T("latlon_chart_title"), height=280,
-                hovermode="x unified", legend=dict(orientation="h", y=1.15),
+                hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
             )
             fig_latlon.update_yaxes(title_text=T("deg_n"), secondary_y=False)
             fig_latlon.update_yaxes(title_text=T("deg_e"), secondary_y=True)
@@ -2253,7 +2253,7 @@ if _page == _nav_labels[2]:
                 height=380,
                 xaxis_title=T("year_label"), yaxis_title=T("region_shares_yaxis"),
                 hovermode="x unified",
-                legend=dict(orientation="h", y=1.1),
+                legend=dict(orientation="h", y=1.02, yanchor="bottom"),
             )
             st.plotly_chart(fig_region, use_container_width=True)
 
@@ -2371,7 +2371,7 @@ if _page == _nav_labels[3]:
             height=480,
             xaxis_title=T("beta_scatter_xaxis"), yaxis_title=T("beta_scatter_yaxis"),
             xaxis_type="log",
-            legend=dict(orientation="h", y=1.1),
+            legend=dict(orientation="h", y=1.02, yanchor="bottom"),
         )
         st.plotly_chart(fig_traj, use_container_width=True)
         direction_text = T("beta_caption_neg") if sl_h < 0 else T("beta_caption_pos")
@@ -2501,7 +2501,7 @@ if _page == _nav_labels[3]:
             **PLOTLY_LAYOUT,
             title=T("sigma_detail_title"),
             height=380,
-            hovermode="x unified", legend=dict(orientation="h", y=1.12),
+            hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
         )
         fig_sigma_h.update_yaxes(title_text=T("sigma_yaxis1"), secondary_y=False)
         fig_sigma_h.update_yaxes(title_text=T("cv_yaxis"), secondary_y=True)
@@ -2564,7 +2564,7 @@ if _page == _nav_labels[3]:
             **PLOTLY_LAYOUT,
             title=T("province_trend_title", prov=prov_name(focus_province)),
             height=380,
-            hovermode="x unified", legend=dict(orientation="h", y=1.1),
+            hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
         )
         fig_detail.update_yaxes(title_text=T("density_unit"), secondary_y=False)
         fig_detail.update_yaxes(title_text=T("hundred_million"), secondary_y=True)
@@ -2633,7 +2633,7 @@ if _page == _nav_labels[3]:
         fig_cross.update_layout(
             **PLOTLY_LAYOUT,
             height=380,
-            hovermode="x unified", legend=dict(orientation="h", y=1.1),
+            hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
             title=f"{prov_name(focus_province)} vs {prov_name(compare_province)}",
         )
         st.plotly_chart(fig_cross, use_container_width=True)
