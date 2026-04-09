@@ -1514,12 +1514,12 @@ def filter_names(names, mainland_only):
 # Language toggle MUST come first so T() works for all subsequent labels
 lang = st.sidebar.radio(
     "Language / 语言",
-    options=["中文", "English"],
+    options=["English", "中文"],
     horizontal=True,
     index=0,
     key="lang_select",
 )
-lang = "zh" if lang == "中文" else "en"
+lang = "en" if lang == "English" else "zh"
 
 st.sidebar.markdown(f"## {T('sidebar_title')}")
 st.sidebar.caption(T("sidebar_subtitle"))
