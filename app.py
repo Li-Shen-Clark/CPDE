@@ -2397,8 +2397,8 @@ if _page == _nav_labels[3]:
         fig_cross.update_layout(
             **{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
             height=440,
-            margin=dict(t=90, b=20, l=20, r=20),
-            hovermode="x unified", legend=dict(orientation="h", y=1.12, yanchor="bottom"),
+            margin=dict(t=60, b=50, l=20, r=20),
+            hovermode="x unified", legend=dict(orientation="h", y=-0.15, yanchor="top", x=0.5, xanchor="center"),
             title=f"{prov_name(cmp_province_a)} vs {prov_name(cmp_province_b)}",
         )
         st.plotly_chart(fig_cross, use_container_width=True)
