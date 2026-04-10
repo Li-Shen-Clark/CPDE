@@ -2129,6 +2129,9 @@ if _page == _nav_labels[3]:
             y_max = float(scatter_anim_df["增长率%"].max())
             color_abs = max(abs(float(scatter_anim_df["绝对增长"].min())), abs(float(scatter_anim_df["绝对增长"].max())))
 
+            import math
+            log_xmin = math.log10(x_min * 0.85)
+            log_xmax = math.log10(x_max * 1.15)
             fig_traj_anim = px.scatter(
                 scatter_anim_df,
                 x="2002年密度",
@@ -2139,7 +2142,8 @@ if _page == _nav_labels[3]:
                 size_max=45,
                 color="绝对增长",
                 color_continuous_scale="RdYlGn",
-                range_x=[x_min * 0.85, x_max * 1.15],
+                log_x=True,
+                range_x=[10**log_xmin, 10**log_xmax],
                 range_y=[y_min - 5, y_max + 5],
                 hover_name="省份",
                 hover_data={"2002年密度": ":.0f", "当年密度": ":.0f", "增长率%": ":.1f", "当年人口(万)": ":.0f"},
@@ -2153,7 +2157,6 @@ if _page == _nav_labels[3]:
                 height=480,
                 xaxis_title=T("anim_xaxis"),
                 yaxis_title=T("anim_yaxis", y0=YEARS[0]),
-                xaxis_type="log",
                 coloraxis_colorbar_title=T("abs_growth_label"),
                 legend_title_text="",
             )
