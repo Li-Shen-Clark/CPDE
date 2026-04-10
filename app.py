@@ -1075,7 +1075,9 @@ def build_growth_df(exclude_names):
             "绝对增长": round(abs_change, 1),
             "2020人口(万)": p2020["est_pop_wan"],
         })
-    return pd.DataFrame(rows).sort_values("绝对增长", ascending=False).reset_index(drop=True)
+    df = pd.DataFrame(rows)
+    df = df[df["2002年密度"] > 0].sort_values("绝对增长", ascending=False).reset_index(drop=True)
+    return df
 
 
 @st.cache_data
@@ -1099,7 +1101,9 @@ def build_growth_animation_df(exclude_names):
                 "绝对增长": round(abs_change, 1),
                 "当年人口(万)": cur_row["est_pop_wan"],
             })
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    df = df[df["2002年密度"] > 0].reset_index(drop=True)
+    return df
 
 
 # ---------------------------------------------------------------------------
