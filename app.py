@@ -150,11 +150,16 @@ WORLDPOP_DOI_URL = "https://doi.org/10.5258/SOTON/WP00675"
 CC_BY_4_URL = "https://creativecommons.org/licenses/by/4.0/"
 
 # --- Paper entry points (single source of truth) ---
-PAPER_PDF_URL = "https://github.com/Li-Shen-Clark/CPDE/blob/main/main.pdf"
-# SSRN_URL = ""  # uncomment and fill when SSRN listing is live
+# When SSRN is live, fill SSRN_URL; the site will auto-switch to it as canonical.
+SSRN_URL = ""  # e.g. "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=XXXXXXX"
+PAPER_PDF_URL = "https://github.com/Li-Shen-Clark/CPDE/raw/main/main.pdf"
+# Derived: prefer SSRN when available
+PAPER_CANONICAL_URL = SSRN_URL or PAPER_PDF_URL
+PAPER_IS_SSRN = bool(SSRN_URL)
 CITATION_TEXT = (
     'Shen, Li (2025). "Population Agglomeration and Spatial Reallocation in China." '
-    "Working Paper, Clark University."
+    + (f"Available at SSRN: {SSRN_URL}" if PAPER_IS_SSRN
+       else "Working Paper, Clark University.")
 )
 
 # ---------------------------------------------------------------------------
@@ -391,8 +396,6 @@ _LANG_STRINGS = {
     "anim_decrease_share_en": "Decline Area Share",
     "anim_stats_caption_zh": "当前总人口 {pop:.2f} 亿，加权平均密度 {wt:.1f} 人/km²；差值色标约为 ±{p99:.0f} 人/km²，裁剪 {clip:.1f}% 像素。",
     "anim_stats_caption_en": "Current total pop. {pop:.2f}B, weighted avg. density {wt:.1f} ppl/km²; diff colorscale ≈±{p99:.0f} ppl/km², clipping {clip:.1f}% pixels.",
-    "anim_top5_zh": "**{yr} 年高密度 Top 5 省份**",
-    "anim_top5_en": "**{yr} Top 5 High-Density Provinces**",
     "agg_indicators_zh": "集聚指标时间序列",
     "agg_indicators_en": "Concentration Indicator Time Series",
     # Gini chart
@@ -540,6 +543,8 @@ _LANG_STRINGS = {
     "subtab_sigma_en": "σ-Dispersion",
     "subtab_profile_zh": "省份剖面",
     "subtab_profile_en": "Province Profile",
+    "subtab_compare_zh": "省际对比",
+    "subtab_compare_en": "Province Comparison",
     "focus_province_zh": "焦点省份",
     "focus_province_en": "Focus Province",
     "compare_province_zh": "对照省份",
@@ -1382,10 +1387,10 @@ st.sidebar.divider()
 
 # --- Minimal meta info ---
 scope_label_readable = T("scope_mainland") if mainland_only else T("scope_all")
-if lang == "zh":
-    st.sidebar.link_button("📄 阅读论文 (PDF)", PAPER_PDF_URL, use_container_width=True)
-else:
-    st.sidebar.link_button("📄 Read the Paper", PAPER_PDF_URL, use_container_width=True)
+_paper_btn_zh = "📄 阅读论文 (SSRN)" if PAPER_IS_SSRN else "📄 阅读论文 (PDF)"
+_paper_btn_en = "📄 Read the Paper (SSRN)" if PAPER_IS_SSRN else "📄 Read the Paper (PDF)"
+st.sidebar.link_button(_paper_btn_zh if lang == "zh" else _paper_btn_en,
+                        PAPER_CANONICAL_URL, use_container_width=True)
 st.sidebar.caption(
     f"Li Shen · Clark University · [GitHub](https://github.com/Li-Shen-Clark/CPDE)"
 )
@@ -1470,10 +1475,8 @@ if _page == _nav_labels[0]:
     # Read the paper button
     _btn_col, _ = st.columns([1, 3])
     with _btn_col:
-        if lang == "zh":
-            st.link_button("📄 阅读论文 (PDF)", PAPER_PDF_URL, use_container_width=True)
-        else:
-            st.link_button("📄 Read the Paper (PDF)", PAPER_PDF_URL, use_container_width=True)
+        st.link_button(_paper_btn_zh if lang == "zh" else _paper_btn_en,
+                        PAPER_CANONICAL_URL, use_container_width=True)
 
     st.divider()
 
@@ -1660,11 +1663,6 @@ if _page == _nav_labels[1]:
                          wt=nat_row_yr['加权平均密度'],
                          p99=p99_val,
                          clip=clipped_n / total_n * 100))
-            yr_provs = sorted(filter_provs(province_stats[str(yr)], mainland_only),
-                              key=lambda x: x["mean"], reverse=True)
-            st.markdown(T("anim_top5", yr=yr))
-            for i, p in enumerate(yr_provs[:5], 1):
-                st.markdown(f"{i}. **{prov_name(p['name'])}** — {p['mean']:.0f} {'人/km²' if lang == 'zh' else 'ppl/km²'}")
 
     if play_btn:
         for yr in YEARS:
@@ -2046,8 +2044,8 @@ if _page == _nav_labels[3]:
     st.header(T("hetero_header"))
     st.caption(T("hetero_caption"))
 
-    _sub_beta, _sub_sigma, _sub_profile = st.tabs([
-        T("subtab_beta"), T("subtab_sigma"), T("subtab_profile"),
+    _sub_beta, _sub_sigma, _sub_profile, _sub_compare = st.tabs([
+        T("subtab_beta"), T("subtab_sigma"), T("subtab_profile"), T("subtab_compare"),
     ])
 
     # ===================  Sub-tab 1: β-Convergence  ===================
@@ -2264,17 +2262,11 @@ if _page == _nav_labels[3]:
 
     # ===================  Sub-tab 3: Province Profile  ===================
     with _sub_profile:
-        col_focus, col_peer, col_year = st.columns([2, 2, 1.3])
+        col_focus, col_year = st.columns([3, 1.3])
         with col_focus:
             focus_province = st.selectbox(T("focus_province"), available_names,
                                           index=focus_default_idx, key="hetero_focus",
                                           format_func=prov_name)
-        with col_peer:
-            peer_candidates = [n for n in available_names if n != focus_province]
-            peer_default = peer_candidates.index("江苏省") if "江苏省" in peer_candidates else 0
-            compare_province = st.selectbox(T("compare_province"), peer_candidates,
-                                            index=peer_default, key="hetero_peer",
-                                            format_func=prov_name)
         with col_year:
             year_dr = st.slider(T("focus_year"), YEARS[0], YEARS[-1], 2010, 1, key="hetero_year")
 
@@ -2341,7 +2333,7 @@ if _page == _nav_labels[3]:
             )
             st.plotly_chart(fig_bump, use_container_width=True)
 
-        col_stats, col_compare = st.columns([2, 3])
+        col_stats, col_yoy = st.columns(2)
         with col_stats:
             metric_names = T("stats_table_metrics")
             st.dataframe(
@@ -2359,6 +2351,7 @@ if _page == _nav_labels[3]:
                 use_container_width=True,
                 hide_index=True,
             )
+        with col_yoy:
             yoy_rows = []
             for i in range(1, len(prov_series)):
                 prev = prov_series.iloc[i - 1]
@@ -2370,27 +2363,40 @@ if _page == _nav_labels[3]:
                     T("yoy_change_col"): f"{change:+.1f}",
                     T("yoy_pct_col"): f"{pct:+.1f}%",
                 })
-            st.dataframe(pd.DataFrame(yoy_rows), use_container_width=True, height=250, hide_index=True)
+            st.dataframe(pd.DataFrame(yoy_rows), use_container_width=True, height=300, hide_index=True)
 
-        with col_compare:
-            s1 = df_prov[df_prov["name"] == focus_province].sort_values("年份")
-            s2 = df_prov[df_prov["name"] == compare_province].sort_values("年份")
-            subplot_titles = T("compare_subplots")
-            fig_cross = make_subplots(rows=1, cols=3, subplot_titles=subplot_titles)
-            for idx, metric in enumerate(["mean", "est_pop_wan", "max"], 1):
-                fig_cross.add_trace(go.Scatter(x=s1["年份"], y=s1[metric], name=prov_name(focus_province),
-                                               mode="lines+markers", line=dict(color="#1e3a5f", width=2),
-                                               showlegend=(idx == 1)), row=1, col=idx)
-                fig_cross.add_trace(go.Scatter(x=s2["年份"], y=s2[metric], name=prov_name(compare_province),
-                                               mode="lines+markers", line=dict(color="#c0392b", width=2),
-                                               showlegend=(idx == 1)), row=1, col=idx)
-            fig_cross.update_layout(
-                **PLOTLY_LAYOUT,
-                height=380,
-                hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
-                title=f"{prov_name(focus_province)} vs {prov_name(compare_province)}",
-            )
-            st.plotly_chart(fig_cross, use_container_width=True)
+    # ===================  Sub-tab 4: Province Comparison  ===================
+    with _sub_compare:
+        col_cmp1, col_cmp2 = st.columns(2)
+        with col_cmp1:
+            cmp_province_a = st.selectbox(T("focus_province"), available_names,
+                                          index=focus_default_idx, key="cmp_focus",
+                                          format_func=prov_name)
+        with col_cmp2:
+            cmp_candidates = [n for n in available_names if n != cmp_province_a]
+            cmp_default = cmp_candidates.index("江苏省") if "江苏省" in cmp_candidates else 0
+            cmp_province_b = st.selectbox(T("compare_province"), cmp_candidates,
+                                          index=cmp_default, key="cmp_peer",
+                                          format_func=prov_name)
+
+        s1 = df_prov[df_prov["name"] == cmp_province_a].sort_values("年份")
+        s2 = df_prov[df_prov["name"] == cmp_province_b].sort_values("年份")
+        subplot_titles = T("compare_subplots")
+        fig_cross = make_subplots(rows=1, cols=3, subplot_titles=subplot_titles)
+        for idx, metric in enumerate(["mean", "est_pop_wan", "max"], 1):
+            fig_cross.add_trace(go.Scatter(x=s1["年份"], y=s1[metric], name=prov_name(cmp_province_a),
+                                           mode="lines+markers", line=dict(color="#1e3a5f", width=2),
+                                           showlegend=(idx == 1)), row=1, col=idx)
+            fig_cross.add_trace(go.Scatter(x=s2["年份"], y=s2[metric], name=prov_name(cmp_province_b),
+                                           mode="lines+markers", line=dict(color="#c0392b", width=2),
+                                           showlegend=(idx == 1)), row=1, col=idx)
+        fig_cross.update_layout(
+            **PLOTLY_LAYOUT,
+            height=420,
+            hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
+            title=f"{prov_name(cmp_province_a)} vs {prov_name(cmp_province_b)}",
+        )
+        st.plotly_chart(fig_cross, use_container_width=True)
 
 
 # ===================================================================
