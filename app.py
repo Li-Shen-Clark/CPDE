@@ -1815,7 +1815,7 @@ if _page == _nav_labels[2]:
             fig_rank.update_layout(
                 **{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
                 height=380,
-                margin=dict(t=20, b=10, l=10, r=50),
+                margin=dict(t=40, b=10, l=10, r=50),
                 title=T("top15_title"), xaxis_title=T("density_unit"),
             )
             st.plotly_chart(fig_rank, use_container_width=True)
