@@ -1815,7 +1815,7 @@ if _page == _nav_labels[2]:
             fig_rank.update_layout(
                 **{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
                 height=380,
-                margin=dict(t=40, b=10, l=10, r=50),
+                margin=dict(t=50, b=10, l=10, r=50),
                 title=T("top15_title"), xaxis_title=T("density_unit"),
             )
             st.plotly_chart(fig_rank, use_container_width=True)
@@ -1894,7 +1894,7 @@ if _page == _nav_labels[2]:
                     **{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
                     title=T("prov_diff_title"),
                     height=max(480, len(prov_diff_list) * 22),
-                    margin=dict(t=40, b=10, l=10, r=50),
+                    margin=dict(t=50, b=10, l=10, r=50),
                     xaxis_title=T("density_unit"),
                 )
                 st.plotly_chart(fig_prov_diff, use_container_width=True)
@@ -1946,7 +1946,7 @@ if _page == _nav_labels[2]:
                 **{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
                 title=T("centroid_chart_title", y0=YEARS[0], y1=YEARS[-1]),
                 height=480,
-                margin=dict(t=40, b=10, l=10, r=10),
+                margin=dict(t=50, b=10, l=10, r=10),
                 geo=dict(bgcolor="rgba(0,0,0,0)"),
             )
             st.plotly_chart(fig_centroid, use_container_width=True)
@@ -2217,7 +2217,7 @@ if _page == _nav_labels[3]:
         ))
         fig_hm.update_layout(**{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
                              height=max(480, len(prov_names_ordered) * 20),
-                             margin=dict(t=20, b=20, l=10, r=10),
+                             margin=dict(t=50, b=20, l=10, r=10),
                              xaxis=dict(dtick=1), yaxis=dict(autorange="reversed"))
         st.plotly_chart(fig_hm, use_container_width=True)
 
