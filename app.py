@@ -47,7 +47,7 @@ html, body, [class*="css"] {
     font-family: 'Crimson Pro', 'Georgia', 'Noto Serif SC', serif;
 }
 .block-container {
-    padding-top: 1.5rem;
+    padding-top: 3rem;
     padding-bottom: 1rem;
     max-width: 1200px;
     background-color: #faf9f6;
