@@ -217,7 +217,7 @@ PLOTLY_LAYOUT = dict(
 
 _LANG_STRINGS = {
     # Sidebar
-    "sidebar_title_zh": "论文数据伴侣",
+    "sidebar_title_zh": "论文交互附录",
     "sidebar_title_en": "Working Paper Companion",
     "sidebar_subtitle_zh": "中国人口密度 2002–2020",
     "sidebar_subtitle_en": "China Population Density 2002–2020",
@@ -2395,7 +2395,7 @@ if _page == _nav_labels[3]:
                                            mode="lines+markers", line=dict(color="#c0392b", width=2),
                                            showlegend=(idx == 1)), row=1, col=idx)
         fig_cross.update_layout(
-            **PLOTLY_LAYOUT,
+            **{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
             height=440,
             margin=dict(t=90, b=20, l=20, r=20),
             hovermode="x unified", legend=dict(orientation="h", y=1.12, yanchor="bottom"),
