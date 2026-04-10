@@ -386,14 +386,14 @@ _LANG_STRINGS = {
     "year_slider_en": "Year",
     "anim_frame_caption_zh": "{yr} 年累计变化（相对 {y0} 年）",
     "anim_frame_caption_en": "{yr} cumulative change (relative to {y0})",
-    "anim_mean_change_zh": "累计平均变化",
-    "anim_mean_change_en": "Cumul. Avg. Change",
-    "anim_max_increase_zh": "最大累计增幅",
-    "anim_max_increase_en": "Max Cumul. Increase",
-    "anim_increase_share_zh": "增长区域占比",
-    "anim_increase_share_en": "Growth Area Share",
-    "anim_decrease_share_zh": "下降区域占比",
-    "anim_decrease_share_en": "Decline Area Share",
+    "anim_mean_change_zh": "均值变化",
+    "anim_mean_change_en": "Avg. Δ",
+    "anim_max_increase_zh": "最大增幅",
+    "anim_max_increase_en": "Max Δ",
+    "anim_increase_share_zh": "增长区占比",
+    "anim_increase_share_en": "Growth %",
+    "anim_decrease_share_zh": "下降区占比",
+    "anim_decrease_share_en": "Decline %",
     "anim_stats_caption_zh": "当前总人口 {pop:.2f} 亿，加权平均密度 {wt:.1f} 人/km²；差值色标约为 ±{p99:.0f} 人/km²，裁剪 {clip:.1f}% 像素。",
     "anim_stats_caption_en": "Current total pop. {pop:.2f}B, weighted avg. density {wt:.1f} ppl/km²; diff colorscale ≈±{p99:.0f} ppl/km², clipping {clip:.1f}% pixels.",
     "agg_indicators_zh": "集聚指标时间序列",
@@ -1653,7 +1653,7 @@ if _page == _nav_labels[1]:
             st.progress(progress, text=f"**{yr}** / {YEARS[-1]}")
             nat_row_yr = df_national[df_national["年份"] == yr].iloc[0]
             c1, c2 = st.columns(2)
-            c1.metric(T("anim_mean_change"), f"{s['mean_change']:+.1f} {'人/km²' if lang == 'zh' else 'ppl/km²'}")
+            c1.metric(T("anim_mean_change"), f"{s['mean_change']:+.1f}")
             c2.metric(T("anim_max_increase"), f"{s['max_increase']:+.0f}")
             c3, c4 = st.columns(2)
             c3.metric(T("anim_increase_share"), f"{s['increase_share']:.1f}%")
