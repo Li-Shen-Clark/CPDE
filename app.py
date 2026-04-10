@@ -280,7 +280,7 @@ _LANG_STRINGS = {
     # ---- Tab 1: Summary (paper landing page) ----
     "summary_header_zh": "人口集聚与空间再配置：中国",
     "summary_header_en": "Population Agglomeration and Spatial Reallocation in China",
-    "summary_author_zh": "沈力 · 克拉克大学经济学系",
+    "summary_author_zh": "申丽 · 克拉克大学经济学系",
     "summary_author_en": "Li Shen · Department of Economics, Clark University",
     "summary_abstract_zh": (
         "本研究利用 WorldPop 联合国校正 1 km 人口密度栅格数据（降采样至 ~5 km），"
