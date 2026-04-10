@@ -2065,7 +2065,6 @@ if _page == _nav_labels[3]:
             label_set = set(scatter_df.nlargest(5, "2020人口(万)")["省份"])
             label_set.update(scatter_df.nlargest(3, "增长率%")["省份"])
             label_set.update(scatter_df.nsmallest(3, "增长率%")["省份"])
-            label_set.add(focus_province)
             scatter_df["标签"] = scatter_df["省份"].apply(lambda x: PROVINCE_NAME_EN.get(x, x) if lang == "en" else x.replace("省","").replace("市","").replace("自治区","").replace("壮族","").replace("维吾尔","").replace("回族","")).where(scatter_df["省份"].isin(label_set), "")
 
             fig_traj = go.Figure()
@@ -2091,15 +2090,6 @@ if _page == _nav_labels[3]:
                                   + "<extra></extra>",
                     customdata=list(zip(sub["省份"], sub["2020人口(万)"])),
                 ))
-
-            # Highlight focus province
-            focus_row = scatter_df[scatter_df["省份"] == focus_province].iloc[0]
-            fig_traj.add_trace(go.Scatter(
-                x=[focus_row["2002年密度"]], y=[focus_row["增长率%"]],
-                mode="markers",
-                marker=dict(size=22, color="rgba(0,0,0,0)", line=dict(color="black", width=2.5)),
-                name=T("focus_province_legend"), showlegend=False, hoverinfo="skip",
-            ))
 
             # OLS regression line
             x_log = np.log(scatter_df["2002年密度"].values)
