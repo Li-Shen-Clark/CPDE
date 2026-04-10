@@ -304,6 +304,59 @@ _LANG_STRINGS = {
     ),
     "summary_caption_zh": "Working Paper · 当前范围：{scope}",
     "summary_caption_en": "Working Paper · Current scope: {scope}",
+    # --- Contributions section ---
+    "contrib_header_zh": "论文贡献",
+    "contrib_header_en": "Contributions",
+    "contrib_field_labels_zh": ["空间经济学", "区域科学", "中国区域发展"],
+    "contrib_field_labels_en": ["Spatial Economics", "Regional Science", "China Regional Development"],
+    "contrib_measurement_title_zh": "度量贡献",
+    "contrib_measurement_title_en": "Measurement",
+    "contrib_measurement_zh": (
+        "构建了一套基于栅格的人口空间分布度量框架：从 1 km WorldPop 栅格出发，"
+        "经纬度修正像元面积、P99 裁剪、降采样至 5 km，"
+        "直接从栅格计算空间基尼系数、Top-10% 集中度、人口重心等指标，"
+        "避免了行政单元汇总带来的 MAUP 问题。"
+    ),
+    "contrib_measurement_en": (
+        "Develops a raster-based measurement framework for population distribution: "
+        "starting from 1 km WorldPop grids, applying latitude-corrected pixel areas, P99 clipping, "
+        "and downsampling to 5 km, then computing spatial Gini, top-decile concentration, "
+        "and population centroid directly from the raster — avoiding the MAUP bias inherent "
+        "in administrative-unit aggregation."
+    ),
+    "contrib_empirical_title_zh": "实证贡献",
+    "contrib_empirical_title_en": "Empirical",
+    "contrib_empirical_zh": (
+        "提供了 {y0}–{y1} 年中国人口空间再配置的系统性描述证据。"
+        "文献中关于中国人口分布的实证研究多依赖地级或省级截面数据；"
+        "本文在像元层面呈现了集聚增强、核心区扩展、重心南移等事实，"
+        "并通过省际 β/σ 收敛检验刻画了省际密度的离散演化。"
+    ),
+    "contrib_empirical_en": (
+        "Provides systematic descriptive evidence on China's population spatial reallocation "
+        "over {y0}–{y1}. Much of the existing empirical literature on China's population "
+        "distribution relies on prefecture- or province-level cross-sections; "
+        "this paper documents rising concentration, core expansion, and southward centroid shift "
+        "at the pixel level, and characterizes interprovincial density dispersion through β/σ convergence tests."
+    ),
+    "contrib_relevance_title_zh": "领域关联",
+    "contrib_relevance_title_en": "Relevance",
+    "contrib_relevance_zh": (
+        "**空间经济学**：为人口集聚的空间演化提供了像元层面的高分辨率证据，"
+        "补充了既有基于行政区划的集聚研究。"
+        "**区域科学**：β/σ 收敛检验揭示省际密度的追赶与分化特征，"
+        "对理解中国区域差异的演变具有参考价值。"
+        "**中国区域发展**：对高密度核心区的扩展路径、"
+        "人口重心的空间轨迹等提供了可重复的栅格证据。"
+    ),
+    "contrib_relevance_en": (
+        "**Spatial economics**: provides high-resolution, pixel-level evidence on the spatial evolution "
+        "of population agglomeration, complementing existing studies based on administrative units. "
+        "**Regional science**: β/σ convergence tests reveal catch-up and dispersion patterns across provinces, "
+        "informing the understanding of China's evolving regional disparities. "
+        "**China regional development**: documents expansion paths of high-density cores "
+        "and the spatial trajectory of the population centroid with reproducible raster-based evidence."
+    ),
     # shift directions
     "shift_ne_zh": "东北", "shift_ne_en": "Northeast",
     "shift_nw_zh": "西北", "shift_nw_en": "Northwest",
@@ -1481,6 +1534,35 @@ if _page == _nav_labels[0]:
     with _btn_col:
         st.link_button(_paper_btn_zh if lang == "zh" else _paper_btn_en,
                         PAPER_CANONICAL_URL, use_container_width=True)
+
+    # --- Contributions ---
+    st.divider()
+    st.markdown(f"#### {T('contrib_header')}")
+
+    # Field tags
+    _field_labels = T("contrib_field_labels")
+    _tag_html = " &nbsp;".join(
+        f"<span style='display:inline-block;background:#1e3a5f;color:#fff;"
+        f"padding:2px 10px;border-radius:12px;font-size:0.78rem;'>{lb}</span>"
+        for lb in _field_labels
+    )
+    st.markdown(_tag_html, unsafe_allow_html=True)
+    st.markdown("")
+
+    _cc1, _cc2, _cc3 = st.columns(3, gap="medium")
+    with _cc1:
+        st.markdown(f"**{T('contrib_measurement_title')}**")
+        st.markdown(f"<span style='font-size:0.88rem;line-height:1.5;color:#444;'>"
+                    f"{T('contrib_measurement')}</span>", unsafe_allow_html=True)
+    with _cc2:
+        st.markdown(f"**{T('contrib_empirical_title')}**")
+        st.markdown(f"<span style='font-size:0.88rem;line-height:1.5;color:#444;'>"
+                    f"{T('contrib_empirical', y0=YEARS[0], y1=YEARS[-1])}</span>",
+                    unsafe_allow_html=True)
+    with _cc3:
+        st.markdown(f"**{T('contrib_relevance_title')}**")
+        st.markdown(f"<span style='font-size:0.88rem;line-height:1.5;color:#444;'>"
+                    f"{T('contrib_relevance')}</span>", unsafe_allow_html=True)
 
     st.divider()
 
