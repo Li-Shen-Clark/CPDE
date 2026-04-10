@@ -1779,6 +1779,10 @@ if _page == _nav_labels[2]:
                                           "weight": 0.8, "fillOpacity": 0},
             ).add_to(m)
             map_result = st_folium(m, height=520, use_container_width=True, key="spatial_single_map")
+            if lang == "zh":
+                st.caption("色标（inferno，对数刻度）：黑色 = 低密度，紫色 = 中等密度，黄色 = 高密度。点击地图可查看该像元的历年密度序列。")
+            else:
+                st.caption("Colorscale (inferno, log scale): black = low density, purple = medium, yellow = high density. Click the map to view a pixel's density time series.")
 
             if map_result and map_result.get("last_clicked"):
                 lat_c = map_result["last_clicked"]["lat"]
