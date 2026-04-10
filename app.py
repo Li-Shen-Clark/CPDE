@@ -369,8 +369,8 @@ _LANG_STRINGS = {
     # ---- Tab 2: National ----
     "national_header_zh": "主要发现",
     "national_header_en": "Main Findings",
-    "national_caption_zh": "展示 {y0}–{y1} 年人口密度的时间演变。上半部分为空间再配置动画，下半部分为集聚指标时间序列。",
-    "national_caption_en": "Displaying temporal evolution of population density {y0}–{y1}. Top: spatial reallocation animation. Bottom: concentration indicator time series.",
+    "national_caption_zh": "展示 {y0}–{y1} 年人口密度的时间演变。上半部分为空间再配置动画（红色 = 相对基期人口增加，蓝色 = 减少），下半部分为集聚指标时间序列。",
+    "national_caption_en": "Displaying temporal evolution of population density {y0}–{y1}. Top: spatial reallocation animation (red = population gain relative to base year, blue = loss). Bottom: concentration indicator time series.",
     "play_btn_zh": "播放累计变化",
     "play_btn_en": "Play Cumulative Change",
     "speed_label_zh": "速度",
