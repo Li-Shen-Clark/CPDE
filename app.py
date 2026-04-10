@@ -149,6 +149,14 @@ WORLDPOP_CHINA_2020_URL = "https://hub.worldpop.org/geodata/summary?id=44834"
 WORLDPOP_DOI_URL = "https://doi.org/10.5258/SOTON/WP00675"
 CC_BY_4_URL = "https://creativecommons.org/licenses/by/4.0/"
 
+# --- Paper entry points (single source of truth) ---
+PAPER_PDF_URL = "https://github.com/Li-Shen-Clark/CPDE/blob/main/main.pdf"
+# SSRN_URL = ""  # uncomment and fill when SSRN listing is live
+CITATION_TEXT = (
+    'Shen, Li (2025). "Population Agglomeration and Spatial Reallocation in China." '
+    "Working Paper, Clark University."
+)
+
 # ---------------------------------------------------------------------------
 # Region classification (东/中/西/东北)
 # ---------------------------------------------------------------------------
@@ -264,8 +272,6 @@ _LANG_STRINGS = {
     "tab_spatial_en": "Maps",
     "tab_hetero_zh": "省际证据",
     "tab_hetero_en": "Provincial Evidence",
-    "tab_research_zh": "研究课题",
-    "tab_research_en": "Research Topics",
     "tab_methods_zh": "数据与方法",
     "tab_methods_en": "Data & Methods",
     # Page title
@@ -491,11 +497,9 @@ _LANG_STRINGS = {
     "centroid_meaning_en": "**Note**",
     "centroid_meaning_text_zh": (
         "人口重心的持续漂移与沿海和中南部省份的相对人口增长一致。"
-        "方向性的一致提示这不太可能仅由短期随机波动所驱动。"
     ),
     "centroid_meaning_text_en": (
-        "The persistent centroid drift is consistent with relative population gains in coastal and south-central provinces. "
-        "The directional consistency suggests this is unlikely to be driven solely by idiosyncratic local shocks."
+        "The persistent centroid drift is consistent with relative population gains in coastal and south-central provinces."
     ),
     "latlon_chart_title_zh": "重心坐标时间序列",
     "latlon_chart_title_en": "Centroid Coordinate Time Series",
@@ -530,6 +534,12 @@ _LANG_STRINGS = {
     "hetero_header_en": "Provincial Evidence",
     "hetero_caption_zh": "初始密度低的省份是否增长更快？省际密度差异在缩小还是扩大？",
     "hetero_caption_en": "Do provinces with lower initial density grow faster? Is cross-provincial dispersion narrowing or widening?",
+    "subtab_beta_zh": "β-收敛",
+    "subtab_beta_en": "β-Convergence",
+    "subtab_sigma_zh": "σ-离散度",
+    "subtab_sigma_en": "σ-Dispersion",
+    "subtab_profile_zh": "省份剖面",
+    "subtab_profile_en": "Province Profile",
     "focus_province_zh": "焦点省份",
     "focus_province_en": "Focus Province",
     "compare_province_zh": "对照省份",
@@ -648,268 +658,11 @@ _LANG_STRINGS = {
     "yoy_pct_col_en": "Chg. Rate",
     "compare_subplots_zh": ["平均密度", "估算人口(万)", "最大密度"],
     "compare_subplots_en": ["Avg. Density", "Est. Pop. (10k)", "Max Density"],
-    # ---- Tab 5: Research ----
-    "research_header_zh": "研究课题：Trade, Spatial Economics & Market Integration",
-    "research_header_en": "Research Topics: Trade, Spatial Economics & Market Integration",
-    "research_caption_zh": "本数据集（WorldPop UN-adjusted, 2002-2020）适用于以下研究方向，按与贸易/空间/市场一体化的相关性排序。",
-    "research_caption_en": "This dataset (WorldPop UN-adjusted, 2002-2020) is suitable for the following research directions, ranked by relevance to trade/spatial/market integration research.",
-    "topic1_title_zh": "01 — 市场一体化与贸易成本的空间代理",
-    "topic1_title_en": "01 — Market Integration & Spatial Proxy for Trade Costs",
-    "topic1_body_zh": """
-**核心问题**：中国国内市场一体化程度如何演变？人口再配置能否作为贸易成本下降的显示性证据？
-
-在 NEG 框架中，贸易成本下降会促使劳动力向市场规模更大的核心区集中。人口密度的空间动态
-因此可作为 market integration 的代理指标：集聚加速暗示要素流动壁垒在降低。
-
-**适用方法**
-- 人口重心漂移方向与距离 → 劳动力流动的宏观方向代理
-- 加权平均密度（market potential 代理）时间序列 → 本地市场规模演化
-- 东/中/西人口份额变化 → 区域间 market access 相对变化
-
-**本平台已提供的证据**
-- **摘要页**：人口重心漂移方向与距离、市场潜力代理指标趋势
-- **空间格局 → 人口重心与区域份额**：四大区域人口份额演变图
-
-**参考文献**
-- Redding & Venables (2004) *Economic geography and international inequality*
-- Zheng & Kahn (2013) *China's bullet trains facilitate market integration*
-- Hanson (2005) *Market potential, increasing returns, and geographic concentration*
-""",
-    "topic1_body_en": """
-**Core question**: How has the degree of China's domestic market integration evolved? Can population reallocation serve as revealed evidence of declining trade costs?
-
-In the NEG framework, lower trade costs encourage labor to concentrate in core areas with larger market sizes. Spatial dynamics of population density thus serve as a proxy for market integration: accelerating agglomeration implies falling barriers to factor mobility.
-
-**Applicable methods**
-- Population centroid drift direction & distance → macro-directional proxy for labor mobility
-- Weighted average density (market potential proxy) time series → evolution of local market scale
-- East/Central/West population share changes → relative changes in interregional market access
-
-**Evidence already provided on this platform**
-- **Summary**: population centroid drift direction & distance, market potential proxy trends
-- **Spatial Patterns → Population Centroid & Regional Shares**: four-region population share evolution chart
-
-**References**
-- Redding & Venables (2004) *Economic geography and international inequality*
-- Zheng & Kahn (2013) *China's bullet trains facilitate market integration*
-- Hanson (2005) *Market potential, increasing returns, and geographic concentration*
-""",
-    "topic2_title_zh": "02 — 空间不平等与区域收敛",
-    "topic2_title_en": "02 — Spatial Inequality & Regional Convergence",
-    "topic2_body_zh": """
-**核心问题**：中国省际/区域间人口密度在收敛还是发散？这对 regional economic outcomes 意味着什么？
-
-人口密度收敛/发散直接反映区域经济机会的趋同或分化。σ-收敛和 β-收敛检验
-是 regional economics 的经典分析范式。
-
-**适用方法**
-- β-收敛：ln(初始密度) vs 年均增长率的 OLS 回归
-- σ-收敛：省际密度变异系数（CV）的时间趋势
-- 空间基尼系数：像元级人口分布不平等度
-- Theil 指数分解：总不平等 = 省际 + 省内
-
-**本平台已提供的证据**
-- **摘要页**：β-收敛散点图（按东/中/西/东北着色）、空间基尼系数趋势
-- **全国演变**：σ-收敛（CV 时间序列）、空间基尼系数面板
-- **区域收敛**：σ-收敛详图、β-收敛散点图、省际热力矩阵
-
-**参考文献**
-- Barro & Sala-i-Martin (1992) *Convergence*
-- Lessmann & Seidel (2017) *Regional inequality, convergence, and its determinants*
-- Fan & Sun (2008) *Regional inequality in China, 1978-2006*
-""",
-    "topic2_body_en": """
-**Core question**: Is interprovincial/interregional population density in China converging or diverging? What does this imply for regional economic outcomes?
-
-Convergence/divergence of population density directly reflects the convergence or divergence of regional economic opportunities. σ-convergence and β-convergence tests are classic analytical paradigms in regional economics.
-
-**Applicable methods**
-- β-convergence: OLS regression of ln(initial density) vs annual growth rate
-- σ-convergence: time trend of interprovincial density coefficient of variation (CV)
-- Spatial Gini coefficient: pixel-level population distribution inequality
-- Theil index decomposition: total inequality = interprovincial + intraprovincial
-
-**Evidence already provided on this platform**
-- **Summary**: β-convergence scatter (colored by East/Central/West/Northeast), spatial Gini trend
-- **National Dynamics**: σ-convergence (CV time series), spatial Gini panel
-- **Provincial Heterogeneity**: σ-convergence detail, β-convergence scatter, interprovincial heatmap
-
-**References**
-- Barro & Sala-i-Martin (1992) *Convergence*
-- Lessmann & Seidel (2017) *Regional inequality, convergence, and its determinants*
-- Fan & Sun (2008) *Regional inequality in China, 1978-2006*
-""",
-    "topic3_title_zh": "03 — 基础设施与政策的因果推断",
-    "topic3_title_en": "03 — Causal Inference for Infrastructure & Policy",
-    "topic3_body_zh": """
-**核心问题**：高铁开通、经济特区设立等政策冲击是否显著改变了周边人口密度和 regional outcomes？
-
-人口密度栅格提供了精细的空间连续数据，非常适合做空间断点回归（Spatial RDD）
-或双重差分（DID）分析，评估交通基础设施和贸易政策对区域经济的因果效应。
-
-**适用方法**
-- **空间 DID**：以高铁站点/自贸区为处理组，匹配对照组，比较政策前后密度变化
-- **空间 RDD**：以政策边界（如开发区边界）为断点，检验边界两侧密度差异
-- **合成控制法**：为特定城市构建反事实对照
-
-**本平台已提供的证据**
-- **空间格局 → 两期对比**：可自由选择政策前后年份，查看空间再配置地图
-- **区域收敛 → 焦点省份剖面**：特定省份的密度时间序列，可识别政策拐点
-
-**参考文献**
-- Zheng & Kahn (2013) *China's bullet trains facilitate market integration*
-- Qin (2017) *"No county left behind?" The distributional impact of high-speed rail upgrades in China*
-- Faber (2014) *Trade integration, market size, and industrialization*
-""",
-    "topic3_body_en": """
-**Core question**: Did policy shocks such as high-speed rail openings and special economic zone establishment significantly change nearby population density and regional outcomes?
-
-Population density rasters provide fine-grained spatially continuous data, highly suitable for Spatial Regression Discontinuity Design (Spatial RDD) or Difference-in-Differences (DID) analysis to evaluate causal effects of transportation infrastructure and trade policy on regional economies.
-
-**Applicable methods**
-- **Spatial DID**: Use HSR stations/FTZs as treatment group, match control group, compare density changes before/after policy
-- **Spatial RDD**: Use policy boundaries (e.g., development zone boundaries) as cutoffs to test density differences on both sides
-- **Synthetic control method**: Construct counterfactual comparisons for specific cities
-
-**Evidence already provided on this platform**
-- **Spatial Patterns → Two-Period Comparison**: freely select pre/post-policy years to view spatial reallocation maps
-- **Provincial Heterogeneity → Focus Province Profile**: density time series for specific provinces to identify policy inflection points
-
-**References**
-- Zheng & Kahn (2013) *China's bullet trains facilitate market integration*
-- Qin (2017) *"No county left behind?" The distributional impact of high-speed rail upgrades in China*
-- Faber (2014) *Trade integration, market size, and industrialization*
-""",
-    "topic4_title_zh": "04 — 人口迁移推断与劳动力流动",
-    "topic4_title_en": "04 — Migration Inference & Labor Mobility",
-    "topic4_body_zh": """
-**核心问题**：哪些地区在持续"吸人"，哪些在"失血"？净迁移格局如何反映区域比较优势？
-
-相邻年份的密度差分（Δρ）扣除自然增长率后，残差可近似视为净迁移的空间代理变量。
-迁移方向揭示劳动力对区域间市场规模和就业机会差异的"用脚投票"。
-
-**适用方法**
-- 差分法：Δρ(x,y) = ρ_t(x,y) - ρ_{t-1}(x,y)
-- 扣除自然增长：利用省级出生率/死亡率数据估算自然增量，残差 ≈ 净迁移
-- 空间聚类：对 Δρ 做 Local Moran's I，识别显著聚集区
-
-**本平台已提供的证据**
-- **全国演变**：累计变化动画——红色 = 人口流入区，蓝色 = 流出区
-- **空间格局 → 两期对比**：差值地图 + 省级变化柱状图
-
-**参考文献**
-- Bakker et al. (2021) *Estimating net migration at high spatial resolution*
-- Tombe & Zhu (2019) *Trade, migration, and productivity: A quantitative analysis of China*
-""",
-    "topic4_body_en": """
-**Core question**: Which regions are continuously "attracting" people, and which are "bleeding" population? How does the net migration pattern reflect regional comparative advantage?
-
-The density difference (Δρ) between adjacent years, after removing natural growth, can approximately serve as a spatial proxy for net migration. Migration direction reveals labor's "voting with feet" in response to differences in regional market size and employment opportunities.
-
-**Applicable methods**
-- Differencing: Δρ(x,y) = ρ_t(x,y) - ρ_{t-1}(x,y)
-- Remove natural growth: Use provincial birth/death rate data to estimate natural increment; residual ≈ net migration
-- Spatial clustering: Apply Local Moran's I to Δρ to identify significant clusters
-
-**Evidence already provided on this platform**
-- **National Dynamics**: cumulative change animation — red = population inflow, blue = outflow
-- **Spatial Patterns → Two-Period Comparison**: difference map + provincial change bar chart
-
-**References**
-- Bakker et al. (2021) *Estimating net migration at high spatial resolution*
-- Tombe & Zhu (2019) *Trade, migration, and productivity: A quantitative analysis of China*
-""",
-    "topic5_title_zh": "05 — 城镇化结构与城市体系",
-    "topic5_title_en": "05 — Urbanization Structure & Urban System",
-    "topic5_body_zh": """
-**核心问题**：中国城市体系的空间结构如何演变？是否服从 Zipf 定律？城镇化模式是"摊大饼"还是"多中心"？
-
-栅格数据允许跳过行政区划限制，用密度阈值直接构建"功能城市区"（Functional Urban Area），
-检验城市规模分布并追踪城市边界扩张。
-
-**适用方法**
-- 密度阈值 + 连通域分析 → 功能城市区 → Zipf 系数估计
-- 城市蔓延指数：斑块面积增速 vs 人口增速
-- 多中心性检验：次中心密度峰值的数量与强度变化
-
-**本平台已提供的证据**
-- **全国演变**：高密度像元数（核心区规模）时间趋势
-- **空间格局 → 单年格局**：像元密度分布直方图
-
-**参考文献**
-- Gabaix (1999) *Zipf's Law for Cities: An Explanation*
-- Angel et al. (2011) *The dimensions of global urban expansion*
-- Au & Henderson (2006) *Are Chinese cities too small?*
-""",
-    "topic5_body_en": """
-**Core question**: How has China's urban system spatial structure evolved? Does it follow Zipf's Law? Is the urbanization pattern "urban sprawl" or "polycentric"?
-
-Raster data allows bypassing administrative boundary constraints, using density thresholds to directly construct Functional Urban Areas (FUAs), test urban size distributions, and track urban boundary expansion.
-
-**Applicable methods**
-- Density threshold + connected component analysis → Functional Urban Areas → Zipf coefficient estimation
-- Urban sprawl index: patch area growth rate vs population growth rate
-- Polycentricity test: number and intensity changes of secondary center density peaks
-
-**Evidence already provided on this platform**
-- **National Dynamics**: high-density pixel count (core area scale) time trend
-- **Spatial Patterns → Single Year**: pixel density distribution histogram
-
-**References**
-- Gabaix (1999) *Zipf's Law for Cities: An Explanation*
-- Angel et al. (2011) *The dimensions of global urban expansion*
-- Au & Henderson (2006) *Are Chinese cities too small?*
-""",
-    "topic6_title_zh": "06 — 多源数据叠加与耦合分析",
-    "topic6_title_en": "06 — Multi-Source Data Overlay & Coupling Analysis",
-    "topic6_body_zh": """
-**核心问题**：人口密度与经济活动、夜间灯光、贸易流量之间存在怎样的空间耦合关系？
-
-将人口密度栅格与其他空间数据集叠加，可以揭示人口-经济-贸易的协同演化模式，
-为 market access 和 economic geography 的实证研究提供多维度支撑。
-
-**适用方法**
-- 栅格叠加：人口密度 × 夜间灯光（DMSP/VIIRS）→ 残差分析
-- Market access 构建：人口密度 + 交通网络 → Harris (1954) market potential
-- 地理加权回归（GWR）：探索贸易-人口关系的空间异质性
-
-**可叠加的数据源**
-- 夜间灯光：DMSP-OLS / NPP-VIIRS → 经济活动代理
-- GDP 栅格：Kummu et al. (2018) → 空间经济产出
-- 交通网络：OpenStreetMap 路网 → 贸易成本度量
-- 土地利用：GlobeLand30 / CLCD → 城市用地扩张
-
-**参考文献**
-- Henderson et al. (2012) *Measuring economic growth from outer space*
-- Donaldson & Hornbeck (2016) *Railroads and American economic growth*
-""",
-    "topic6_body_en": """
-**Core question**: What spatial coupling relationships exist between population density, economic activity, nighttime lights, and trade flows?
-
-Overlaying population density rasters with other spatial datasets can reveal co-evolutionary patterns of population-economy-trade, providing multi-dimensional support for empirical research in market access and economic geography.
-
-**Applicable methods**
-- Raster overlay: population density × nighttime lights (DMSP/VIIRS) → residual analysis
-- Market access construction: population density + transport network → Harris (1954) market potential
-- Geographically Weighted Regression (GWR): explore spatial heterogeneity of trade-population relationships
-
-**Overlayable data sources**
-- Nighttime lights: DMSP-OLS / NPP-VIIRS → economic activity proxy
-- GDP raster: Kummu et al. (2018) → spatial economic output
-- Transport network: OpenStreetMap road network → trade cost measurement
-- Land use: GlobeLand30 / CLCD → urban land expansion
-
-**References**
-- Henderson et al. (2012) *Measuring economic growth from outer space*
-- Donaldson & Hornbeck (2016) *Railroads and American economic growth*
-""",
-    "research_footer_zh": "以上课题均可基于本平台展示的数据展开初步分析。各课题标注了本平台已提供的相关证据页面，可直接跳转查看。如需原始 1km 栅格，请访问 [WorldPop 官方数据页](%s)。",
-    "research_footer_en": "All above topics can be preliminarily analyzed using data shown on this platform. Each topic notes relevant evidence pages already provided. For the original 1km rasters, visit the [WorldPop official data page](%s).",
     # ---- Tab 6: Methods ----
     "methods_header_zh": "数据与方法",
     "methods_header_en": "Data & Methods",
-    "methods_caption_zh": "把数据口径、处理流程和解释边界写清楚，是经济分析页面最重要的可信度部分。",
-    "methods_caption_en": "Clearly documenting data scope, processing workflow, and interpretation boundaries is the most important credibility element of any economic analysis page.",
+    "methods_caption_zh": "数据口径、处理流程与解释边界。",
+    "methods_caption_en": "Data scope, processing workflow, and interpretation boundaries.",
     "methods_data_sources_zh": "数据来源",
     "methods_data_sources_en": "Data Sources",
     "methods_data_md_zh": (
@@ -1629,6 +1382,10 @@ st.sidebar.divider()
 
 # --- Minimal meta info ---
 scope_label_readable = T("scope_mainland") if mainland_only else T("scope_all")
+if lang == "zh":
+    st.sidebar.link_button("📄 阅读论文 (PDF)", PAPER_PDF_URL, use_container_width=True)
+else:
+    st.sidebar.link_button("📄 Read the Paper", PAPER_PDF_URL, use_container_width=True)
 st.sidebar.caption(
     f"Li Shen · Clark University · [GitHub](https://github.com/Li-Shen-Clark/CPDE)"
 )
@@ -1714,9 +1471,9 @@ if _page == _nav_labels[0]:
     _btn_col, _ = st.columns([1, 3])
     with _btn_col:
         if lang == "zh":
-            st.link_button("📄 阅读论文 (PDF)", "https://github.com/Li-Shen-Clark/CPDE/blob/main/main.pdf", use_container_width=True)
+            st.link_button("📄 阅读论文 (PDF)", PAPER_PDF_URL, use_container_width=True)
         else:
-            st.link_button("📄 Read the Paper (PDF)", "https://github.com/Li-Shen-Clark/CPDE/blob/main/main.pdf", use_container_width=True)
+            st.link_button("📄 Read the Paper (PDF)", PAPER_PDF_URL, use_container_width=True)
 
     st.divider()
 
@@ -1916,85 +1673,85 @@ if _page == _nav_labels[1]:
     else:
         render_national_frame(manual_year)
 
-    # --- Agglomeration indicators panel ---
+    # --- Concentration indicators panel (collapsed by default) ---
     st.divider()
-    st.subheader(T("agg_indicators"))
+    with st.expander(T("agg_indicators"), expanded=False):
 
-    col_gini, col_conc = st.columns(2)
-    with col_gini:
-        fig_gini = go.Figure()
-        fig_gini.add_trace(go.Scatter(
-            x=df_gini["年份"], y=df_gini["空间基尼系数"],
-            mode="lines+markers", line=dict(color="#1e3a5f", width=2.5),
-            fill="tozeroy", fillcolor="rgba(30,58,95,0.08)",
-        ))
-        fig_gini.update_layout(
-            **PLOTLY_LAYOUT,
-            title=T("gini_chart_title"),
-            height=380,
-            xaxis_title=T("year_label"), yaxis_title=T("gini_yaxis"),
-            hovermode="x unified",
-        )
-        st.plotly_chart(fig_gini, use_container_width=True)
-        st.caption(T("gini_caption"))
+        col_gini, col_conc = st.columns(2)
+        with col_gini:
+            fig_gini = go.Figure()
+            fig_gini.add_trace(go.Scatter(
+                x=df_gini["年份"], y=df_gini["空间基尼系数"],
+                mode="lines+markers", line=dict(color="#1e3a5f", width=2.5),
+                fill="tozeroy", fillcolor="rgba(30,58,95,0.08)",
+            ))
+            fig_gini.update_layout(
+                **PLOTLY_LAYOUT,
+                title=T("gini_chart_title"),
+                height=380,
+                xaxis_title=T("year_label"), yaxis_title=T("gini_yaxis"),
+                hovermode="x unified",
+            )
+            st.plotly_chart(fig_gini, use_container_width=True)
+            st.caption(T("gini_caption"))
 
-    with col_conc:
-        fig_conc = go.Figure()
-        fig_conc.add_trace(go.Scatter(
-            x=df_conc10["年份"], y=df_conc10["Top10%人口占比"],
-            mode="lines+markers", line=dict(color="#c0392b", width=2.5),
-            fill="tozeroy", fillcolor="rgba(192,57,43,0.08)",
-        ))
-        fig_conc.update_layout(
-            **PLOTLY_LAYOUT,
-            title=T("conc_chart_title"),
-            height=380,
-            xaxis_title=T("year_label"), yaxis_title=T("conc_yaxis2"),
-            hovermode="x unified",
-        )
-        st.plotly_chart(fig_conc, use_container_width=True)
-        st.caption(T("conc_caption"))
+        with col_conc:
+            fig_conc = go.Figure()
+            fig_conc.add_trace(go.Scatter(
+                x=df_conc10["年份"], y=df_conc10["Top10%人口占比"],
+                mode="lines+markers", line=dict(color="#c0392b", width=2.5),
+                fill="tozeroy", fillcolor="rgba(192,57,43,0.08)",
+            ))
+            fig_conc.update_layout(
+                **PLOTLY_LAYOUT,
+                title=T("conc_chart_title"),
+                height=380,
+                xaxis_title=T("year_label"), yaxis_title=T("conc_yaxis2"),
+                hovermode="x unified",
+            )
+            st.plotly_chart(fig_conc, use_container_width=True)
+            st.caption(T("conc_caption"))
 
-    col_mp, col_sigma = st.columns(2)
-    with col_mp:
-        fig_mp = make_subplots(specs=[[{"secondary_y": True}]])
-        fig_mp.add_trace(go.Scatter(
-            x=df_national["年份"], y=df_national["加权平均密度"],
-            name=T("mp_trace1"), mode="lines+markers",
-            line=dict(color="#1e3a5f", width=2.5),
-        ), secondary_y=False)
-        fig_mp.add_trace(go.Scatter(
-            x=df_national["年份"], y=df_national["高密度像素数"],
-            name=T("mp_trace2"), mode="lines+markers",
-            line=dict(color="#b8860b", width=2),
-        ), secondary_y=True)
-        fig_mp.update_layout(
-            **PLOTLY_LAYOUT,
-            title=T("mp_chart_title"),
-            height=380,
-            hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
-        )
-        fig_mp.update_yaxes(title_text=T("mp_yaxis1"), secondary_y=False)
-        fig_mp.update_yaxes(title_text=T("mp_yaxis2"), secondary_y=True)
-        st.plotly_chart(fig_mp, use_container_width=True)
+        col_mp, col_sigma = st.columns(2)
+        with col_mp:
+            fig_mp = make_subplots(specs=[[{"secondary_y": True}]])
+            fig_mp.add_trace(go.Scatter(
+                x=df_national["年份"], y=df_national["加权平均密度"],
+                name=T("mp_trace1"), mode="lines+markers",
+                line=dict(color="#1e3a5f", width=2.5),
+            ), secondary_y=False)
+            fig_mp.add_trace(go.Scatter(
+                x=df_national["年份"], y=df_national["高密度像素数"],
+                name=T("mp_trace2"), mode="lines+markers",
+                line=dict(color="#b8860b", width=2),
+            ), secondary_y=True)
+            fig_mp.update_layout(
+                **PLOTLY_LAYOUT,
+                title=T("mp_chart_title"),
+                height=380,
+                hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
+            )
+            fig_mp.update_yaxes(title_text=T("mp_yaxis1"), secondary_y=False)
+            fig_mp.update_yaxes(title_text=T("mp_yaxis2"), secondary_y=True)
+            st.plotly_chart(fig_mp, use_container_width=True)
 
-    with col_sigma:
-        df_sigma = compute_sigma_convergence(province_stats, frozenset(exclude_for_rank))
-        fig_sigma = go.Figure()
-        fig_sigma.add_trace(go.Scatter(
-            x=df_sigma["年份"], y=df_sigma["变异系数CV"],
-            mode="lines+markers", line=dict(color="#2d6a4f", width=2.5),
-            fill="tozeroy", fillcolor="rgba(45,106,79,0.08)",
-        ))
-        fig_sigma.update_layout(
-            **PLOTLY_LAYOUT,
-            title=T("sigma_chart_title"),
-            height=380,
-            xaxis_title=T("year_label"), yaxis_title=T("sigma_yaxis"),
-            hovermode="x unified",
-        )
-        st.plotly_chart(fig_sigma, use_container_width=True)
-        st.caption(T("sigma_caption"))
+        with col_sigma:
+            df_sigma = compute_sigma_convergence(province_stats, frozenset(exclude_for_rank))
+            fig_sigma = go.Figure()
+            fig_sigma.add_trace(go.Scatter(
+                x=df_sigma["年份"], y=df_sigma["变异系数CV"],
+                mode="lines+markers", line=dict(color="#2d6a4f", width=2.5),
+                fill="tozeroy", fillcolor="rgba(45,106,79,0.08)",
+            ))
+            fig_sigma.update_layout(
+                **PLOTLY_LAYOUT,
+                title=T("sigma_chart_title"),
+                height=380,
+                xaxis_title=T("year_label"), yaxis_title=T("sigma_yaxis"),
+                hovermode="x unified",
+            )
+            st.plotly_chart(fig_sigma, use_container_width=True)
+            st.caption(T("sigma_caption"))
 
 
 # ===================================================================
@@ -2289,389 +2046,365 @@ if _page == _nav_labels[3]:
     st.header(T("hetero_header"))
     st.caption(T("hetero_caption"))
 
-    col_focus, col_peer, col_year = st.columns([2, 2, 1.3])
-    with col_focus:
-        focus_province = st.selectbox(T("focus_province"), available_names,
-                                      index=focus_default_idx, key="hetero_focus",
-                                      format_func=prov_name)
-    with col_peer:
-        peer_candidates = [n for n in available_names if n != focus_province]
-        peer_default = peer_candidates.index("江苏省") if "江苏省" in peer_candidates else 0
-        compare_province = st.selectbox(T("compare_province"), peer_candidates,
-                                        index=peer_default, key="hetero_peer",
-                                        format_func=prov_name)
-    with col_year:
-        year_dr = st.slider(T("focus_year"), YEARS[0], YEARS[-1], 2010, 1, key="hetero_year")
+    _sub_beta, _sub_sigma, _sub_profile = st.tabs([
+        T("subtab_beta"), T("subtab_sigma"), T("subtab_profile"),
+    ])
 
-    scatter_mode = st.radio(
-        T("scatter_mode"),
-        [T("scatter_endpoint"), T("scatter_animation")],
-        horizontal=True,
-        key="hetero_scatter_mode",
-    )
+    # ===================  Sub-tab 1: β-Convergence  ===================
+    with _sub_beta:
+        scatter_mode = st.radio(
+            T("scatter_mode"),
+            [T("scatter_endpoint"), T("scatter_animation")],
+            horizontal=True,
+            key="hetero_scatter_mode",
+        )
 
-    if scatter_mode == T("scatter_endpoint"):
-        scatter_df = df_growth.copy()
-        scatter_df["区域"] = scatter_df["省份"].map(REGION_MAP).fillna("其他")
-        label_set = set(scatter_df.nlargest(5, "2020人口(万)")["省份"])
-        label_set.update(scatter_df.nlargest(3, "增长率%")["省份"])
-        label_set.update(scatter_df.nsmallest(3, "增长率%")["省份"])
-        label_set.add(focus_province)
-        scatter_df["标签"] = scatter_df["省份"].apply(lambda x: PROVINCE_NAME_EN.get(x, x) if lang == "en" else x.replace("省","").replace("市","").replace("自治区","").replace("壮族","").replace("维吾尔","").replace("回族","")).where(scatter_df["省份"].isin(label_set), "")
+        if scatter_mode == T("scatter_endpoint"):
+            scatter_df = df_growth.copy()
+            scatter_df["区域"] = scatter_df["省份"].map(REGION_MAP).fillna("其他")
+            label_set = set(scatter_df.nlargest(5, "2020人口(万)")["省份"])
+            label_set.update(scatter_df.nlargest(3, "增长率%")["省份"])
+            label_set.update(scatter_df.nsmallest(3, "增长率%")["省份"])
+            label_set.add(focus_province)
+            scatter_df["标签"] = scatter_df["省份"].apply(lambda x: PROVINCE_NAME_EN.get(x, x) if lang == "en" else x.replace("省","").replace("市","").replace("自治区","").replace("壮族","").replace("维吾尔","").replace("回族","")).where(scatter_df["省份"].isin(label_set), "")
 
-        fig_traj = go.Figure()
-        for region in ["东部", "中部", "西部", "东北"]:
-            sub = scatter_df[scatter_df["区域"] == region]
+            fig_traj = go.Figure()
+            for region in ["东部", "中部", "西部", "东北"]:
+                sub = scatter_df[scatter_df["区域"] == region]
+                fig_traj.add_trace(go.Scatter(
+                    x=sub["2002年密度"], y=sub["增长率%"],
+                    mode="markers+text", name=region_name(region),
+                    marker=dict(
+                        size=sub["2020人口(万)"].apply(lambda x: max(8, min(50, x / 300))),
+                        color=REGION_COLORS.get(region, "#999"),
+                        opacity=0.8,
+                    ),
+                    text=sub["标签"], textposition="top center", textfont_size=8,
+                    hovertemplate="%{customdata[0]}<br>"
+                                  + ("2002密度" if lang == "zh" else "2002 Density")
+                                  + ": %{x:.0f}<br>"
+                                  + ("增长率" if lang == "zh" else "Growth Rate")
+                                  + ": %{y:.1f}%<br>"
+                                  + ("2020人口" if lang == "zh" else "2020 Pop.")
+                                  + ": %{customdata[1]:.0f}"
+                                  + ("万" if lang == "zh" else "×10k")
+                                  + "<extra></extra>",
+                    customdata=list(zip(sub["省份"], sub["2020人口(万)"])),
+                ))
+
+            # Highlight focus province
+            focus_row = scatter_df[scatter_df["省份"] == focus_province].iloc[0]
             fig_traj.add_trace(go.Scatter(
-                x=sub["2002年密度"], y=sub["增长率%"],
-                mode="markers+text", name=region_name(region),
-                marker=dict(
-                    size=sub["2020人口(万)"].apply(lambda x: max(8, min(50, x / 300))),
-                    color=REGION_COLORS.get(region, "#999"),
-                    opacity=0.8,
-                ),
-                text=sub["标签"], textposition="top center", textfont_size=8,
-                hovertemplate="%{customdata[0]}<br>"
-                              + ("2002密度" if lang == "zh" else "2002 Density")
-                              + ": %{x:.0f}<br>"
-                              + ("增长率" if lang == "zh" else "Growth Rate")
-                              + ": %{y:.1f}%<br>"
-                              + ("2020人口" if lang == "zh" else "2020 Pop.")
-                              + ": %{customdata[1]:.0f}"
-                              + ("万" if lang == "zh" else "×10k")
-                              + "<extra></extra>",
-                customdata=list(zip(sub["省份"], sub["2020人口(万)"])),
+                x=[focus_row["2002年密度"]], y=[focus_row["增长率%"]],
+                mode="markers",
+                marker=dict(size=22, color="rgba(0,0,0,0)", line=dict(color="black", width=2.5)),
+                name=T("focus_province_legend"), showlegend=False, hoverinfo="skip",
             ))
 
-        # Highlight focus province
-        focus_row = scatter_df[scatter_df["省份"] == focus_province].iloc[0]
-        fig_traj.add_trace(go.Scatter(
-            x=[focus_row["2002年密度"]], y=[focus_row["增长率%"]],
-            mode="markers",
-            marker=dict(size=22, color="rgba(0,0,0,0)", line=dict(color="black", width=2.5)),
-            name=T("focus_province_legend"), showlegend=False, hoverinfo="skip",
-        ))
+            # OLS regression line
+            x_log = np.log(scatter_df["2002年密度"].values)
+            y_vals = scatter_df["增长率%"].values
+            sl_h, intc_h, _, _, _ = sp_stats.linregress(x_log, y_vals)
+            x_fit = np.linspace(scatter_df["2002年密度"].min() * 0.8, scatter_df["2002年密度"].max() * 1.2, 50)
+            y_fit = intc_h + sl_h * np.log(x_fit)
+            fig_traj.add_trace(go.Scatter(
+                x=x_fit, y=y_fit, mode="lines",
+                name=T("ols_trend", beta=sl_h),
+                line=dict(color="grey", dash="dash", width=2),
+            ))
 
-        # OLS regression line (β-convergence visual)
-        x_log = np.log(scatter_df["2002年密度"].values)
-        y_vals = scatter_df["增长率%"].values
-        sl_h, intc_h, _, _, _ = sp_stats.linregress(x_log, y_vals)
-        x_fit = np.linspace(scatter_df["2002年密度"].min() * 0.8, scatter_df["2002年密度"].max() * 1.2, 50)
-        y_fit = intc_h + sl_h * np.log(x_fit)
-        fig_traj.add_trace(go.Scatter(
-            x=x_fit, y=y_fit, mode="lines",
-            name=T("ols_trend", beta=sl_h),
-            line=dict(color="grey", dash="dash", width=2),
-        ))
-
-        fig_traj.add_hline(y=0, line_dash="dash", line_color="grey", opacity=0.5)
-        fig_traj.update_layout(
-            **PLOTLY_LAYOUT,
-            title=T("beta_scatter_title"),
-            height=480,
-            xaxis_title=T("beta_scatter_xaxis"), yaxis_title=T("beta_scatter_yaxis"),
-            xaxis_type="log",
-            legend=dict(orientation="h", y=1.02, yanchor="bottom"),
-        )
-        st.plotly_chart(fig_traj, use_container_width=True)
-        direction_text = T("beta_caption_neg") if sl_h < 0 else T("beta_caption_pos")
-        st.caption(T("beta_caption_full", beta=sl_h, direction=direction_text))
-    else:
-        scatter_anim_df = build_growth_animation_df(frozenset(exclude_for_rank))
-        x_min = float(scatter_anim_df["2002年密度"].min())
-        x_max = float(scatter_anim_df["2002年密度"].max())
-        y_min = float(scatter_anim_df["增长率%"].min())
-        y_max = float(scatter_anim_df["增长率%"].max())
-        color_abs = max(abs(float(scatter_anim_df["绝对增长"].min())), abs(float(scatter_anim_df["绝对增长"].max())))
-
-        fig_traj_anim = px.scatter(
-            scatter_anim_df,
-            x="2002年密度",
-            y="增长率%",
-            animation_frame="年份",
-            animation_group="省份",
-            size="当年人口(万)",
-            size_max=45,
-            color="绝对增长",
-            color_continuous_scale="RdYlGn",
-            range_x=[x_min * 0.85, x_max * 1.15],
-            range_y=[y_min - 5, y_max + 5],
-            hover_name="省份",
-            hover_data={"2002年密度": ":.0f", "当年密度": ":.0f", "增长率%": ":.1f", "当年人口(万)": ":.0f"},
-        )
-        fig_traj_anim.add_hline(y=0, line_dash="dash", line_color="grey", opacity=0.5)
-        fig_traj_anim.add_vline(x=float(df_growth["2002年密度"].median()), line_dash="dot",
-                                line_color="#999", opacity=0.3)
-        fig_traj_anim.update_layout(
-            **PLOTLY_LAYOUT,
-            title=T("anim_title", y0=YEARS[0]),
-            height=480,
-            xaxis_title=T("anim_xaxis"),
-            yaxis_title=T("anim_yaxis", y0=YEARS[0]),
-            xaxis_type="log",
-            coloraxis_colorbar_title=T("abs_growth_label"),
-            legend_title_text="",
-        )
-        fig_traj_anim.update_coloraxes(cmin=-color_abs, cmax=color_abs)
-        if fig_traj_anim.layout.updatemenus:
-            fig_traj_anim.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 700
-            fig_traj_anim.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 350
-        st.plotly_chart(fig_traj_anim, use_container_width=True)
-        st.caption(T("anim_caption"))
-
-    # Heatmap metric selector — map display labels back to internal column names
-    heatmap_opt_mean = T("heatmap_opt_mean")
-    heatmap_opt_growth = T("heatmap_opt_growth")
-    heatmap_opt_yoy = T("heatmap_opt_yoy")
-    matrix_metric_label = st.radio(T("heatmap_metric"),
-                                   [heatmap_opt_mean, heatmap_opt_growth, heatmap_opt_yoy],
-                                   horizontal=True, key="hetero_matrix_metric")
-    # Map display label to internal key used in the logic below
-    if matrix_metric_label == heatmap_opt_mean:
-        matrix_metric = "平均密度"
-    elif matrix_metric_label == heatmap_opt_growth:
-        matrix_metric = "相对2002年增长率%"
-    else:
-        matrix_metric = "逐年变化"
-
-    provs_2020 = sorted(filter_provs(province_stats["2020"], mainland_only),
-                        key=lambda x: x["mean"], reverse=True)
-    prov_names_ordered = [p["name"] for p in provs_2020]
-    prov_names_display = [prov_name(n) for n in prov_names_ordered]
-    z_matrix = []
-    for pname in prov_names_ordered:
-        row = []
-        base_val = prev_val = None
-        for y in YEARS:
-            val = next((p["mean"] for p in province_stats[str(y)] if p["name"] == pname), 0)
-            if base_val is None:
-                base_val = val
-            if matrix_metric == "平均密度":
-                row.append(round(val, 1))
-            elif matrix_metric == "相对2002年增长率%":
-                row.append(round((val - base_val) / base_val * 100, 1) if base_val > 0 else 0)
-            else:
-                row.append(round(val - prev_val, 1) if prev_val is not None else 0)
-            prev_val = val
-        z_matrix.append(row)
-
-    if matrix_metric == "平均密度":
-        colorscale, zmin, zmax, bar_title = "OrRd", 0, 1200, T("heatmap_bar_density")
-    elif matrix_metric == "相对2002年增长率%":
-        zmax = max(abs(v) for row in z_matrix for v in row)
-        colorscale, zmin, zmax, bar_title = "RdYlBu_r", -zmax * 0.3, zmax, T("heatmap_bar_pct")
-    else:
-        zmax = max(abs(v) for row in z_matrix for v in row if abs(v) < 500)
-        colorscale, zmin, zmax, bar_title = "RdBu_r", -zmax, zmax, T("heatmap_bar_density")
-
-    fig_hm = go.Figure(go.Heatmap(
-        z=z_matrix, x=YEARS, y=prov_names_display, colorscale=colorscale, zmin=zmin, zmax=zmax,
-        colorbar_title=bar_title,
-        hovertemplate=("省份" if lang == "zh" else "Province")
-                      + ": %{y}<br>"
-                      + ("年份" if lang == "zh" else "Year")
-                      + ": %{x}<br>"
-                      + ("值" if lang == "zh" else "Value")
-                      + ": %{z}<extra></extra>",
-    ))
-    fig_hm.update_layout(**{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
-                         height=max(480, len(prov_names_ordered) * 20),
-                         margin=dict(t=20, b=20, l=10, r=10),
-                         xaxis=dict(dtick=1), yaxis=dict(autorange="reversed"))
-    st.plotly_chart(fig_hm, use_container_width=True)
-
-    # --- σ-convergence detail ---
-    st.divider()
-    st.subheader(T("sigma_detail_header"))
-    col_sigma_detail, col_sigma_text = st.columns([5, 3])
-    with col_sigma_detail:
-        df_sigma_h = compute_sigma_convergence(province_stats, frozenset(exclude_for_rank))
-        fig_sigma_h = make_subplots(specs=[[{"secondary_y": True}]])
-        fig_sigma_h.add_trace(go.Scatter(
-            x=df_sigma_h["年份"], y=df_sigma_h["省际标准差"],
-            name=T("sigma_detail_trace1"), mode="lines+markers",
-            line=dict(color="#1e3a5f", width=2.5),
-        ), secondary_y=False)
-        fig_sigma_h.add_trace(go.Scatter(
-            x=df_sigma_h["年份"], y=df_sigma_h["变异系数CV"],
-            name=T("sigma_detail_trace2"), mode="lines+markers",
-            line=dict(color="#c0392b", width=2.5),
-        ), secondary_y=True)
-        fig_sigma_h.update_layout(
-            **PLOTLY_LAYOUT,
-            title=T("sigma_detail_title"),
-            height=380,
-            hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
-        )
-        fig_sigma_h.update_yaxes(title_text=T("sigma_yaxis1"), secondary_y=False)
-        fig_sigma_h.update_yaxes(title_text=T("cv_yaxis"), secondary_y=True)
-        st.plotly_chart(fig_sigma_h, use_container_width=True)
-    with col_sigma_text:
-        cv_start = df_sigma_h[df_sigma_h["年份"] == YEARS[0]]["变异系数CV"].values[0]
-        cv_end = df_sigma_h[df_sigma_h["年份"] == YEARS[-1]]["变异系数CV"].values[0]
-        std_start = df_sigma_h[df_sigma_h["年份"] == YEARS[0]]["省际标准差"].values[0]
-        std_end = df_sigma_h[df_sigma_h["年份"] == YEARS[-1]]["省际标准差"].values[0]
-        st.markdown(T("sigma_judgment"))
-        cv_dir = T("cv_converge") if cv_end < cv_start else T("cv_diverge")
-        std_dir = T("std_shrink") if std_end < std_start else T("std_expand")
-        st.markdown(f"- {'变异系数 CV' if lang == 'zh' else 'Coeff. of Variation CV'}: {cv_start:.4f} → {cv_end:.4f} ({cv_dir})")
-        st.markdown(f"- {'标准差' if lang == 'zh' else 'Std. Dev.'}: {std_start:.2f} → {std_end:.2f} ({std_dir})")
-        st.divider()
-        st.markdown(T("sigma_meaning"))
-        if cv_end < cv_start:
-            st.markdown(T("sigma_conv_text"))
+            fig_traj.add_hline(y=0, line_dash="dash", line_color="grey", opacity=0.5)
+            fig_traj.update_layout(
+                **PLOTLY_LAYOUT,
+                title=T("beta_scatter_title"),
+                height=480,
+                xaxis_title=T("beta_scatter_xaxis"), yaxis_title=T("beta_scatter_yaxis"),
+                xaxis_type="log",
+                legend=dict(orientation="h", y=1.02, yanchor="bottom"),
+            )
+            st.plotly_chart(fig_traj, use_container_width=True)
+            direction_text = T("beta_caption_neg") if sl_h < 0 else T("beta_caption_pos")
+            st.caption(T("beta_caption_full", beta=sl_h, direction=direction_text))
         else:
-            st.markdown(T("sigma_div_text"))
+            scatter_anim_df = build_growth_animation_df(frozenset(exclude_for_rank))
+            x_min = float(scatter_anim_df["2002年密度"].min())
+            x_max = float(scatter_anim_df["2002年密度"].max())
+            y_min = float(scatter_anim_df["增长率%"].min())
+            y_max = float(scatter_anim_df["增长率%"].max())
+            color_abs = max(abs(float(scatter_anim_df["绝对增长"].min())), abs(float(scatter_anim_df["绝对增长"].max())))
 
-    st.divider()
-    st.subheader(T("focus_profile", prov=prov_name(focus_province)))
+            fig_traj_anim = px.scatter(
+                scatter_anim_df,
+                x="2002年密度",
+                y="增长率%",
+                animation_frame="年份",
+                animation_group="省份",
+                size="当年人口(万)",
+                size_max=45,
+                color="绝对增长",
+                color_continuous_scale="RdYlGn",
+                range_x=[x_min * 0.85, x_max * 1.15],
+                range_y=[y_min - 5, y_max + 5],
+                hover_name="省份",
+                hover_data={"2002年密度": ":.0f", "当年密度": ":.0f", "增长率%": ":.1f", "当年人口(万)": ":.0f"},
+            )
+            fig_traj_anim.add_hline(y=0, line_dash="dash", line_color="grey", opacity=0.5)
+            fig_traj_anim.add_vline(x=float(df_growth["2002年密度"].median()), line_dash="dot",
+                                    line_color="#999", opacity=0.3)
+            fig_traj_anim.update_layout(
+                **PLOTLY_LAYOUT,
+                title=T("anim_title", y0=YEARS[0]),
+                height=480,
+                xaxis_title=T("anim_xaxis"),
+                yaxis_title=T("anim_yaxis", y0=YEARS[0]),
+                xaxis_type="log",
+                coloraxis_colorbar_title=T("abs_growth_label"),
+                legend_title_text="",
+            )
+            fig_traj_anim.update_coloraxes(cmin=-color_abs, cmax=color_abs)
+            if fig_traj_anim.layout.updatemenus:
+                fig_traj_anim.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 700
+                fig_traj_anim.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 350
+            st.plotly_chart(fig_traj_anim, use_container_width=True)
+            st.caption(T("anim_caption"))
 
-    prov_series = df_prov[df_prov["name"] == focus_province].sort_values("年份")
-    prov_current = prov_series[prov_series["年份"] == year_dr].iloc[0]
-    first_rank = rank_df[(rank_df["省份"] == focus_province) & (rank_df["年份"] == YEARS[0])]["排名"].values[0]
-    cur_rank = rank_df[(rank_df["省份"] == focus_province) & (rank_df["年份"] == year_dr)]["排名"].values[0]
-    total_growth = prov_series.iloc[-1]["mean"] - prov_series.iloc[0]["mean"]
-    growth_rate = (total_growth / prov_series.iloc[0]["mean"] * 100) if prov_series.iloc[0]["mean"] > 0 else 0
+        # Heatmap
+        st.divider()
+        heatmap_opt_mean = T("heatmap_opt_mean")
+        heatmap_opt_growth = T("heatmap_opt_growth")
+        heatmap_opt_yoy = T("heatmap_opt_yoy")
+        matrix_metric_label = st.radio(T("heatmap_metric"),
+                                       [heatmap_opt_mean, heatmap_opt_growth, heatmap_opt_yoy],
+                                       horizontal=True, key="hetero_matrix_metric")
+        if matrix_metric_label == heatmap_opt_mean:
+            matrix_metric = "平均密度"
+        elif matrix_metric_label == heatmap_opt_growth:
+            matrix_metric = "相对2002年增长率%"
+        else:
+            matrix_metric = "逐年变化"
 
-    k1, k2, k3, k4, k5 = st.columns(5)
-    k1.metric(T("kpi_yr_density", yr=year_dr),
-              f"{prov_current['mean']:.1f} {'人/km²' if lang == 'zh' else 'ppl/km²'}")
-    k2.metric(T("kpi_pop_est"),
-              f"{prov_current['est_pop_wan']/10000:.2f} {'亿' if lang == 'zh' else 'B'}")
-    k3.metric(T("kpi_national_rank"),
-              T("kpi_rank_val", rank=cur_rank),
-              delta=f"{first_rank - cur_rank:+d} (vs {YEARS[0]})")
-    k4.metric(T("kpi_total_growth"),
-              f"{total_growth:+.1f} {'人/km²' if lang == 'zh' else 'ppl/km²'}")
-    k5.metric(T("kpi_growth_rate"), f"{growth_rate:+.1f}%")
+        provs_2020 = sorted(filter_provs(province_stats["2020"], mainland_only),
+                            key=lambda x: x["mean"], reverse=True)
+        prov_names_ordered = [p["name"] for p in provs_2020]
+        prov_names_display = [prov_name(n) for n in prov_names_ordered]
+        z_matrix = []
+        for pname in prov_names_ordered:
+            row = []
+            base_val = prev_val = None
+            for y in YEARS:
+                val = next((p["mean"] for p in province_stats[str(y)] if p["name"] == pname), 0)
+                if base_val is None:
+                    base_val = val
+                if matrix_metric == "平均密度":
+                    row.append(round(val, 1))
+                elif matrix_metric == "相对2002年增长率%":
+                    row.append(round((val - base_val) / base_val * 100, 1) if base_val > 0 else 0)
+                else:
+                    row.append(round(val - prev_val, 1) if prev_val is not None else 0)
+                prev_val = val
+            z_matrix.append(row)
 
-    col_ts, col_rank = st.columns([3, 2])
-    with col_ts:
-        fig_detail = make_subplots(specs=[[{"secondary_y": True}]])
-        fig_detail.add_trace(go.Scatter(
-            x=prov_series["年份"], y=prov_series["mean"],
-            name=T("avg_density_trace"), mode="lines+markers",
-            line=dict(color="#1e3a5f", width=2.5),
-            fill="tozeroy", fillcolor="rgba(30,58,95,0.1)",
-        ), secondary_y=False)
-        fig_detail.add_trace(go.Scatter(
-            x=prov_series["年份"], y=prov_series["est_pop_wan"] / 10000,
-            name=T("pop_est_trace"), mode="lines+markers",
-            line=dict(color="#c0392b", width=2),
-        ), secondary_y=True)
-        fig_detail.add_vline(x=year_dr, line_dash="dash", line_color="grey")
-        fig_detail.update_layout(
-            **PLOTLY_LAYOUT,
-            title=T("province_trend_title", prov=prov_name(focus_province)),
-            height=380,
-            hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
-        )
-        fig_detail.update_yaxes(title_text=T("density_unit"), secondary_y=False)
-        fig_detail.update_yaxes(title_text=T("hundred_million"), secondary_y=True)
-        st.plotly_chart(fig_detail, use_container_width=True)
+        if matrix_metric == "平均密度":
+            colorscale, zmin, zmax, bar_title = "OrRd", 0, 1200, T("heatmap_bar_density")
+        elif matrix_metric == "相对2002年增长率%":
+            zmax = max(abs(v) for row in z_matrix for v in row)
+            colorscale, zmin, zmax, bar_title = "RdYlBu_r", -zmax * 0.3, zmax, T("heatmap_bar_pct")
+        else:
+            zmax = max(abs(v) for row in z_matrix for v in row if abs(v) < 500)
+            colorscale, zmin, zmax, bar_title = "RdBu_r", -zmax, zmax, T("heatmap_bar_density")
 
-    with col_rank:
-        prov_rank_data = rank_df[rank_df["省份"] == focus_province]
-        fig_bump = go.Figure(go.Scatter(
-            x=prov_rank_data["年份"], y=prov_rank_data["排名"],
-            mode="lines+markers+text",
-            text=[f"#{r}" for r in prov_rank_data["排名"]],
-            textposition="top center",
-            line=dict(color="#1e3a5f", width=3), marker=dict(size=8),
+        fig_hm = go.Figure(go.Heatmap(
+            z=z_matrix, x=YEARS, y=prov_names_display, colorscale=colorscale, zmin=zmin, zmax=zmax,
+            colorbar_title=bar_title,
+            hovertemplate=("省份" if lang == "zh" else "Province")
+                          + ": %{y}<br>"
+                          + ("年份" if lang == "zh" else "Year")
+                          + ": %{x}<br>"
+                          + ("值" if lang == "zh" else "Value")
+                          + ": %{z}<extra></extra>",
         ))
-        fig_bump.update_layout(
-            **PLOTLY_LAYOUT,
-            title=T("rank_chart_title", prov=prov_name(focus_province)),
-            height=380,
-            yaxis=dict(autorange="reversed", dtick=1, title=T("rank_yaxis")),
-        )
-        st.plotly_chart(fig_bump, use_container_width=True)
+        fig_hm.update_layout(**{k: v for k, v in PLOTLY_LAYOUT.items() if k != "margin"},
+                             height=max(480, len(prov_names_ordered) * 20),
+                             margin=dict(t=20, b=20, l=10, r=10),
+                             xaxis=dict(dtick=1), yaxis=dict(autorange="reversed"))
+        st.plotly_chart(fig_hm, use_container_width=True)
 
-    col_stats, col_compare = st.columns([2, 3])
-    with col_stats:
-        metric_names = T("stats_table_metrics")
-        st.dataframe(
-            pd.DataFrame({
-                T("stats_metric_col"): metric_names,
-                T("stats_value_col"): [
-                    f"{prov_current['mean']:.1f}",
-                    f"{prov_current['median']:.1f}",
-                    f"{prov_current['max']:.0f}",
-                    f"{prov_current['std']:.1f}",
-                    f"{prov_current['est_pop_wan']:,.0f}",
-                    f"{prov_current['pixel_count']:,}",
-                ],
-            }),
-            use_container_width=True,
-            hide_index=True,
-        )
-        yoy_rows = []
-        for i in range(1, len(prov_series)):
-            prev = prov_series.iloc[i - 1]
-            cur = prov_series.iloc[i]
-            change = cur["mean"] - prev["mean"]
-            pct = (change / prev["mean"] * 100) if prev["mean"] > 0 else 0
-            yoy_rows.append({
-                T("yoy_year_col"): f"{int(prev['年份'])}→{int(cur['年份'])}",
-                T("yoy_change_col"): f"{change:+.1f}",
-                T("yoy_pct_col"): f"{pct:+.1f}%",
-            })
-        st.dataframe(pd.DataFrame(yoy_rows), use_container_width=True, height=250, hide_index=True)
-
-    with col_compare:
-        s1 = df_prov[df_prov["name"] == focus_province].sort_values("年份")
-        s2 = df_prov[df_prov["name"] == compare_province].sort_values("年份")
-        subplot_titles = T("compare_subplots")
-        fig_cross = make_subplots(rows=1, cols=3, subplot_titles=subplot_titles)
-        for idx, metric in enumerate(["mean", "est_pop_wan", "max"], 1):
-            fig_cross.add_trace(go.Scatter(x=s1["年份"], y=s1[metric], name=prov_name(focus_province),
-                                           mode="lines+markers", line=dict(color="#1e3a5f", width=2),
-                                           showlegend=(idx == 1)), row=1, col=idx)
-            fig_cross.add_trace(go.Scatter(x=s2["年份"], y=s2[metric], name=prov_name(compare_province),
-                                           mode="lines+markers", line=dict(color="#c0392b", width=2),
-                                           showlegend=(idx == 1)), row=1, col=idx)
-        fig_cross.update_layout(
-            **PLOTLY_LAYOUT,
-            height=380,
-            hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
-            title=f"{prov_name(focus_province)} vs {prov_name(compare_province)}",
-        )
-        st.plotly_chart(fig_cross, use_container_width=True)
-
-
-# ===================================================================
-# TAB 5: Research topics — hidden from main nav, kept for future use
-# ===================================================================
-if False:  # removed from main navigation
-    st.header(T("research_header"))
-    st.caption(T("research_caption"))
-
-    _topic_keys = [
-        ("topic1", True),
-        ("topic2", False),
-        ("topic3", False),
-        ("topic4", False),
-        ("topic5", False),
-        ("topic6", False),
-    ]
-    for _tk, _expanded in _topic_keys:
-        with st.expander(T(f"{_tk}_title"), expanded=_expanded):
-            _body = T(f"{_tk}_body")
-            # Split body into main content and references
-            if "**References**" in _body or "**参考文献**" in _body:
-                _split_key = "**References**" if "**References**" in _body else "**参考文献**"
-                _parts = _body.split(_split_key, 1)
-                st.markdown(_parts[0])
-                st.caption(f"{_split_key}{_parts[1]}")
+    # ===================  Sub-tab 2: σ-Dispersion  ===================
+    with _sub_sigma:
+        st.subheader(T("sigma_detail_header"))
+        col_sigma_detail, col_sigma_text = st.columns([5, 3])
+        with col_sigma_detail:
+            df_sigma_h = compute_sigma_convergence(province_stats, frozenset(exclude_for_rank))
+            fig_sigma_h = make_subplots(specs=[[{"secondary_y": True}]])
+            fig_sigma_h.add_trace(go.Scatter(
+                x=df_sigma_h["年份"], y=df_sigma_h["省际标准差"],
+                name=T("sigma_detail_trace1"), mode="lines+markers",
+                line=dict(color="#1e3a5f", width=2.5),
+            ), secondary_y=False)
+            fig_sigma_h.add_trace(go.Scatter(
+                x=df_sigma_h["年份"], y=df_sigma_h["变异系数CV"],
+                name=T("sigma_detail_trace2"), mode="lines+markers",
+                line=dict(color="#c0392b", width=2.5),
+            ), secondary_y=True)
+            fig_sigma_h.update_layout(
+                **PLOTLY_LAYOUT,
+                title=T("sigma_detail_title"),
+                height=380,
+                hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
+            )
+            fig_sigma_h.update_yaxes(title_text=T("sigma_yaxis1"), secondary_y=False)
+            fig_sigma_h.update_yaxes(title_text=T("cv_yaxis"), secondary_y=True)
+            st.plotly_chart(fig_sigma_h, use_container_width=True)
+        with col_sigma_text:
+            cv_start = df_sigma_h[df_sigma_h["年份"] == YEARS[0]]["变异系数CV"].values[0]
+            cv_end = df_sigma_h[df_sigma_h["年份"] == YEARS[-1]]["变异系数CV"].values[0]
+            std_start = df_sigma_h[df_sigma_h["年份"] == YEARS[0]]["省际标准差"].values[0]
+            std_end = df_sigma_h[df_sigma_h["年份"] == YEARS[-1]]["省际标准差"].values[0]
+            st.markdown(T("sigma_judgment"))
+            cv_dir = T("cv_converge") if cv_end < cv_start else T("cv_diverge")
+            std_dir = T("std_shrink") if std_end < std_start else T("std_expand")
+            st.markdown(f"- {'变异系数 CV' if lang == 'zh' else 'Coeff. of Variation CV'}: {cv_start:.4f} → {cv_end:.4f} ({cv_dir})")
+            st.markdown(f"- {'标准差' if lang == 'zh' else 'Std. Dev.'}: {std_start:.2f} → {std_end:.2f} ({std_dir})")
+            st.divider()
+            st.markdown(T("sigma_meaning"))
+            if cv_end < cv_start:
+                st.markdown(T("sigma_conv_text"))
             else:
-                st.markdown(_body)
+                st.markdown(T("sigma_div_text"))
 
-    st.divider()
-    st.info(T("research_footer") % WORLDPOP_COLLECTION_URL)
+    # ===================  Sub-tab 3: Province Profile  ===================
+    with _sub_profile:
+        col_focus, col_peer, col_year = st.columns([2, 2, 1.3])
+        with col_focus:
+            focus_province = st.selectbox(T("focus_province"), available_names,
+                                          index=focus_default_idx, key="hetero_focus",
+                                          format_func=prov_name)
+        with col_peer:
+            peer_candidates = [n for n in available_names if n != focus_province]
+            peer_default = peer_candidates.index("江苏省") if "江苏省" in peer_candidates else 0
+            compare_province = st.selectbox(T("compare_province"), peer_candidates,
+                                            index=peer_default, key="hetero_peer",
+                                            format_func=prov_name)
+        with col_year:
+            year_dr = st.slider(T("focus_year"), YEARS[0], YEARS[-1], 2010, 1, key="hetero_year")
+
+        st.subheader(T("focus_profile", prov=prov_name(focus_province)))
+
+        prov_series = df_prov[df_prov["name"] == focus_province].sort_values("年份")
+        prov_current = prov_series[prov_series["年份"] == year_dr].iloc[0]
+        first_rank = rank_df[(rank_df["省份"] == focus_province) & (rank_df["年份"] == YEARS[0])]["排名"].values[0]
+        cur_rank = rank_df[(rank_df["省份"] == focus_province) & (rank_df["年份"] == year_dr)]["排名"].values[0]
+        total_growth = prov_series.iloc[-1]["mean"] - prov_series.iloc[0]["mean"]
+        growth_rate = (total_growth / prov_series.iloc[0]["mean"] * 100) if prov_series.iloc[0]["mean"] > 0 else 0
+
+        k1, k2, k3, k4, k5 = st.columns(5)
+        k1.metric(T("kpi_yr_density", yr=year_dr),
+                  f"{prov_current['mean']:.1f} {'人/km²' if lang == 'zh' else 'ppl/km²'}")
+        k2.metric(T("kpi_pop_est"),
+                  f"{prov_current['est_pop_wan']/10000:.2f} {'亿' if lang == 'zh' else 'B'}")
+        k3.metric(T("kpi_national_rank"),
+                  T("kpi_rank_val", rank=cur_rank),
+                  delta=f"{first_rank - cur_rank:+d} (vs {YEARS[0]})")
+        k4.metric(T("kpi_total_growth"),
+                  f"{total_growth:+.1f} {'人/km²' if lang == 'zh' else 'ppl/km²'}")
+        k5.metric(T("kpi_growth_rate"), f"{growth_rate:+.1f}%")
+
+        col_ts, col_rank = st.columns([3, 2])
+        with col_ts:
+            fig_detail = make_subplots(specs=[[{"secondary_y": True}]])
+            fig_detail.add_trace(go.Scatter(
+                x=prov_series["年份"], y=prov_series["mean"],
+                name=T("avg_density_trace"), mode="lines+markers",
+                line=dict(color="#1e3a5f", width=2.5),
+                fill="tozeroy", fillcolor="rgba(30,58,95,0.1)",
+            ), secondary_y=False)
+            fig_detail.add_trace(go.Scatter(
+                x=prov_series["年份"], y=prov_series["est_pop_wan"] / 10000,
+                name=T("pop_est_trace"), mode="lines+markers",
+                line=dict(color="#c0392b", width=2),
+            ), secondary_y=True)
+            fig_detail.add_vline(x=year_dr, line_dash="dash", line_color="grey")
+            fig_detail.update_layout(
+                **PLOTLY_LAYOUT,
+                title=T("province_trend_title", prov=prov_name(focus_province)),
+                height=380,
+                hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
+            )
+            fig_detail.update_yaxes(title_text=T("density_unit"), secondary_y=False)
+            fig_detail.update_yaxes(title_text=T("hundred_million"), secondary_y=True)
+            st.plotly_chart(fig_detail, use_container_width=True)
+
+        with col_rank:
+            prov_rank_data = rank_df[rank_df["省份"] == focus_province]
+            fig_bump = go.Figure(go.Scatter(
+                x=prov_rank_data["年份"], y=prov_rank_data["排名"],
+                mode="lines+markers+text",
+                text=[f"#{r}" for r in prov_rank_data["排名"]],
+                textposition="top center",
+                line=dict(color="#1e3a5f", width=3), marker=dict(size=8),
+            ))
+            fig_bump.update_layout(
+                **PLOTLY_LAYOUT,
+                title=T("rank_chart_title", prov=prov_name(focus_province)),
+                height=380,
+                yaxis=dict(autorange="reversed", dtick=1, title=T("rank_yaxis")),
+            )
+            st.plotly_chart(fig_bump, use_container_width=True)
+
+        col_stats, col_compare = st.columns([2, 3])
+        with col_stats:
+            metric_names = T("stats_table_metrics")
+            st.dataframe(
+                pd.DataFrame({
+                    T("stats_metric_col"): metric_names,
+                    T("stats_value_col"): [
+                        f"{prov_current['mean']:.1f}",
+                        f"{prov_current['median']:.1f}",
+                        f"{prov_current['max']:.0f}",
+                        f"{prov_current['std']:.1f}",
+                        f"{prov_current['est_pop_wan']:,.0f}",
+                        f"{prov_current['pixel_count']:,}",
+                    ],
+                }),
+                use_container_width=True,
+                hide_index=True,
+            )
+            yoy_rows = []
+            for i in range(1, len(prov_series)):
+                prev = prov_series.iloc[i - 1]
+                cur = prov_series.iloc[i]
+                change = cur["mean"] - prev["mean"]
+                pct = (change / prev["mean"] * 100) if prev["mean"] > 0 else 0
+                yoy_rows.append({
+                    T("yoy_year_col"): f"{int(prev['年份'])}→{int(cur['年份'])}",
+                    T("yoy_change_col"): f"{change:+.1f}",
+                    T("yoy_pct_col"): f"{pct:+.1f}%",
+                })
+            st.dataframe(pd.DataFrame(yoy_rows), use_container_width=True, height=250, hide_index=True)
+
+        with col_compare:
+            s1 = df_prov[df_prov["name"] == focus_province].sort_values("年份")
+            s2 = df_prov[df_prov["name"] == compare_province].sort_values("年份")
+            subplot_titles = T("compare_subplots")
+            fig_cross = make_subplots(rows=1, cols=3, subplot_titles=subplot_titles)
+            for idx, metric in enumerate(["mean", "est_pop_wan", "max"], 1):
+                fig_cross.add_trace(go.Scatter(x=s1["年份"], y=s1[metric], name=prov_name(focus_province),
+                                               mode="lines+markers", line=dict(color="#1e3a5f", width=2),
+                                               showlegend=(idx == 1)), row=1, col=idx)
+                fig_cross.add_trace(go.Scatter(x=s2["年份"], y=s2[metric], name=prov_name(compare_province),
+                                               mode="lines+markers", line=dict(color="#c0392b", width=2),
+                                               showlegend=(idx == 1)), row=1, col=idx)
+            fig_cross.update_layout(
+                **PLOTLY_LAYOUT,
+                height=380,
+                hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
+                title=f"{prov_name(focus_province)} vs {prov_name(compare_province)}",
+            )
+            st.plotly_chart(fig_cross, use_container_width=True)
 
 
 # ===================================================================
-# TAB 6: Data and methods
+# TAB 5: Data and methods
 # ===================================================================
 if _page == _nav_labels[4]:
     st.header(T("methods_header"))
@@ -2711,11 +2444,7 @@ if _page == _nav_labels[4]:
 
     st.subheader(T("methods_citation"))
     st.markdown("**Paper:**")
-    st.code(
-        "Shen, Li (2025). \"Population Agglomeration and Spatial Reallocation in China.\" "
-        "Working Paper, Clark University.",
-        language="text",
-    )
+    st.code(CITATION_TEXT, language="text")
     st.markdown("**Data:**")
     st.code(
         "WorldPop and CIESIN (2018). Global High Resolution Population Denominators Project. "
