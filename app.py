@@ -2396,8 +2396,9 @@ if _page == _nav_labels[3]:
                                            showlegend=(idx == 1)), row=1, col=idx)
         fig_cross.update_layout(
             **PLOTLY_LAYOUT,
-            height=420,
-            hovermode="x unified", legend=dict(orientation="h", y=1.02, yanchor="bottom"),
+            height=440,
+            margin=dict(t=90, b=20, l=20, r=20),
+            hovermode="x unified", legend=dict(orientation="h", y=1.12, yanchor="bottom"),
             title=f"{prov_name(cmp_province_a)} vs {prov_name(cmp_province_b)}",
         )
         st.plotly_chart(fig_cross, use_container_width=True)
