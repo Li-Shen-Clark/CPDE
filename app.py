@@ -151,7 +151,7 @@ CC_BY_4_URL = "https://creativecommons.org/licenses/by/4.0/"
 
 # --- Paper entry points (single source of truth) ---
 # When SSRN is live, fill SSRN_URL; the site will auto-switch to it as canonical.
-SSRN_URL = ""  # e.g. "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=XXXXXXX"
+SSRN_URL = "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6569183"
 PAPER_PDF_URL = "https://github.com/Li-Shen-Clark/CPDE/blob/main/main.pdf"
 # Derived: prefer SSRN when available
 PAPER_CANONICAL_URL = SSRN_URL or PAPER_PDF_URL
