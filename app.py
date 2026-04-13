@@ -1449,7 +1449,7 @@ _paper_btn_en = "📄 Read the Paper (SSRN)" if PAPER_IS_SSRN else "📄 Read th
 st.sidebar.link_button(_paper_btn_zh if lang == "zh" else _paper_btn_en,
                         PAPER_CANONICAL_URL, use_container_width=True)
 st.sidebar.caption(
-    f"Li Shen · Clark University · [GitHub](https://github.com/Li-Shen-Clark/CPDE)"
+    f"Li Shen · Clark University · [Homepage](https://lshen.com.cn/)"
 )
 
 # Compute rank once based on scope
