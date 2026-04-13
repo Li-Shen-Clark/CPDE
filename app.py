@@ -315,13 +315,13 @@ _LANG_STRINGS = {
         "构建了一套基于栅格的人口空间分布度量框架：从 1 km WorldPop 栅格出发，"
         "经纬度修正像元面积、P99 裁剪、降采样至 5 km，"
         "直接从栅格计算空间基尼系数、Top-10% 集中度、人口重心等指标，"
-        "避免了行政单元汇总带来的 MAUP 问题。"
+        "缓解了行政单元汇总带来的 MAUP 问题。"
     ),
     "contrib_measurement_en": (
         "Develops a raster-based measurement framework for population distribution: "
         "starting from 1 km WorldPop grids, applying latitude-corrected pixel areas, P99 clipping, "
         "and downsampling to 5 km, then computing spatial Gini, top-decile concentration, "
-        "and population centroid directly from the raster — avoiding the MAUP bias inherent "
+        "and population centroid directly from the raster — mitigating MAUP concerns inherent "
         "in administrative-unit aggregation."
     ),
     "contrib_empirical_title_zh": "实证贡献",
@@ -329,14 +329,14 @@ _LANG_STRINGS = {
     "contrib_empirical_zh": (
         "提供了 {y0}–{y1} 年中国人口空间再配置的系统性描述证据。"
         "文献中关于中国人口分布的实证研究多依赖地级或省级截面数据；"
-        "本文在像元层面呈现了集聚增强、核心区扩展、重心南移等事实，"
+        "本文在像元层面呈现了集聚增强、核心区扩展、重心东南漂移等事实，"
         "并通过省际 β/σ 收敛检验刻画了省际密度的离散演化。"
     ),
     "contrib_empirical_en": (
         "Provides systematic descriptive evidence on China's population spatial reallocation "
-        "over {y0}–{y1}. Much of the existing empirical literature on China's population "
-        "distribution relies on prefecture- or province-level cross-sections; "
-        "this paper documents rising concentration, core expansion, and southward centroid shift "
+        "over {y0}–{y1}. Many existing studies on China's population "
+        "distribution rely on prefecture- or province-level cross-sections; "
+        "this paper documents rising concentration, core expansion, and southeastward centroid shift "
         "at the pixel level, and characterizes interprovincial density dispersion through β/σ convergence tests."
     ),
     "contrib_relevance_title_zh": "领域关联",
