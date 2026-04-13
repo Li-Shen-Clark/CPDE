@@ -6,6 +6,11 @@ An interactive Streamlit web application for exploring China's population densit
 
 Built on WorldPop UN-adjusted 1km population density rasters (downsampled to ~5km), covering 19 consecutive years (2002-2020) across 31 mainland provinces.
 
+## Working Paper
+
+- SSRN preprint: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6569183
+- Companion website: https://cpde.streamlit.app
+
 ![Summary Tab](screenshots/summary.png)
 
 ---
