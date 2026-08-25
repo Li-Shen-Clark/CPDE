@@ -24,8 +24,17 @@ import folium
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from matplotlib import cm
 from matplotlib.colors import LogNorm, Normalize
+try:
+    from matplotlib import colormaps
+except ImportError:  # Older Matplotlib fallback.
+    from matplotlib import cm as _legacy_cm
+
+    def get_colormap(name):
+        return _legacy_cm.get_cmap(name)
+else:
+    def get_colormap(name):
+        return colormaps[name]
 from PIL import Image, ImageDraw
 from scipy import stats as sp_stats
 from streamlit_folium import st_folium
@@ -972,7 +981,7 @@ def compute_rank_history(province_stats, exclude_names):
 @st.cache_data
 def raster_to_image(data):
     norm = LogNorm(vmin=VMIN, vmax=VMAX, clip=True)
-    colormap = cm.get_cmap("inferno")
+    colormap = get_colormap("inferno")
     mask = np.isnan(data) | (data <= 0)
     normalized = np.where(mask, 0, norm(data))
     rgba = colormap(normalized)
@@ -984,7 +993,7 @@ def raster_to_image(data):
 @st.cache_data
 def diff_to_image_adaptive(diff):
     """Coolwarm diverging colormap with p99-based symmetric bounds."""
-    colormap = cm.get_cmap("coolwarm")
+    colormap = get_colormap("coolwarm")
     valid = diff[~np.isnan(diff)]
     if len(valid) == 0:
         return np.zeros((*diff.shape, 4), dtype=np.uint8)
@@ -1034,7 +1043,7 @@ def render_animation_frame_image(year, opacity):
     rgb = rgba[..., :3].astype(np.float32)
     blended = (background * (1.0 - alpha) + rgb * alpha).astype(np.uint8)
 
-    canvas = Image.fromarray(blended, mode="RGB")
+    canvas = Image.fromarray(blended)
     draw = ImageDraw.Draw(canvas)
     lon_span = max(max_lon - min_lon, 1e-9)
     lat_span = max(max_lat - min_lat, 1e-9)
@@ -1065,7 +1074,7 @@ def render_diff_frame_image(year_a, year_b, opacity):
     rgb = rgba[..., :3].astype(np.float32)
     blended = (background * (1.0 - alpha) + rgb * alpha).astype(np.uint8)
 
-    canvas = Image.fromarray(blended, mode="RGB")
+    canvas = Image.fromarray(blended)
     draw = ImageDraw.Draw(canvas)
     min_lat, min_lon = bounds[0]
     max_lat, max_lon = bounds[1]
